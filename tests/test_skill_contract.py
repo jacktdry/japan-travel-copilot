@@ -43,6 +43,8 @@ class SkillContractTests(unittest.TestCase):
             "evidence-and-transit.md",
             "translation-patterns.md",
             "scenarios.md",
+            "onboarding.md",
+            "memory.md",
         ):
             self.assertTrue((ROOT / "references" / filename).is_file())
 
@@ -57,8 +59,9 @@ class SkillContractTests(unittest.TestCase):
         ):
             self.assertIn(phrase, skill)
         self.assertRegex(skill, r"(?is)never\s+hallucinate")
-        self.assertIn("ChatGPT does not automatically install", readme)
-        self.assertIn("local-directory skill import", readme)
+        self.assertIn("vendor-neutral", readme)
+        self.assertIn("Host support for Agent Skills", readme)
+        self.assertIn("host policy", skill)
         combined = "\n".join(
             path.read_text(encoding="utf-8")
             for path in [ROOT / "SKILL.md", ROOT / "README.md"]
@@ -66,6 +69,7 @@ class SkillContractTests(unittest.TestCase):
         )
         self.assertNotRegex(combined, r"/(?:Users|home)/[\w.-]+")
         self.assertNotIn("sk-", combined)
+        self.assertNotRegex(combined, r"(?i)ChatGPT|OpenAI|AgentDock")
 
     def test_fictional_state_example_is_valid_and_has_provenance(self):
         doc = (ROOT / "references" / "travel-state.md").read_text(encoding="utf-8")
@@ -73,9 +77,11 @@ class SkillContractTests(unittest.TestCase):
         self.assertIsNotNone(match)
         data = json.loads(match.group(1))
         self.assertEqual(data["mode"], "on_trip")
-        self.assertEqual(data["current_place"]["source"], "user")
-        self.assertEqual(data["destination"]["source"], "user")
-        self.assertIn("open_question", data)
+        self.assertEqual(data["schema_version"], "0.2")
+        self.assertEqual(data["profile"]["current_place"]["source"], "user")
+        self.assertEqual(data["profile"]["destination"]["source"], "user")
+        self.assertIn("open_question", data["profile"])
+        self.assertIn("raw_snapshot", data)
 
     def test_scenarios_encode_no_guessing_and_estimate_label(self):
         cases = (ROOT / "references" / "scenarios.md").read_text(encoding="utf-8")

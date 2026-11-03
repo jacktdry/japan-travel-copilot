@@ -4,3 +4,6 @@ __pycache__/
 venv/
 .pytest_cache/
 .coverage
+# Defense in depth only: travel state must live outside this checkout/Skill.
+*.travel-state.json
+.trip-*.tmp
