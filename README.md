@@ -176,7 +176,7 @@ itineraries, shopping status, and Japanese food orders/receipts.
 See the [live-navigation rules](references/live-navigation.md),
 [trip continuity](references/trip-operations.md), and
 [photo/order guidance](references/photo-and-orders.md). The
-[20 fictional evaluation scenarios](evaluations/README.md) let different
+[22 fictional evaluation scenarios](evaluations/README.md) let different
 Agent hosts be manually assessed using the same criteria. These are **not
 real chat transcripts**. Passing repository tests validates documentation
 and fixture structure, **not live model performance or real-time accuracy**.
@@ -317,7 +317,7 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 詳見[現場導航](references/live-navigation.md)、
 [旅程進度](references/trip-operations.md)與
 [照片／點餐](references/photo-and-orders.md)的規則。
-另有 [20 個虛構情境](evaluations/README.md)，可讓不同供應商的 Agent
+另有 [22 個虛構情境](evaluations/README.md)，可讓不同供應商的 Agent
 在相同條件下進行**人工對話驗收**；這不是私人對話紀錄。
 專案單元測試通過，**不代表所有模型都已通過實際旅途中驗證**。
 

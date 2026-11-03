@@ -44,12 +44,15 @@ for every relevant segment:
 | --- | --- |
 | Street → named entrance | The actual entrance provides step-free access |
 | Entrance → correct departure platform | Elevator or continuous step-free path |
+| Platform ↔ train carriage | Boarding/alighting step or gap; verify assistance or boarding ramp (スロープ板) with staff when needed |
 | Every line/operator transfer | Correct inter-platform step-free connection |
 | Arrival platform → named exit | Elevator route to the intended exit side |
 | Exit → next destination | Remaining street-level obstacles and luggage practicality |
 
-An elevator **somewhere in the station** is not proof the required transfer
-works. Do not confuse station line codes or recommend the geographically
+Ask staff about ramp arrangements and an appropriate boarding car if
+step-free boarding is essential; a platform elevator alone does not prove
+the carriage has no step/gap. An elevator **somewhere in the station** is not
+proof the required transfer works. Do not confuse station line codes or recommend the geographically
 closest exit when it has stairs. If any segment is unknown, identify it and
 request station staff help or offer an alternative **without guaranteeing** it.
 Carry forward party size, bulky luggage and accessibility as hard constraints

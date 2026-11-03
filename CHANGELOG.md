@@ -9,7 +9,7 @@
   hard exclusions, timed entry and verified versus tentative status.
 - Added multimodal/photo correction, Japanese order changes and
   requested/served/billed receipt reconciliation guidance.
-- Added 20 fictional multi-turn evaluation scenarios with a
+- Added 22 fictional evaluation scenarios (single- and multi-turn) with a
   cross-provider manual scoring rubric. Static tests are not model UAT.
 
 

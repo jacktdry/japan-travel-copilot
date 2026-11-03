@@ -20,14 +20,14 @@ class FieldEvaluationTests(unittest.TestCase):
 
     def test_fixture_is_portable_and_has_a_minimum_risk_set(self):
         self.assertEqual(self.collection["schema_version"], "1.0")
-        self.assertGreaterEqual(len(self.cases), 20)
+        self.assertGreaterEqual(len(self.cases), 22)
         ids = [case["id"] for case in self.cases]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertGreaterEqual(
-            sum(case["priority"] == "P0" for case in self.cases), 8
+            sum(case["priority"] == "P0" for case in self.cases), 10
         )
         self.assertGreaterEqual(
-            sum(case["priority"] == "P1" for case in self.cases), 8
+            sum(case["priority"] == "P1" for case in self.cases), 12
         )
         self.assertGreaterEqual(
             sum(len(case["turns"]) > 1 for case in self.cases), 10
@@ -88,7 +88,12 @@ class FieldEvaluationTests(unittest.TestCase):
             self.assertIn(phrase.lower(), photos.lower())
 
     def test_privacy_and_live_test_limitations(self):
-        text = CASES.read_text(encoding="utf-8")
+        sources = [
+            CASES, ROOT / "SKILL.md", ROOT / "README.md",
+            *sorted((ROOT / "references").glob("*.md")),
+            ROOT / "evaluations" / "README.md",
+        ]
+        text = "\n".join(source.read_text(encoding="utf-8") for source in sources)
         # Check for identifier *shapes*, not values from a real trip.
         for pattern in (
             r"\b[A-Z]{2}[0-9]{3,4}\b",  # Flight identifiers
@@ -106,6 +111,25 @@ class FieldEvaluationTests(unittest.TestCase):
         self.assertIn("automatic critical fail", readme)
         root_readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("evaluations/README.md", root_readme)
+
+    def test_regression_prompts_do_not_accuse_well_behaved_agents(self):
+        by_id = {case["id"]: case for case in self.cases}
+        self.assertIn("19:22", by_id["NAV-TIME-02"]["turns"][0])
+        self.assertIn("07:22", by_id["NAV-TIME-02"]["turns"][0])
+        self.assertIn("舊路線筆記", by_id["NAV-SIGN-03"]["turns"][0])
+        self.assertIn("範例機場第一航廈", by_id["AIRPORT-BUFFER-05"]["turns"][0])
+        self.assertIn("沒附上照片", by_id["IMG-CONFLICT-07"]["turns"][0])
+        self.assertIn("NAV-WRONGWAY-22", by_id)
+        self.assertIn("FOOD-LEDGER-21", by_id)
+
+    def test_accessibility_and_receipt_chain_are_explicit(self):
+        navigation = (ROOT / "references" / "live-navigation.md").read_text(encoding="utf-8")
+        orders = (ROOT / "references" / "photo-and-orders.md").read_text(encoding="utf-8")
+        self.assertIn("Platform ↔ train carriage", navigation)
+        self.assertIn("スロープ板", navigation)
+        self.assertIn("requested", orders.lower())
+        self.assertIn("served", orders.lower())
+        self.assertIn("billed", orders.lower())
 
 
 if __name__ == "__main__":
