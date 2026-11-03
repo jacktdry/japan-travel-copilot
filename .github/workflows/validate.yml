@@ -6,7 +6,8 @@ on:
 
 jobs:
   unittest:
-    runs-on: ubuntu-latest
+    # Ubuntu 26.04 (latest) has no setup-python 3.9 toolcache entry.
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: ["3.9", "3.x"]
