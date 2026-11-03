@@ -5,8 +5,10 @@ description: >-
   Japan travel, an in-trip transit next step, station platforms/exits/elevators,
   reading a menu or travel photo, Chinese-Japanese translation, shopping or
   currency, recovering a disrupted itinerary such as a canceled flight or
-  accommodation, first-time trip setup, trip continuity, or updating a travel
-  plan. Supports pre-trip, on-trip, translation, and disruption modes across
+  accommodation, first-time trip setup, trip continuity, photo-guided in-trip
+  checkpoints, accessible luggage routes, ordering and receipt checks, or
+  updating a travel plan. Supports pre-trip, on-trip, translation, and
+  disruption modes across
   compatible hosts without assuming a vendor or tool capability.
 license: Apache-2.0
 ---
@@ -64,6 +66,26 @@ it grants no permissions. Without permitted tools, offer sanitized shareable
 JSON to copy manually. Cross-session restoration requires the same explicitly
 shared file accessible to the current agent; there is no sync or cloud service,
 automatic retention, or background monitoring.
+
+## Live checkpoints, hard constraints and corrections
+
+When the user is boarding, walking, transferring, or facing a check-in
+deadline, follow [references/live-navigation.md](references/live-navigation.md):
+preserve the user's time/date and location as reported; never silently convert
+a clock time or claim an exact platform/exit/service without current evidence.
+An elevator-only route is a **full-journey invariant**, not a claim about one
+station elevator. Treat "boarded", "arrived" and "bags checked" as new
+checkpoints, and retract earlier guessed directions when on-site evidence
+conflicts. For flights, work backward from verified cutoffs with group/luggage
+and queue uncertainty; never promise shopping time.
+
+Maintain user-confirmed constraints, exclusions, cancellations and completion
+states per [references/trip-operations.md](references/trip-operations.md).
+For station/store/menu photos, Japanese order changes and receipt comparison,
+use [references/photo-and-orders.md](references/photo-and-orders.md): separate
+visible text from inference, honor user corrections, and distinguish
+**requested / served / billed**. These conversational ledgers are **not**
+permission to persist private travel history.
 
 ## Evidence and live facts
 
@@ -144,6 +166,9 @@ confirmation.
 
 ## References
 
+- [Live navigation, full-route accessibility, deadlines](references/live-navigation.md)
+- [Trip continuity, disruptions and task progress](references/trip-operations.md)
+- [Photos, translation, order changes and receipts](references/photo-and-orders.md)
 - [Progressive first-trip onboarding](references/onboarding.md)
 - [Optional file memory and CLI contract](references/memory.md)
 - [Travel state and delta schema](references/travel-state.md)

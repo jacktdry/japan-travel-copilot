@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 (proposed)
+
+- Strengthened evidence-grounded live navigation, date/time interpretation,
+  direction and checkpoint corrections, full-route step-free requirements,
+  and airport deadline/baggage safety margins.
+- Added traveler-decision continuity for cancellations, shopping state,
+  hard exclusions, timed entry and verified versus tentative status.
+- Added multimodal/photo correction, Japanese order changes and
+  requested/served/billed receipt reconciliation guidance.
+- Added 20 fictional multi-turn evaluation scenarios with a
+  cross-provider manual scoring rubric. Static tests are not model UAT.
+
+
 ## 0.2.0 (unreleased)
 
 - Added bilingual, copy-ready installation instructions: Agent-guided install, interactive skills CLI, and manual ZIP fallback.

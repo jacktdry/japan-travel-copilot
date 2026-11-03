@@ -165,6 +165,22 @@ this is neither encryption nor a sandbox against hostile concurrent writers.
 Sensitive free text still needs human/host review. See the full
 [CLI and limitations](references/memory.md) and [schema](references/travel-state.md).
 
+## Field-safety improvements and evaluation
+
+Travel guidance is most useful when it preserves your actual location,
+confirmed bookings, access needs and deadlines. The v0.3 work focuses on
+verified **end-to-end step-free routes**, departure-time accuracy, station
+checkpoints, flight check-in safety margins, photo correction, changing
+itineraries, shopping status, and Japanese food orders/receipts.
+
+See the [live-navigation rules](references/live-navigation.md),
+[trip continuity](references/trip-operations.md), and
+[photo/order guidance](references/photo-and-orders.md). The
+[20 fictional evaluation scenarios](evaluations/README.md) let different
+Agent hosts be manually assessed using the same criteria. These are **not
+real chat transcripts**. Passing repository tests validates documentation
+and fixture structure, **not live model performance or real-time accuracy**.
+
 ## Development and license
 
 ```sh
@@ -291,6 +307,19 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 自由文字仍須人工／宿主檢查敏感內容。完整同意契約、錯誤代碼與限制見
 [記憶文件](references/memory.md)、[狀態格式](references/travel-state.md)；
 引導規則見 [onboarding](references/onboarding.md)。
+
+## 現場安全補強與跨模型驗證
+
+新版特別加強：**完整的電梯路線**、列車時刻與方向的證據、搭乘途中
+依照最新位置更新下一步、機場報到截止時間倒推、現場照片更正、
+旅程異動與購物進度，以及日文點餐、加減單和收據核對。
+
+詳見[現場導航](references/live-navigation.md)、
+[旅程進度](references/trip-operations.md)與
+[照片／點餐](references/photo-and-orders.md)的規則。
+另有 [20 個虛構情境](evaluations/README.md)，可讓不同供應商的 Agent
+在相同條件下進行**人工對話驗收**；這不是私人對話紀錄。
+專案單元測試通過，**不代表所有模型都已通過實際旅途中驗證**。
 
 ## 開發與授權
 
