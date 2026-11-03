@@ -14,6 +14,11 @@ persistence. CLI consent flags cannot authenticate or authorize the caller.
 Follow [onboarding](references/onboarding.md), [state schema](references/travel-state.md)
 and [memory contract](references/memory.md). Use the same schema for manual copy.
 
+Keep the README installation steps independent of model vendors. If an installer
+command changes, confirm it against the tool provider before publishing;
+show global vs project scope, require consent, verify host discovery, and keep
+the no-Node manual method. Installation must not imply travel-memory consent.
+
 Keep references relative and linked from `SKILL.md` or the README. The root
 skill must remain below 500 lines and must not require a particular runtime,
 API, or vendor contract. Never state current schedules, routes, availability,

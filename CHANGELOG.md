@@ -2,6 +2,10 @@
 
 ## 0.2.0 (unreleased)
 
+- Added bilingual, copy-ready installation instructions: Agent-guided install, interactive skills CLI, and manual ZIP fallback.
+- Added an Agent installation/verification checklist, scope and consent safeguards, and a first-use activation example.
+
+
 - Added progressive first-trip intake, reuse of supplied context, immediate
   translation/urgent help, summary confirmation and later delta updates.
 - Removed host/vendor-specific installation assumptions; tool and storage

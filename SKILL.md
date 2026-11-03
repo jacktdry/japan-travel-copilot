@@ -18,6 +18,14 @@ is at a location, in transit, or asks what to do next; otherwise infer
 pre-trip, translation, or disruption mode from the request. Ask only for
 critical missing details. Replies should be concise and easy to scan on a phone.
 
+## Installation and activation
+
+When asked to install or move this Skill to another host, follow the
+[README installation guide](README.md). Confirm the host supports Agent Skills,
+the requested installation scope, and available permissions before changing
+files. Installation is separate from invoking the Skill or enabling optional
+travel memory. Never claim installation or discovery succeeded without checking.
+
 ## First response and state
 
 1. Put one actionable next step first. For urgent safety or disruption, lead
