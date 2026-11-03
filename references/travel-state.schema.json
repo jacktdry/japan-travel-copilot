@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Japan Travel Copilot portable trip state 0.2",
+  "$comment": "Structural schema only. The helper also enforces byte limits, duplicate-key rejection and best-effort sensitive-content checks. Host/user review and consent are required.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "revision",
+    "mode",
+    "profile",
+    "raw_snapshot"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "mode": {
+      "enum": [
+        "disruption",
+        "on_trip",
+        "pre_trip",
+        "translation"
+      ]
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accessibility": {
+          "$ref": "#/$defs/fact"
+        },
+        "accommodation": {
+          "$ref": "#/$defs/fact"
+        },
+        "arrival": {
+          "$ref": "#/$defs/fact"
+        },
+        "booking_status": {
+          "$ref": "#/$defs/fact"
+        },
+        "budget": {
+          "$ref": "#/$defs/fact"
+        },
+        "confirmed_changes": {
+          "$ref": "#/$defs/fact"
+        },
+        "constraints": {
+          "$ref": "#/$defs/fact"
+        },
+        "current_place": {
+          "$ref": "#/$defs/fact"
+        },
+        "dates": {
+          "$ref": "#/$defs/fact"
+        },
+        "departure": {
+          "$ref": "#/$defs/fact"
+        },
+        "destination": {
+          "$ref": "#/$defs/fact"
+        },
+        "destinations": {
+          "$ref": "#/$defs/fact"
+        },
+        "interests": {
+          "$ref": "#/$defs/fact"
+        },
+        "luggage": {
+          "$ref": "#/$defs/fact"
+        },
+        "open_question": {
+          "$ref": "#/$defs/fact"
+        },
+        "origins": {
+          "$ref": "#/$defs/fact"
+        },
+        "transport": {
+          "$ref": "#/$defs/fact"
+        },
+        "travelers": {
+          "$ref": "#/$defs/travelers"
+        }
+      }
+    },
+    "raw_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "accessibility": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "accommodation": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "arrival": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "booking_status": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "budget": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "confirmed_changes": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "constraints": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "current_place": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "dates": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "departure": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "destination": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "destinations": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "interests": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "luggage": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "open_question": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "origins": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "transport": {
+          "$ref": "#/$defs/raw_fact"
+        },
+        "travelers": {
+          "$ref": "#/$defs/raw_travelers"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "fact": {
+      "type": "object",
+      "required": [
+        "value",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "oneOf": [
+            {
+              "type": "string",
+              "maxLength": 1000,
+              "pattern": "^[^\\u0000-\\u001f]*$"
+            },
+            {
+              "type": "array",
+              "maxItems": 20,
+              "items": {
+                "type": "string",
+                "maxLength": 1000,
+                "pattern": "^[^\\u0000-\\u001f]*$"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "enum": [
+            "user",
+            "verified",
+            "inferred"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "maxLength": 1000,
+          "pattern": "\\S",
+          "minLength": 1
+        },
+        "checked_at": {
+          "type": "string",
+          "maxLength": 1000,
+          "pattern": "^[^\\u0000-\\u001f]*$",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "verified"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "evidence",
+              "checked_at"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "evidence"
+                  ]
+                },
+                {
+                  "required": [
+                    "checked_at"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "travelers": {
+      "type": "object",
+      "required": [
+        "value",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 100
+        },
+        "source": {
+          "enum": [
+            "user",
+            "verified",
+            "inferred"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "maxLength": 1000,
+          "pattern": "\\S",
+          "minLength": 1
+        },
+        "checked_at": {
+          "type": "string",
+          "maxLength": 1000,
+          "pattern": "^[^\\u0000-\\u001f]*$",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "verified"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "evidence",
+              "checked_at"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "evidence"
+                  ]
+                },
+                {
+                  "required": [
+                    "checked_at"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "raw_fact": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "source": {
+              "const": "user"
+            }
+          }
+        }
+      ]
+    },
+    "raw_travelers": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/travelers"
+        },
+        {
+          "properties": {
+            "source": {
+              "const": "user"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
