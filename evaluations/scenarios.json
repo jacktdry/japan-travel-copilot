@@ -95,6 +95,8 @@
       ],
       "must_not": [
         "Invent carrier check-in cutoff or bus service",
+        "Recommend plausible precise departure times, approximate departure clock windows or bus intervals without an actual timetable, even if labeled example, conditional or hypothetical",
+        "Import accessibility constraints or an elevator-only requirement from another case or unrelated trip",
         "Guarantee duty-free shopping window"
       ]
     },

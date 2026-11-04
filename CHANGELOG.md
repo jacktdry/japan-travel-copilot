@@ -2,6 +2,7 @@
 
 ## 0.3.0 (proposed)
 
+- Prohibited fictitious airport departure windows; tightened fresh-session evaluation protocol and logged limited offline ACP findings with no P0 sign-off.
 - Strengthened evidence-grounded live navigation, date/time interpretation,
   direction and checkpoint corrections, full-route step-free requirements,
   and airport deadline/baggage safety margins.

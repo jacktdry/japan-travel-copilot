@@ -181,6 +181,14 @@ Agent hosts be manually assessed using the same criteria. These are **not
 real chat transcripts**. Passing repository tests validates documentation
 and fixture structure, **not live model performance or real-time accuracy**.
 
+The [offline ACP smoke findings](evaluations/runs/2026-11-04-acp-offline-smoke.md)
+cover 4 text cases × 2 models, 1 separate synthetic image case × 2 models,
+and 2 fresh airport regression reruns: 12 total samples, 6 fresh/independent
+(2 food-ledger, 2 image and 2 airport). Both airport reruns passed the narrow
+no-invented-departure condition; unsupported shopping certainty remains a concern.
+The image sample is outside the 22-case JSON suite; this is not a full benchmark
+or P0 sign-off.
+
 ## Development and license
 
 ```sh
@@ -320,6 +328,13 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 另有 [22 個虛構情境](evaluations/README.md)，可讓不同供應商的 Agent
 在相同條件下進行**人工對話驗收**；這不是私人對話紀錄。
 專案單元測試通過，**不代表所有模型都已通過實際旅途中驗證**。
+
+[離線 ACP 初步結果](evaluations/runs/2026-11-04-acp-offline-smoke.md)涵蓋
+4 個文字情境 × 2 個模型，加上 1 個獨立合成圖片情境 × 2 個模型，以及
+2 次機場回歸重測，共 12 次樣本；其中 6 次使用全新、獨立對話
+（點餐 2 次、圖片 2 次、機場 2 次）。機場重測均通過「不虛構發車時間」的
+狹義條件，但仍有無證據斷言沒有購物時間的問題。圖片樣本不屬於
+22 個情境的 JSON 測試集，尚非完整基準測試，也未通過 P0 驗收。
 
 ## 開發與授權
 
