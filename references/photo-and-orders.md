@@ -6,6 +6,13 @@ These are reasoning guidelines, **not** an OCR or payments tool.
 
 ## What is actually visible?
 
+- If the user describes a photo but **no image was received**, explicitly say
+  that no image is attached/received. If an attached image cannot be read,
+  explicitly say it is unreadable and identify the unsupported detail. Attribute
+  any description to the **user report**, not direct observation of pixels;
+  do not describe unseen or illegible content as something you saw. Ask for a
+  readable image/crop or an on-site sign/staff check as appropriate.
+
 - Separate **readable source text or numbers**, translation, and an
   **inference** about a route, a store, a dish or a price. Do not fill unreadable
   characters from remembered context. A photo may be older than "now".

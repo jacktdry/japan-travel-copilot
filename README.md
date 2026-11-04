@@ -196,6 +196,15 @@ instructions; one post-fix offline rerun per model now shows the narrow gate
 regression corrected, with provenance and limits recorded in the review.
 These are synthetic tests, not original travel usage logs or full P0 acceptance.
 
+The [remaining P0 review](evaluations/runs/2026-11-04-p0-remaining-review.md)
+adds 10 completed independent fresh samples plus 1 incomplete no-response
+attempt. It found unsupported paid-area advice during wrong-direction recovery;
+the focused navigation, accessibility and missing-image corrections were
+subsequently checked in [4 targeted fresh-session samples](evaluations/runs/2026-11-04-p0-remaining-postfix-transcripts.json).
+The gate and missing-icon defects did not recur in those samples, but a
+separate Gemini image-themed attempt ended with no answer. No full P0
+acceptance or live travel accuracy is claimed.
+
 ## Development and license
 
 ```sh

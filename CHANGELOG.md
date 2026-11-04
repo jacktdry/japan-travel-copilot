@@ -2,7 +2,8 @@
 
 ## 0.3.0 (proposed)
 
-- Grounded transfer gate/ticket instructions in operator, lines and station evidence; added static checkpoint contracts and a 10-sample fresh-session synthetic review with provenance limits and a pending post-fix model rerun.
+- Added the [remaining P0 review](evaluations/runs/2026-11-04-p0-remaining-review.md): 10 completed fresh synthetic samples plus 1 incomplete no-response attempt. Hardened wrong-direction gate/return-route verification, missing-elevator-sign uncertainty and absent-image attribution; subsequent targeted new-session reruns did not reproduce the gate/missing-icon defects, but a Gemini no-response attempt remains; no P0 sign-off.
+- Grounded transfer gate/ticket instructions in operator, lines and station evidence; added static checkpoint contracts and a 10-sample fresh-session synthetic review with provenance limits; the narrow checkpoint gate rerun was observed fixed for both providers.
 - Prohibited fictitious airport departure windows; tightened fresh-session evaluation protocol and logged limited offline ACP findings with no P0 sign-off.
 - Strengthened evidence-grounded live navigation, date/time interpretation,
   direction and checkpoint corrections, full-route step-free requirements,

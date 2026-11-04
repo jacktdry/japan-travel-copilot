@@ -100,7 +100,10 @@ class FieldEvaluationTests(unittest.TestCase):
         # only those filenames; keep scanning prose and other paths.
         for filename in ("2026-11-04-acp-offline-smoke.md",
                          "2026-11-04-p0-fresh-session-review.md",
-                         "2026-11-04-nav-checkpoint-postfix-transcripts.json"):
+                         "2026-11-04-nav-checkpoint-postfix-transcripts.json",
+                         "2026-11-04-p0-remaining-review.md",
+                         "2026-11-04-p0-remaining-transcripts.json",
+                         "2026-11-04-p0-remaining-postfix-transcripts.json"):
             text = text.replace(filename, filename.removeprefix("2026-11-04-"))
         # Check for identifier *shapes*, not values from a real trip.
         for pattern in (
@@ -208,9 +211,10 @@ class FieldEvaluationTests(unittest.TestCase):
         self.assertEqual(evidence["schema_version"], "1.0")
         self.assertEqual(evidence["case_id"], "NAV-CHECKPOINT-04")
         digest = evidence["navigation_reference_sha256"]
-        self.assertEqual(digest, hashlib.sha256(
-            (ROOT / "references" / "live-navigation.md").read_bytes()
-        ).hexdigest())
+        # Historical run snapshot: later guidance edits must not rewrite evidence
+        # or imply that the current reference has already been behaviorally tested.
+        self.assertEqual(digest,
+                         "be740984415f7b8ef97258bfa725449dad07d3193be47d24eea7954dda50c3f8")
         self.assertEqual(len(evidence["runs"]), 2)
         final_answers = {}
         fixture = next(case for case in self.cases if case["id"] == evidence["case_id"])
@@ -275,6 +279,183 @@ class FieldEvaluationTests(unittest.TestCase):
         self.assertIn("Critical substantive grounding failure", report)
         protocol = (ROOT / "evaluations" / "README.md").read_text(encoding="utf-8")
         self.assertIn("runs/2026-11-04-nav-checkpoint-postfix-transcripts.json", protocol)
+
+    def test_remaining_case_contracts_preserve_source_boundaries_and_prompts(self):
+        # Contract presence only, not a test of model decision-making.
+        by_id = {case["id"]: case for case in self.cases}
+        navigation = " ".join((ROOT / "references/live-navigation.md").read_text().split())
+        photos = " ".join((ROOT / "references/photo-and-orders.md").read_text().split())
+        for phrase in (
+            "next actually scheduled express stop", "If that stop is unknown",
+            "Safe stopping is separate from return-route feasibility",
+            "first scheduled stop is not necessarily the best reverse transfer",
+            "do not assume all local trains serve the desired station",
+            "wrong-direction recovery, return trips and transfer decisions",
+            "specific actual station, operator, lines and ticket/transfer rules",
+            "must stay inside fare gates or must exit/re-enter",
+            "opposite platform is the return route",
+            "missing elevator icon, absent display or incomplete photo does not prove",
+            "unverified", "station map or station staff",
+        ):
+            self.assertIn(phrase, navigation)
+        for phrase in (
+            "no image was received", "explicitly say that no image is attached/received",
+            "attached image cannot be read", "explicitly say it is unreadable",
+            "user report", "not direct observation of pixels",
+        ):
+            self.assertIn(phrase, photos)
+        for case_id, phrases in {
+            "NAV-WRONGWAY-22": (
+                "stay inside fare gates or exit/re-enter", "ticket/transfer rules",
+                "opposite platform", "first scheduled express stop",
+                "best reverse transfer", "all local trains", "verified stop pattern",
+            ),
+            "NAV-STEPFREE-01": (
+                "missing elevator icon", "absent display", "incomplete photo",
+                "proof that the route is inaccessible",
+            ),
+        }.items():
+            prohibitions = " ".join(by_id[case_id]["must_not"])
+            for phrase in phrases:
+                self.assertIn(phrase, prohibitions)
+        blur = " ".join(by_id["IMG-BLUR-08"]["must"])
+        for phrase in ("no image was attached/received", "user report", "not observed pixels"):
+            self.assertIn(phrase, blur)
+        # Pin every existing fictional turn, independently of changing rubrics.
+        prompts = {case["id"]: case["turns"] for case in self.cases}
+        self.assertEqual(hashlib.sha256(json.dumps(
+            prompts, ensure_ascii=False, sort_keys=True
+        ).encode()).hexdigest(),
+            "d44cace3da29fe5cd57eaaf9303e1dd3567aa2ae28a7d8f5fe5d0f8967f4020f")
+
+    def test_remaining_artifact_completeness_provenance_and_immutability(self):
+        # Supplied artifact assertions, not independent session/freshness proof.
+        path = ROOT / "evaluations/runs/2026-11-04-p0-remaining-transcripts.json"
+        raw = path.read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                         "501b8e62f0845d87580fe513d2f22eb7e6f30fe3bdf073e5bb07ad42f9166361")
+        evidence = json.loads(raw)
+        self.assertEqual(evidence["schema_version"], "1.0")
+        self.assertEqual(evidence["skill_revision"],
+                         "fe71d16f7d9da1aaa4083ff8284406bc5fffd436")
+        self.assertIn("synthetic, offline, text-only", evidence["environment"])
+        self.assertIn("Original first-turn test harness wrapper omitted", evidence["provenance"])
+        models = {"gpt-6.1-sol": "Codex ACP read-only",
+                  "gemini-3.8-flash": "Antigravity ACP plan"}
+        ids = {"NAV-WRONGWAY-22", "NAV-STEPFREE-01", "IMG-BLUR-08",
+               "IMG-CONFLICT-07", "LOC-CORRECT-09"}
+        expected = {(case_id, model) for case_id in ids for model in models}
+        samples = evidence["completed_samples"]
+        self.assertEqual(len(samples), 10)
+        self.assertEqual({(r["case_id"], r["model"]) for r in samples}, expected)
+        fixtures = {c["id"]: c for c in self.cases}
+        for run in samples:
+            with self.subTest(case=run["case_id"], model=run["model"]):
+                self.assertIs(run["fresh_independent_session"], True)
+                self.assertEqual(run["host"], models[run["model"]])
+                self.assertEqual(run["reasoning_effort"], "medium")
+                self.assertEqual([turn["user"] for turn in run["turns"]],
+                                 fixtures[run["case_id"]]["turns"])
+                self.assertTrue(all(turn["assistant"].strip() for turn in run["turns"]))
+                recovered = (run["model"] == "gemini-3.8-flash" and
+                             run["case_id"] in {"IMG-CONFLICT-07", "LOC-CORRECT-09", "IMG-BLUR-08"})
+                if recovered:
+                    self.assertIn("nontruncated ACP run events (session/load empty)", run["source"])
+                    self.assertIn("traveler prompts taken from public fixture", run["source"])
+                else:
+                    self.assertIn("ACP adapter session/load", run["source"])
+        self.assertEqual(len(evidence["incomplete_attempts"]), 1)
+        attempt = evidence["incomplete_attempts"][0]
+        self.assertEqual((attempt["case_id"], attempt["model"]),
+                         ("IMG-BLUR-08", "gemini-3.8-flash"))
+        self.assertIs(attempt["response_present"], False)
+        self.assertIn("does not count as a pass", attempt["reason"])
+        self.assertEqual(attempt["attempt"], "first independent session")
+        for pattern in (
+            r"/(?:Users|home)/[A-Za-z0-9._-]+",
+            r"\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b",
+            r"\b[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}\b",
+            r"gh[opusr]_[A-Za-z0-9]+",
+            r'"(?:session_id|host_id|device_id|native_id)"\s*:',
+            r"\b(?:[0-9][ -]?){13,19}\b",
+        ):
+            self.assertNotRegex(raw.decode(), pattern)
+
+    def test_remaining_review_keeps_failure_retry_and_rerun_limits_explicit(self):
+        # Documentation contract only; no model inference or live route proof.
+        report_path = ROOT / "evaluations/runs/2026-11-04-p0-remaining-review.md"
+        report = " ".join(report_path.read_text().split())
+        for phrase in (
+            "10 completed independent fresh case/model samples",
+            "1 incomplete no-response Gemini IMG-BLUR attempt",
+            "retry used a NEW session", "not a model-answer pass",
+            "single turn", "not real traveler logs", "gpt-6.1-sol",
+            "gemini-3.8-flash", "medium", "Offline, text-only",
+            "completed nontruncated ACP run event streams",
+            "Exact run timestamps were not recorded",
+            "P0 critical unsupported paid-area advice",
+            "not a known real-life station failure", "Noncritical scope caveat",
+            "No actual image or official map",
+            "Targeted post-fix independent reruns",
+            "4 completed", "fresh independent model/case samples",
+            "no P0 field-safety sign-off", "no live transit accuracy",
+            "2026-11-04-p0-remaining-transcripts.json",
+            "2026-11-04-p0-fresh-session-review.md",
+        ):
+            self.assertIn(phrase, report)
+        for filename in ("README.md", "evaluations/README.md", "CHANGELOG.md"):
+            self.assertIn(report_path.name, (ROOT / filename).read_text())
+        # Check the new report's relative links resolve without network access.
+        for target in re.findall(r"\]\(([^)]+)\)", report_path.read_text()):
+            self.assertTrue((report_path.parent / target).is_file(), target)
+
+    def test_remaining_postfix_artifact_provenance_and_sample_counts(self):
+        # An archival integrity check, not a behavioral model benchmark.
+        path = ROOT / "evaluations/runs/2026-11-04-p0-remaining-postfix-transcripts.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(data["schema_version"], "1.0")
+        self.assertEqual(data["precommit_head"],
+                         "fe71d16f7d9da1aaa4083ff8284406bc5fffd436")
+        for field, filename in (
+            ("live_navigation_sha256", "live-navigation.md"),
+            ("photo_orders_sha256", "photo-and-orders.md"),
+        ):
+            self.assertEqual(
+                data[field],
+                hashlib.sha256((ROOT / "references" / filename).read_bytes()).hexdigest()
+            )
+        expected = {
+            ("NAV-WRONGWAY-22", "gpt-6.1-sol"): 2,
+            ("NAV-WRONGWAY-22", "gemini-3.8-flash"): 2,
+            ("NAV-STEPFREE-01", "gemini-3.8-flash"): 3,
+            ("IMG-BLUR-08", "gemini-3.8-flash"): 1,
+        }
+        samples = data["completed_samples"]
+        self.assertEqual(
+            {(s["case_id"], s["model"]): len(s["turns"]) for s in samples}, expected
+        )
+        for sample in samples:
+            self.assertIs(sample["fresh_session"], True)
+            self.assertEqual(sample["effort"], "medium")
+            for turn in sample["turns"]:
+                self.assertTrue(turn["user"].strip())
+                self.assertTrue(turn["assistant"].strip())
+        self.assertEqual(len(data["incomplete_attempts"]), 1)
+        incomplete = data["incomplete_attempts"][0]
+        self.assertEqual(incomplete["case_id"], "IMG-BLUR-08")
+        self.assertEqual(incomplete["model"], "gemini-3.8-flash")
+        self.assertIn("without assistant message text", incomplete["reason"])
+        raw = path.read_text(encoding="utf-8")
+        for sensitive_pattern in (
+            r"/(?:Users|home)/[A-Za-z0-9._-]+",
+            r"gh[opusr]_[A-Za-z0-9]+",
+            r'"(?:session_id|host_id|device_id|native_id)"\s*:',
+        ):
+            self.assertNotRegex(raw, sensitive_pattern)
+        report = (ROOT / "evaluations/runs/2026-11-04-p0-remaining-review.md").read_text()
+        self.assertIn(path.name, report)
+        self.assertIn("not reproduced after the fix", report)
+        self.assertIn("not a full test", report)
 
     def test_manual_protocol_requires_fresh_sessions_and_auditable_evidence(self):
         # Instruction presence cannot establish independent behavioral acceptance.

@@ -41,8 +41,22 @@ extends [evidence-and-transit.md](evidence-and-transit.md), not a transit feed.
   the paid area, tell the traveler not to exit gates, or require exit/re-entry.
   Verify the applicable gate/ticket procedure before directing passage through
   gates; use on-site signs or staff when evidence is missing.
-- For wrong-direction travel, stop the old itinerary. Identify the nearest
-  safe station, current travel direction and a safe next correction.
+- For wrong-direction recovery, stop the old itinerary. While moving, stay
+  safely seated or hold on; verify the next actually scheduled express stop
+  from the onboard display, announcement or crew. If that stop is unknown,
+  ask for its name rather than inventing a stopping station or transfer.
+  Alight only at a normal stop after the train has stopped and doors open.
+  **Safe stopping is separate from return-route feasibility**: the first
+  scheduled stop is not necessarily the best reverse transfer. Confirm the
+  actual station, operator, line, direction and stop pattern before replanning;
+  do not assume all local trains serve the desired station.
+- The gate/ticket verification rule also applies to **wrong-direction recovery,
+  return trips and transfer decisions**. Before verifying the specific actual
+  station, operator, lines and ticket/transfer rules, do not instruct that the
+  traveler must stay inside fare gates or must exit/re-enter, or assume the
+  opposite platform is the return route. This remains true when the next actual
+  express stop is unknown. Ask crew or station staff to verify the correction
+  and gate procedure; a safe alighting point alone does not establish either.
 
 ## Step-free means the entire path
 
@@ -64,6 +78,11 @@ the carriage has no step/gap. An elevator **somewhere in the station** is not
 proof the required transfer works. Do not confuse station line codes or recommend the geographically
 closest exit when it has stairs. If any segment is unknown, identify it and
 request station staff help or offer an alternative **without guaranteeing** it.
+A missing elevator icon, absent display or incomplete photo does not prove
+that a route is inaccessible. Treat the affected entrance, transfer or exit
+segment as **unverified**, rather than declaring it impossible from missing
+signage. Verify that segment with a station map or station staff and request
+assistance before proceeding with an elevator-only route.
 Carry forward party size, bulky luggage and user-required accessibility as hard
 constraints in every later route suggestion for the current trip. For a new
 case or unrelated trip, use only that case's constraints; do not import an

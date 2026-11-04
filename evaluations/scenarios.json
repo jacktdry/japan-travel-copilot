@@ -18,7 +18,8 @@
       ],
       "must_not": [
         "Claim entire route accessible from one elevator",
-        "Infer nearest exit is an elevator exit"
+        "Infer nearest exit is an elevator exit",
+        "Treat a missing elevator icon, absent display or incomplete photo as proof that the route is inaccessible"
       ]
     },
     {
@@ -152,7 +153,8 @@
       ],
       "must": [
         "State that ambiguous number cannot be reliably read",
-        "Ask for a clear crop or check official board"
+        "Ask for a clear crop or check official board",
+        "Explicitly state no image was attached/received in this text-only case; attribute the blurry-photo description to the user report, not observed pixels"
       ],
       "must_not": [
         "Assert platform four from blurry content",
@@ -420,7 +422,11 @@
       "must_not": [
         "Tell traveler to remain onboard to reach northern destination",
         "Invent next stop or guaranteed reverse train timetable",
-        "Suggest getting off before train is safely stopped"
+        "Suggest getting off before train is safely stopped",
+        "Direct traveler to stay inside fare gates or exit/re-enter without verified actual station, operator, lines and ticket/transfer rules",
+        "Assume the opposite platform is the return route without evidence",
+        "Claim the first scheduled express stop is definitely the best reverse transfer without evidence",
+        "Assume all local trains serve the desired station without a verified stop pattern"
       ]
     }
   ]
