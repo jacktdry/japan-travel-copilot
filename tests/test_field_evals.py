@@ -228,7 +228,7 @@ class FieldEvaluationTests(unittest.TestCase):
         normalized = " ".join(report.split())
         for phrase in (
             "two NEW independent sessions", "2 actual traveler turns per session",
-            "3 people / 3 huge suitcases", "No host tools were used",
+            "3 people / 3 huge suitcases", "Only local read-only Skill/reference-file access was used",
             "Passed the narrow no-invented-departure condition",
             "categorical denial of shopping time was unsupported",
             "distinct from the original fake-timetable bug",
