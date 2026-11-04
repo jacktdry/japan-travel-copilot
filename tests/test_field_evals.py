@@ -3,6 +3,7 @@
 These tests deliberately do NOT run an LLM or simulate live transit.
 """
 
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -95,9 +96,12 @@ class FieldEvaluationTests(unittest.TestCase):
             ROOT / "evaluations" / "fixtures" / "README.md",
         ]
         text = "\n".join(source.read_text(encoding="utf-8") for source in sources)
-        # The public evaluation report filename contains a run date, not a trip
-        # date. Exempt only that filename; keep scanning prose and other paths.
-        text = text.replace("2026-11-04-acp-offline-smoke.md", "acp-offline-smoke.md")
+        # Public report filenames contain run dates, not trip dates. Exempt
+        # only those filenames; keep scanning prose and other paths.
+        for filename in ("2026-11-04-acp-offline-smoke.md",
+                         "2026-11-04-p0-fresh-session-review.md",
+                         "2026-11-04-nav-checkpoint-postfix-transcripts.json"):
+            text = text.replace(filename, filename.removeprefix("2026-11-04-"))
         # Check for identifier *shapes*, not values from a real trip.
         for pattern in (
             r"\b[A-Z]{2}[0-9]{3,4}\b",  # Flight identifiers
@@ -156,6 +160,121 @@ class FieldEvaluationTests(unittest.TestCase):
             self.assertIn(phrase, airport_rules)
         self.assertIn("do not import", navigation)
         self.assertIn("user-required", navigation)
+
+    def test_transfer_checkpoint_requires_grounded_gate_instructions(self):
+        # Static contract only: these assertions do not prove model compliance.
+        case = next(case for case in self.cases if case["id"] == "NAV-CHECKPOINT-04")
+        self.assertEqual(case["turns"], [
+            "我要從範例站搭火車到範例港，還沒上車。",
+            "現在上車了，車門關了。",
+            "已經到轉乘站。",
+        ])
+        requirements = " ".join(case["must"]).lower()
+        for phrase in (
+            "actual transfer station", "on-train versus off-train",
+            "next appropriate line/direction", "one safe next action",
+            "gate/ticket", "operator, lines and station", "before directing passage",
+        ):
+            self.assertIn(phrase, requirements)
+        prohibitions = " ".join(case["must_not"]).lower()
+        for phrase in (
+            "entirely within the paid area", "not to exit gates",
+            "without grounded operator, lines and station",
+            "exit/re-entry", "without verified operator-specific transfer evidence",
+        ):
+            self.assertIn(phrase, prohibitions)
+        navigation = (ROOT / "references" / "live-navigation.md").read_text(encoding="utf-8")
+        rules = " ".join(navigation.split("## Time, boarding and travel checkpoints", 1)[1]
+                         .split("## Step-free", 1)[0].split())
+        for phrase in (
+            "confirm the actual station", "still on the train or has alighted",
+            "next appropriate line/direction from evidence", "one safe next action",
+            "Gate and ticket arrangements depend on the operator",
+            "Without grounded operator, lines and station",
+            "do not presume", "paid area", "not to exit gates", "require exit/re-entry",
+            "Verify the applicable gate/ticket procedure before directing passage",
+        ):
+            self.assertIn(phrase, rules)
+
+    def test_postfix_gate_evidence_structure_quotes_and_privacy(self):
+        # Artifact checks only; no LLM call or independent behavioral validation.
+        path = ROOT / "evaluations" / "runs" / "2026-11-04-nav-checkpoint-postfix-transcripts.json"
+        text = path.read_text(encoding="utf-8")
+        evidence = json.loads(text)
+        self.assertEqual(set(evidence), {
+            "schema_version", "case_id", "date_local", "timezone",
+            "precommit_head", "navigation_reference_sha256", "note", "runs",
+        })
+        self.assertEqual(evidence["schema_version"], "1.0")
+        self.assertEqual(evidence["case_id"], "NAV-CHECKPOINT-04")
+        digest = evidence["navigation_reference_sha256"]
+        self.assertEqual(digest, hashlib.sha256(
+            (ROOT / "references" / "live-navigation.md").read_bytes()
+        ).hexdigest())
+        self.assertEqual(len(evidence["runs"]), 2)
+        final_answers = {}
+        fixture = next(case for case in self.cases if case["id"] == evidence["case_id"])
+        for run in evidence["runs"]:
+            self.assertEqual(set(run), {
+                "adapter", "model", "effort", "fresh_session", "source", "messages",
+            })
+            self.assertIs(run["fresh_session"], True)
+            self.assertEqual(run["effort"], "medium")
+            users = []
+            for message in run["messages"]:
+                self.assertEqual(set(message), {"role", "text"})
+                self.assertIn(message["role"], ("user", "assistant"))
+                self.assertTrue(message["text"].strip())
+                if message["role"] == "user":
+                    users.append(message["text"])
+            self.assertEqual(len(users), 3)
+            self.assertTrue(users[0].endswith(fixture["turns"][0]))
+            self.assertEqual(users[1:], fixture["turns"][1:])
+            self.assertEqual(run["messages"][-1]["role"], "assistant")
+            final_answers[run["model"]] = run["messages"][-1]["text"]
+        self.assertEqual(set(final_answers), {"gpt-6.1-sol", "gemini-3.8-flash"})
+        for phrase in ("你到的是哪一站", "還在車上，還是已經下車", "是否需要出閘"):
+            self.assertIn(phrase, final_answers["gpt-6.1-sol"])
+        for phrase in (
+            "站名是什麼", "還是仍在車廂內", "有些可在站內付費區",
+            "有些則需出閘門", "請勿自行穿過閘門或認定不用出站",
+            "改札を出る必要がありますか？",
+        ):
+            self.assertIn(phrase, final_answers["gemini-3.8-flash"])
+        for answer in final_answers.values():
+            self.assertNotIn("請勿走出驗票閘門", answer)
+            self.assertNotIn("留在付費區內", answer)
+        # Shape guards complement synthetic provenance; they cannot prove privacy.
+        for pattern in (
+            r"/(?:Users|home)/[A-Za-z0-9._-]+",
+            r"\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b",
+            r"\b[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}\b",
+            r"gh[opusr]_[A-Za-z0-9]+",
+            r'"(?:session_id|host_id|device_id|native_id)"\s*:',
+            r"\b(?:[0-9][ -]?){13,19}\b",
+        ):
+            self.assertNotRegex(text, pattern)
+
+    def test_postfix_report_keeps_outcome_narrow_and_provenance_explicit(self):
+        # Documentation contract only, not an LLM validation.
+        runs = ROOT / "evaluations" / "runs"
+        report = (runs / "2026-11-04-p0-fresh-session-review.md").read_text(encoding="utf-8")
+        section = " ".join(report.split("## Post-fix gate regression", 1)[1].split())
+        evidence = json.loads((runs / "2026-11-04-nav-checkpoint-postfix-transcripts.json").read_text(encoding="utf-8"))
+        for phrase in (
+            "two fresh independent ACP sessions, 3 traveler turns each",
+            "2026-11-04-nav-checkpoint-postfix-transcripts.json",
+            evidence["navigation_reference_sha256"], "complete run event stream",
+            "original first-turn harness wrapper excluded",
+            "not original travel usage logs", "observed fixed for both providers",
+            "one synthetic offline rerun per model", "not full P0 acceptance",
+            "no live station verification", "do not run an LLM",
+        ):
+            self.assertIn(phrase, section)
+        self.assertNotIn("No actual post-fix model rerun has been", report)
+        self.assertIn("Critical substantive grounding failure", report)
+        protocol = (ROOT / "evaluations" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("runs/2026-11-04-nav-checkpoint-postfix-transcripts.json", protocol)
 
     def test_manual_protocol_requires_fresh_sessions_and_auditable_evidence(self):
         # Instruction presence cannot establish independent behavioral acceptance.

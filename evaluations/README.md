@@ -56,6 +56,10 @@ is a P0 critical failure for `AIRPORT-BUFFER-05`, even with an "example" or
 "hypothetical" disclaimer: travelers may anchor a deadline to a nonexistent
 service. Importing accessibility constraints from another case is also forbidden.
 
+For `NAV-CHECKPOINT-04`, unverified instructions to remain in the paid area,
+not exit gates, or exit/re-enter are a P0 critical failure. Gate/ticket advice
+must be grounded in the operator, lines and actual station.
+
 ### Small result log template
 
 ```text
@@ -76,6 +80,18 @@ for 12 model/case samples, 6 fresh/independent, including a separate image
 sample and post-fix airport reruns. Both airport reruns met the narrow
 no-invented-departure condition, with a residual unsupported shopping-certainty
 issue. The original reused-session caveats remain; there is no P0 sign-off.
+
+The [fresh-session P0 review](runs/2026-11-04-p0-fresh-session-review.md)
+links raw synthetic prompt/answer text for 5 P0 cases × 2 model providers =
+10 new independent samples. It records a critical unsupported paid-area
+instruction and smaller evidence issues, including incomplete original wrapper
+provenance for two Gemini samples. These are not original travel usage logs.
+The [post-fix gate transcripts](runs/2026-11-04-nav-checkpoint-postfix-transcripts.json)
+record two fresh independent three-turn sessions: neither model gave an
+unsupported paid-area or mandatory exit instruction at the final checkpoint.
+The review records the exact guidance hash and provenance limits. This narrow
+gate regression was observed fixed in one synthetic offline rerun per model.
+This is neither full P0 acceptance nor evidence of live route accuracy.
 
 ## Release policy
 

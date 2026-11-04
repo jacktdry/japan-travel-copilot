@@ -189,6 +189,13 @@ no-invented-departure condition; unsupported shopping certainty remains a concer
 The image sample is outside the 22-case JSON suite; this is not a full benchmark
 or P0 sign-off.
 
+The [fresh-session P0 review](evaluations/runs/2026-11-04-p0-fresh-session-review.md)
+adds 10 new independent synthetic samples (5 P0 cases × 2 providers), with raw
+prompt/answer text and provenance limits. It found unsupported paid-area transfer
+instructions; one post-fix offline rerun per model now shows the narrow gate
+regression corrected, with provenance and limits recorded in the review.
+These are synthetic tests, not original travel usage logs or full P0 acceptance.
+
 ## Development and license
 
 ```sh
@@ -335,6 +342,12 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 （點餐 2 次、圖片 2 次、機場 2 次）。機場重測均通過「不虛構發車時間」的
 狹義條件，但仍有無證據斷言沒有購物時間的問題。圖片樣本不屬於
 22 個情境的 JSON 測試集，尚非完整基準測試，也未通過 P0 驗收。
+
+[全新獨立對話 P0 審查](evaluations/runs/2026-11-04-p0-fresh-session-review.md)
+新增 5 個 P0 情境 × 2 家供應商，共 10 個獨立合成樣本，附提示、回答及來源限制。
+其中發現無證據要求留在付費區轉乘的問題；規則補強後，兩個模型各一次離線重跑
+均未出現該閘門假設問題，來源與限制詳見報告。
+這些是合成測試，並非原始旅遊使用紀錄，也不代表完整 P0 驗收通過。
 
 ## 開發與授權
 

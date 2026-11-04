@@ -32,6 +32,15 @@ extends [evidence-and-transit.md](evidence-and-transit.md), not a transit feed.
 - "I boarded", "I am on platform 4", "we arrived", "we got off", "bags checked"
   are **new checkpoints**. Stop issuing earlier-stage instructions. Lead
   with the next alighting/transfer/action and one confirmation cue.
+- For "at the transfer station", confirm the actual station and whether the
+  traveler is still on the train or has alighted when unclear. Identify the
+  next appropriate line/direction from evidence, or ask staff to verify it;
+  give one safe next action rather than an unverified transfer path.
+- Gate and ticket arrangements depend on the operator. Without grounded
+  operator, lines and station, do not presume a transfer stays entirely within
+  the paid area, tell the traveler not to exit gates, or require exit/re-entry.
+  Verify the applicable gate/ticket procedure before directing passage through
+  gates; use on-site signs or staff when evidence is missing.
 - For wrong-direction travel, stop the old itinerary. Identify the nearest
   safe station, current travel direction and a safe next correction.
 

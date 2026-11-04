@@ -72,11 +72,16 @@
       "must": [
         "Switch from pre-boarding to in-transit checkpoint",
         "On arrival only give next action/verification cue",
-        "Avoid repeating entry instructions"
+        "Avoid repeating entry instructions",
+        "Confirm actual transfer station and on-train versus off-train status when unclear",
+        "Identify next appropriate line/direction from evidence or ask staff to verify; give one safe next action",
+        "Ground gate/ticket instructions in operator, lines and station evidence before directing passage through gates"
       ],
       "must_not": [
         "Tell traveler to buy tickets after boarding",
-        "Assume route completed at intermediate station"
+        "Assume route completed at intermediate station",
+        "Presume transfer stays entirely within the paid area or tell traveler not to exit gates without grounded operator, lines and station",
+        "Require exit/re-entry through gates without verified operator-specific transfer evidence"
       ]
     },
     {

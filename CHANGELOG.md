@@ -2,6 +2,7 @@
 
 ## 0.3.0 (proposed)
 
+- Grounded transfer gate/ticket instructions in operator, lines and station evidence; added static checkpoint contracts and a 10-sample fresh-session synthetic review with provenance limits and a pending post-fix model rerun.
 - Prohibited fictitious airport departure windows; tightened fresh-session evaluation protocol and logged limited offline ACP findings with no P0 sign-off.
 - Strengthened evidence-grounded live navigation, date/time interpretation,
   direction and checkpoint corrections, full-route step-free requirements,
