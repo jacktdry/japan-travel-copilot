@@ -181,6 +181,13 @@ Agent hosts be manually assessed using the same criteria. These are **not
 real chat transcripts**. Passing repository tests validates documentation
 and fixture structure, **not live model performance or real-time accuracy**.
 
+One separate [source-backed P0 evidence exercise](evaluations/source-backed-airport.json)
+uses an upstream-inspected official timetable/map snapshot with fictional turns.
+It is outside the 22 text-only offline cases and recorded inference results.
+**Not run yet**: static source injection is neither agent live browsing nor
+current service/accessibility/check-in verification. See its
+[manual procedure](evaluations/README.md#source-backed-p0-static-evidence-exercise).
+
 The [offline ACP smoke findings](evaluations/runs/2026-11-04-acp-offline-smoke.md)
 cover 4 text cases × 2 models, 1 separate synthetic image case × 2 models,
 and 2 fresh airport regression reruns: 12 total samples, 6 fresh/independent
@@ -362,6 +369,12 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 另有 [22 個虛構情境](evaluations/README.md)，可讓不同供應商的 Agent
 在相同條件下進行**人工對話驗收**；這不是私人對話紀錄。
 專案單元測試通過，**不代表所有模型都已通過實際旅途中驗證**。
+
+另有一份獨立的[官方來源快照 P0 測試案例](evaluations/source-backed-airport.json)，
+以公開時刻表及車站圖驗證模型能否區分「表定抵達」、「即時運行」及
+「完整無階梯轉乘」。它不計入原本 22 個合成情境，**目前尚未執行模型測試**；
+模型只能收到來源事實，未知事項與評分條件另存，不可用快照宣稱班次
+當天正常、電梯可用或能趕上班機。執行方式見[驗收規範](evaluations/README.md#source-backed-p0-static-evidence-exercise)。
 
 [離線 ACP 初步結果](evaluations/runs/2026-11-04-acp-offline-smoke.md)涵蓋
 4 個文字情境 × 2 個模型，加上 1 個獨立合成圖片情境 × 2 個模型，以及

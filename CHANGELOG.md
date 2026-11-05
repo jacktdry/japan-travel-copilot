@@ -2,6 +2,8 @@
 
 ## 0.3.0 (proposed)
 
+- Added one [source-backed P0 static evidence exercise](evaluations/source-backed-airport.json) and manual injection/report procedure, separate from the 22 offline cases and actual inference archives. Kept reviewer-only unknowns out of the injected evidence card and clarified scheduled-arrival, accessible-transfer and source-date boundaries. Model evaluation not run yet; no live operational verification or safety sign-off.
+
 - Added two fresh sandboxed Gemini actual-image post-fix responses; neutral peanut avoidance and unknown cashier cause now observed in narrow synthetic cases (no host file audit or live safety sign-off).
 - Reviewed [four additional actual-JPEG samples](evaluations/runs/2026-11-05-p1-visual-review.md); tightened optional allergy scripts, receipt-cause and unlisted-fee grounding, with static integrity checks. Gemini's pre-fix failure/caveat remain recorded alongside two successful narrow post-fix image reruns; strict host no-file verification is outstanding.
 

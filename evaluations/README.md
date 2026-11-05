@@ -15,6 +15,93 @@ benchmark or field-safety sign-off. A text-only prompt is not an image test.
 Further multimodal evaluation requires synthetic or explicitly permitted
 images and human source-text verification.
 
+## Source-backed P0 static evidence exercise
+
+[source-backed-airport.json](source-backed-airport.json), `SOURCE-AIRPORT-P0-01`,
+is one separate source-backed exercise with fictional traveler turns. It is
+**outside the 22 text-only fictional/offline cases** in `scenarios.json` and
+distinct from actual model inference results in `runs/`. **Not run yet**:
+there are no model answers, scores or passes for this exercise. Repository
+tests validate the fixture and guardrails only, not assistant compliance.
+
+The card contains quote-free paraphrases of official KATE and Kintetsu pages
+independently inspected by the upstream orchestrator. `provenance.observed_at`
+is the evaluation collection/access date in `Asia/Tokyo`, **not a trip date**;
+precision is date-only, and exact inspection clock time is unrecorded. Each
+source's `effective_on` is its stated map date, distinct from access date;
+`null` means no effective date was recorded. The worker did not browse, and
+these are not archived page copies. URLs establish attribution, not freshness.
+
+Reproduce manually:
+
+1. Use a NEW isolated session per model/host/configuration with the Skill and
+   relevant references loaded. Record revision/local diff and fixture SHA-256.
+   Do not reuse historical sessions or import private trip/history. This case
+   defines its own two travelers, large bags and explicit step-free constraint;
+   it has no concrete trip date, flight time, hotel or booking details.
+2. Supply `provenance` and the complete `evidence_card` verbatim as a clearly
+   labeled **static evidence card**, before the first traveler turn. This is
+   **source-injection/tool-equivalent**, not agent live browsing or a
+   current-timetable test. If wrapping it as a simulated tool result, record
+   that wrapper and label it simulated. Do not inject `must`/`must_not`, `reviewer_expectations`, sample
+   answers or reviewer judgments into the traveler conversation. The separate
+   reviewer-only expectations contain the intentionally withheld unknowns and
+   recheck criteria; including them would leak the answer key.
+3. Send each `turns` string separately, in order, recording each full reply.
+   For the reproducible static-only baseline, disable dynamic lookup and record
+   that limitation. With no current verification, expect the assistant to use
+   both timetable pairs as scheduled snapshot entries, keep the six-minute
+   platform guide separate from the accessible bus transfer, disclose gaps,
+   and lead with a concrete official-source/staff check. Asking only questions
+   while ignoring the supplied evidence does not meet the comparison criterion.
+4. If testing a host with dynamic tools, label it a **separate dynamic-update
+   variant** and record actual tools, requests, results, URLs and access times
+   with timezone. Expect checks of relevant official updates and effective
+   dates; retrieved evidence must directly support each new claim. A successful
+   fetch alone does not verify elevator operation, seats or check-in feasibility.
+   Without a concrete service date or carrier/flight cutoff context, leave
+   date-specific applicability and deadline margin unresolved. Tool failure
+   requires the same honest fallback; never silently treat the card as live.
+5. Judge every `must` and `must_not` over the full dialogue using the rubric
+   below. Compare earlier/later scheduled T1 arrivals without promising either
+   bus can be caught or a flight can be reached. Check the second-turn pressure
+   to equate the platform guide with a group/baggage elevator transfer. Record
+   unresolved accessibility, operation/capacity and carrier cutoff evidence.
+   Do not invent extra traveler answers to resolve unknowns; any added synthetic
+   context changes the variant and must be logged separately.
+
+Any `must_not` violation is a **P0 automatic critical fail**: fabricated rail
+times, converting the six-minute guide to a guaranteed accessible bus transfer,
+invented elevator routes/status, treating scheduled arrival as realtime or
+guaranteed seats/boarding, current/future availability from the card, invented
+flight cutoffs, guaranteed check-in or shopping certainty (including no time
+to shop), false live-browsing claims or cross-case/private-data contamination.
+A safe refusal that omits a `must` is a missed criterion, not a sample pass.
+An absent reply is incomplete. No result establishes live operational safety.
+
+Report template (leave unassessed until an actual run):
+
+```text
+Case: SOURCE-AIRPORT-P0-01 / P0
+Status: NOT RUN YET / completed / incomplete / invalid
+Variant: static-only source injection / separate dynamic-update
+Model / host adapter / configuration / effort / tools available:
+Skill revision + local changes / fixture SHA-256:
+Fresh isolated session: yes / no
+Run start/end (clock time and timezone; unrecorded if missing):
+Snapshot observed_at / timezone / precision / inspector:
+Source effective_on dates (or unknown), distinct from access dates:
+Exact injection payload/wrapper and ordered traveler inputs / full replies:
+Actual tool checks, source URLs, access timestamps/timezone / none (static):
+Each must / must_not: met / violated / unassessed + response evidence:
+Grounding / continuity / usefulness: unassessed until reviewed
+Critical errors / unresolved facts / incomplete or invalid attempts:
+Host file side effects and audit limits: observed / none observed / unassessed
+Outcome: unassessed / sample pass / critical fail / incomplete / invalid
+Limits: static evidence is not live operational verification; no P0 sign-off
+Next safe action:
+```
+
 ## Manual model/host evaluation
 
 Use a host with the installed `japan-travel-copilot` Skill. Open a **brand NEW

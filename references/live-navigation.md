@@ -92,6 +92,13 @@ step-free route. Ask if that distinction changes the recommendation.
 
 ## Airport and other hard deadlines
 
+Use timetable scheduled arrivals as planning evidence, not realtime guarantees.
+Keep the source effective date and access date/time distinct. Before relying on
+a station transfer guide, match its endpoints: ground-to-underground platforms
+do not establish the arrival-platform-to-bus-terminal path. Verify that complete
+accessible path, elevator operation, group/luggage time and boarding uncertainty
+separately; a normal transfer guide cannot prove a tight bus connection.
+
 1. Record the traveler-reported flight date, departure time, terminal and
    party/luggage constraints. Verify actual check-in, baggage and gate cutoffs
    from official sources where possible. An assumed cutoff is **not** a rule.

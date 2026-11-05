@@ -14,6 +14,15 @@ Use a source that directly supports the detail being stated. A route planner
 does not prove elevator operation; a station map does not prove a train is
 running today. State what was checked and when when that affects a decision.
 
+Keep a source's stated **effective date** separate from the **access date and
+timezone** (and clock time, if recorded). Accessing an older station map today
+does not make its contents newly effective or confirm elevator operation.
+A timetable's scheduled arrival is not a realtime arrival or a guarantee of
+service, seats, boarding, a connection or airline check-in. Confirm applicability
+to the travel date and check operational updates separately. A station's normal
+platform transfer-time guide is not a measured group-and-baggage accessible
+path to a bus terminal; it supports only the endpoints and conditions stated.
+
 ## Transit decision tree
 
 1. **Is the traveler unsafe, stranded, or facing an immediate deadline?**
