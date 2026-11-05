@@ -99,7 +99,8 @@ class FieldEvaluationTests(unittest.TestCase):
         text = "\n".join(source.read_text(encoding="utf-8") for source in sources)
         # Public report filenames contain run dates, not trip dates. Exempt
         # only those filenames; keep scanning prose and other paths.
-        for filename in ("2026-11-05-source-backed-postfix-review.md",
+        for filename in ("2026-11-05-source-backed-gemini-recheck-review.md",
+                         "2026-11-05-source-backed-postfix-review.md",
                          "2026-11-05-source-backed-initial-review.md",
                          "2026-11-04-acp-offline-smoke.md",
                          "2026-11-04-p0-fresh-session-review.md",

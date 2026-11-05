@@ -8,6 +8,14 @@ pass, failure, or completed sample. The
 remains unchanged in substance and continues to show the Gemini P0 critical
 route/duration error. **No full cross-provider P0 sign-off.**
 
+A later [independent Gemini recheck](2026-11-05-source-backed-gemini-recheck-review.md)
+completed the same two inputs in a NEW session: 5/6, no observed P0 critical
+violation in that sample, but both explicit map effective-date mappings remain
+missing (MUST 3 partially unmet). This is not a complete rubric pass. The prior
+block was not reproduced; its cause remains unknown, not conclusively repaired.
+The blocked history below remains unassessed. Configuration/runtime disagreement
+and no-file limitations persist; **P0 NO-GO remains**.
+
 ## Provenance and scope
 
 - [Actual post-fix archive](2026-11-05-source-backed-postfix-transcripts.json)
@@ -61,10 +69,11 @@ establish this behavioral result without the linked actual transcript.
 
 ## Remaining acceptance work
 
-Re-run the same source card in a **NEW** isolated Gemini/Antigravity session once
-host safety policy permits, then independently score all `must` and `must_not`
-requirements. Also rerun a fresh Codex case if guidance changes again. Improve
-source-date precision without conflating `observed_at` with `effective_on`.
+The requested NEW isolated Gemini rerun is now recorded in the linked recheck;
+it does not retroactively assess this blocked attempt. Improve explicit mapping
+of Uehommachi `effective_on=2026-08-01` and Tsuruhashi `effective_on=2026-03-14`
+without conflating them with `observed_at`. Independently rerun unchanged inputs
+for both providers if guidance changes again.
 Separately verify host model/sandbox configuration projection, live service
 applicability, end-to-end accessible route and elevator operation, boarding
 conditions, airline cutoffs and host filesystem side effects before any field

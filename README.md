@@ -192,8 +192,14 @@ The unchanged fixture's `not_run` is historical; the review records current stat
 Static source injection is neither agent live browsing nor current
 service/accessibility/check-in verification. Guidance is tightened. A [post-fix review](evaluations/runs/2026-11-05-source-backed-postfix-review.md)
 records one new two-turn Codex sample without a P0 critical failure but with
-a remaining source-date precision gap. The Gemini post-fix run was blocked
-before execution and is unassessed; there is no full P0 pass. See the
+a remaining source-date precision gap. The earlier Gemini submission was blocked
+before execution and remains unassessed. A later [independent Gemini recheck](evaluations/runs/2026-11-05-source-backed-gemini-recheck-review.md)
+completed two turns with 5/6 and no P0 critical violation observed in that sample;
+explicit mapping of both map effective dates remains missing (MUST 3 partially
+unmet). This narrow conditional result is not a complete rubric pass. The prior
+block was not reproduced, but its cause is unknown; configuration/runtime
+disagreement and no-file limits remain. Historical failure is preserved;
+**P0 NO-GO**, no full P0 acceptance or live operational proof. See the
 [manual procedure](evaluations/README.md#source-backed-p0-static-evidence-exercise).
 
 The [offline ACP smoke findings](evaluations/runs/2026-11-04-acp-offline-smoke.md)
@@ -388,8 +394,13 @@ Gemini 的介面設定與執行狀態投影不一致，歸屬限制詳見報告�
 未修改案例中的 `not_run` 是歷史初始狀態，現況以評審報告為準。
 規則已補強。[修正後審查](evaluations/runs/2026-11-05-source-backed-postfix-review.md)
 記錄 Codex 新的 2 回合測試，未見 P0 重大錯誤，但來源日期精確度仍有缺口；
-Gemini 重測在執行前遭宿主安全檢查阻擋，不能算通過或失敗。
-**目前沒有全面 P0 驗收通過的證據**。
+先前 Gemini 重測在執行前遭宿主安全檢查阻擋，不能算通過或失敗。
+後續[獨立 Gemini 重測](evaluations/runs/2026-11-05-source-backed-gemini-recheck-review.md)
+完成 2 回合，評分 5/6，此單次樣本未見 P0 重大違規；但仍未明確對應兩份站圖的
+生效日期（MUST 3 部分未達成），僅為狹窄條件式結果，並非完整規準通過。
+先前阻擋未重現，根因仍未知；設定與執行狀態投影仍不一致，原生模型身分、
+沙盒效力及零落檔皆未驗證。原始失敗與阻擋歷史保留；**P0 仍為 NO-GO，
+目前沒有全面 P0 驗收通過的證據**。
 模型只收到靜態來源事實，未實際上網；不可宣稱班次當天正常、電梯可用、
 能趕上班機或宿主完全不落檔。執行方式見[驗收規範](evaluations/README.md#source-backed-p0-static-evidence-exercise)。
 

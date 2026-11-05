@@ -152,6 +152,78 @@ class SourceBackedArchiveTests(unittest.TestCase):
         for fname in ("README.md", "CHANGELOG.md", "evaluations/README.md"):
             self.assertIn(report.name, (ROOT / fname).read_text(encoding="utf-8"))
 
+    def test_gemini_recheck_preserves_exact_inputs_complete_runs_and_limits(self):
+        # Static archive/report contract only; never LLM behavior acceptance.
+        path = ROOT / "evaluations/runs/2026-11-05-source-backed-gemini-recheck-transcripts.json"
+        raw = path.read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                         "270168dc16845c9aeac3dee25c53d3ed72d0fd393c1553ea385952a3ef94cc5a")
+        data = json.loads(raw)
+        self.assertEqual(data["schema_version"], "1.0")
+        self.assertEqual(data["case_id"], self.fixture["id"])
+        self.assertEqual(data["status"], "completed_single_provider_postfix_rerun")
+        self.assertEqual(data["baseline_head"],
+                         "ad3718173bc20cb903798b16f1ed624ce5035920")
+        messages = data["messages"]
+        self.assertEqual([m["role"] for m in messages],
+                         ["user", "assistant", "user", "assistant"])
+        self.assertTrue(all(set(m) == {"role", "text"} and m["text"].strip()
+                            for m in messages))
+        # Exact wrapper/card/turn parity with both historical provider inputs.
+        users = [m["text"] for m in messages if m["role"] == "user"]
+        for baseline in self.archive["runs"]:
+            self.assertEqual(users, [m["text"] for m in baseline["messages"]
+                                     if m["role"] == "user"])
+        self.assertIs(data["adapter_history_truncated"], False)
+        self.assertEqual(data["provenance"]["source"],
+                         "ACP adapter-owned session/load complete replay")
+        self.assertEqual(data["provenance"]["host_filesystem_audit"], "not performed")
+        self.assertEqual(len(data["runs"]), 2)
+        previous_end = None
+        for turn, run in enumerate(data["runs"], 1):
+            self.assertEqual(run["turn"], turn)
+            self.assertEqual(run["status"], "completed")
+            self.assertIs(run["run_event_ring_truncated"], False)
+            start = _parse_utc_timestamp(run["started_at_utc"])
+            end = _parse_utc_timestamp(run["ended_at_utc"])
+            self.assertEqual(start.date().isoformat(), data["date_local"])
+            self.assertLess(start, end)
+            if previous_end is not None:
+                self.assertLess(previous_end, start)
+            previous_end = end
+        config = data["model_configuration"]
+        self.assertEqual((config["adapter"], config["configured_model"],
+                          config["mode"], config["effort"]),
+                         ("Antigravity ACP", "gemini-3.8-flash", "plan", "medium"))
+        self.assertIs(config["sandbox_configured"], True)
+        self.assertIs(config["configuration_update_observed"], True)
+        self.assertEqual(config["post_run_runtime_state_projection"],
+                         {"model": "gemini-4-argon", "mode": "default", "sandbox": False})
+        self.assertIn("cannot be independently proven", config["configuration_discrepancy"])
+        self.assertEqual(data["prior_blocker"]["prior_submission"], "blocked_before_run")
+        self.assertEqual(data["prior_blocker"]["this_submission"], "accepted_and_completed")
+        self.assertEqual(data["prior_blocker"]["root_cause"], "not established")
+        report = path.with_name("2026-11-05-source-backed-gemini-recheck-review.md")
+        review = report.read_text(encoding="utf-8")
+        for phrase in (path.name, hashlib.sha256(raw).hexdigest(), "5/6",
+                       "Partially unmet", "2026-08-01", "2026-03-14",
+                       "P0 NO-GO", "not a complete rubric pass", "not conclusively repaired"):
+            self.assertIn(phrase, review)
+        for text in (raw.decode("utf-8"), review):
+            for pattern in (r"/(?:Users|home|Volumes)/", r"/(?:private/)?var/folders/",
+                            r"/(?:private/)?tmp/", r"file://", r"plugin://", r"\b[A-Za-z]:\\",
+                            r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",
+                            r"gh[opusr]_[A-Za-z0-9]+", r"github_pat_[A-Za-z0-9_]+",
+                            r"sk-[A-Za-z0-9_-]{16,}", r"AKIA[A-Z0-9]{16}",
+                            r"-----BEGIN .*PRIVATE KEY-----",
+                            r"\b[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}\b",
+                            r'"(?:session_?[Ii]d|native_?[Ii]d|run_id|host_id|device_id|thread_id|transcript_url|api_key|access_token)"\s*:'):
+                self.assertNotRegex(text, pattern)
+        # Reporting limits protect against promoting this archive to acceptance.
+        for fname in ("README.md", "CHANGELOG.md", "evaluations/README.md",
+                      "evaluations/runs/2026-11-05-source-backed-postfix-review.md"):
+            self.assertIn(report.name, (ROOT / fname).read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()

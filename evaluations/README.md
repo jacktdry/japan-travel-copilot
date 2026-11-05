@@ -32,7 +32,20 @@ not assistant compliance.
 The byte-identical fixture's `model_evaluation_status: "not_run"` is its
 historical initial state, not current evaluation status. The linked review is
 the current result record; preserve the injected card and original answers for
-comparison. Guidance was tightened; a [post-fix review](runs/2026-11-05-source-backed-postfix-review.md) records one fresh two-turn Codex sample without a P0 critical failure but with an unfulfilled source-date precision criterion. The Gemini post-fix prompt was blocked before execution, so no Gemini result or full cross-provider acceptance exists.
+comparison. Guidance was tightened; a [post-fix review](runs/2026-11-05-source-backed-postfix-review.md)
+records one fresh two-turn Codex sample without a P0 critical failure but with
+an unfulfilled source-date precision criterion. The earlier Gemini post-fix
+prompt was blocked before execution and remains unassessed.
+
+A later [independent Gemini recheck](runs/2026-11-05-source-backed-gemini-recheck-review.md)
+completed both turns: grounding 1/2, continuity 2/2, usefulness 2/2 = 5/6, with
+no P0 critical violation observed in this sample. Both supplied map effective
+dates remain omitted from the replies (MUST 3 partially unmet); this is a narrow
+conditional result, not a complete rubric pass. The prior block was not
+reproduced, but its cause is unknown. Adapter settings still disagree with
+runtime projection; native identity, sandbox effectiveness and no-file behavior
+are unverified. Initial failure and blocked histories remain; **P0 NO-GO**,
+no full cross-provider acceptance or live service verification.
 
 The card contains quote-free paraphrases of official KATE and Kintetsu pages
 independently inspected by the upstream orchestrator. `provenance.observed_at`
