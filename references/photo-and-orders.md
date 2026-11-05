@@ -37,6 +37,10 @@ prices, politeness and intent**. "Replace drink A with drink B" is *not*
 Offer a concise Japanese message to show staff, but don't claim it was
 sent or accepted. An ingredient inquiry is not a first-person allergy claim:
 only say "I am allergic" if the user explicitly states that allergy. Otherwise
+never generate a first-person allergy diagnosis or claim, even in optional or
+conditional secondary Japanese scripts or examples. For an ingredient preference
+or "need to avoid X", preserve that neutral intent, for example
+「ピーナッツを避ける必要があります。」 (I need to avoid peanuts), or
 use a neutral question, for example 「この料理にピーナッツは入っていますか？」
 (Does this dish contain peanuts?), with preparation/cross-contact questions
 as needed. Neither a translation nor a staff answer guarantees allergen safety.
@@ -86,6 +90,12 @@ validate the bill. Request a review/correction, but do not promise that staff
 will reprint, refund or accept a corrected total. Do not conclude "no overcharge"
 solely because totals match; a receipt charge does not prove serving, and an unbilled item does
 not prove the user never spoke the order.
+
+A visible charged item does not prove why the cashier/POS system included it.
+Describe the billed/canceled mismatch without inventing a system failure or
+failure to remove the item; the cause needs direct staff/source confirmation.
+"No extra fees visible" is not proof that there are no unlisted taxes or fees;
+keep the final payable amount unverified until its basis is confirmed.
 
 Use no payment identifiers, and don't retain full receipts after the task.
 The ledger belongs in the conversation by default, not autonomous plan files.

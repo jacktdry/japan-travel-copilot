@@ -2,6 +2,9 @@
 
 ## 0.3.0 (proposed)
 
+- Added two fresh sandboxed Gemini actual-image post-fix responses; neutral peanut avoidance and unknown cashier cause now observed in narrow synthetic cases (no host file audit or live safety sign-off).
+- Reviewed [four additional actual-JPEG samples](evaluations/runs/2026-11-05-p1-visual-review.md); tightened optional allergy scripts, receipt-cause and unlisted-fee grounding, with static integrity checks. Gemini's pre-fix failure/caveat remain recorded alongside two successful narrow post-fix image reruns; strict host no-file verification is outstanding.
+
 - Added [actual-image P1 tests and a sandbox privacy probe](evaluations/runs/2026-11-05-p1-multimodal-privacy-review.md): two wholly synthetic Japanese menu/receipt JPEGs, four fresh independent ACP image-input samples (two models) and one separate three-turn Gemini sandbox no-file observation. Both models grounded the explicit peanut warning and canceled 400-JPY receipt line. No write-type tool event observed in the sandbox probe, but **no host-wide filesystem audit**; strict zero-file and field safety remain unverified.
 
 - Added the [P1 offline review](evaluations/runs/2026-11-05-p1-offline-review.md): 24 independent completed synthetic samples, 46 traveler turns, 2 excluded/qualified initial attempts and a host temporary plan-file observation. Tightened refund/timed-ticket grounding, receipt math, allergy translation, order-state separation and host storage boundaries; targeted contracts and static archive checks added. Six targeted fresh post-fix Gemini case samples showed narrow repairs in five cases and a residual missing-order error; a seventh independent three-turn sample after a concrete rule edit no longer made that error. Historical failures and host plan-file behavior remain; no broad all-pass or strict zero-file claim.

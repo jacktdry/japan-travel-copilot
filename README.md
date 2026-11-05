@@ -216,6 +216,13 @@ unverified; an earlier unsandboxed host-plan write remains documented.
 These image cases are **outside** the 22 text-only scenarios and are not
 a real-world OCR/food-safety benchmark or P0/P1 field sign-off.
 
+The [additional P1 visual review](evaluations/runs/2026-11-05-p1-visual-review.md)
+records four fresh actual-JPEG samples: Gemini's optional allergy claim fails
+faithful translation and its receipt cause is unverified. Two fresh
+[post-fix Gemini image reruns](evaluations/runs/2026-11-05-p1-visual-postfix-transcripts.json)
+did not reproduce those narrow defects; strict host no-file verification
+remains outstanding.
+
 ## Development and license
 
 ```sh
@@ -392,3 +399,5 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 虛構資料與外部暫存檔案，不連網；CI 探索全部測試。引導文字的靜態契約檢查不
 等於所有宿主的對話行為驗收。貢獻規範見 [CONTRIBUTING.md](CONTRIBUTING.md)。
 Apache-2.0，詳見 [LICENSE](LICENSE)。
+
+The [post-fix actual-image P1 evidence](evaluations/runs/2026-11-05-p1-visual-postfix-transcripts.json) records two independent Gemini reruns: neutral peanut-avoidance Japanese and source-grounded receipt reconciliation; zero host files is not established.

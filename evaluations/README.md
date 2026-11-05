@@ -142,6 +142,18 @@ remain recorded; strict zero-file privacy is unverified.
 
 ## Real image-input and host privacy addendum
 
+The [new P1 visual review](runs/2026-11-05-p1-visual-review.md) links
+[four independent fresh actual-JPEG samples](runs/2026-11-05-p1-visual-transcripts.json)
+using the same synthetic menu/receipt fixtures. Unlike the earlier explicit-allergy
+question below, the new menu question says only **need to avoid peanuts**.
+Codex passed the two narrow samples; Gemini's optional first-person allergy
+script fails faithful translation, and its receipt answer invents an unverified
+cashier-system cause. No extra fees visible cannot establish a final payable
+total. Two [post-fix Gemini image reruns](runs/2026-11-05-p1-visual-postfix-transcripts.json)
+did not reproduce the narrow translation/cashier-cause defects. These are qualitative
+observations, not an OCR benchmark; sandbox tool-write observations do not
+prove zero host files, and the historical unsandboxed plan-file gate remains.
+
 The [P1 actual-image and sandbox privacy review](runs/2026-11-05-p1-multimodal-privacy-review.md)
 links the [4 fresh model/image outputs](runs/2026-11-05-p1-image-acp-transcripts.json)
 for two source-generated Japanese [menu and receipt JPEGs](fixtures/README.md),
@@ -170,3 +182,11 @@ Record P1 failures and regressions. An ordinary repository
 schema and optional file helper only. It **does not run model inference**.
 Without real cross-provider runs, report these as proposed evaluation cases,
 not as a completed cross-model benchmark.
+
+The [neutral-avoidance P1 actual-image recheck](runs/2026-11-05-p1-visual-postfix-transcripts.json)
+contains **two fresh Gemini image-input post-fix samples**, following a
+distinct pre-fix case in which the traveler said only “avoid peanuts” but the
+model's optional Japanese script claimed a peanut allergy. One synthetic rerun
+used a neutral avoidance sentence, and the other explicitly left an erroneous
+receipt item's cashier/POS cause unknown. This is narrow model behavior only,
+not a real restaurant, allergen or host no-file certification.

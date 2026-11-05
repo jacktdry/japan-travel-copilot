@@ -5,6 +5,7 @@ These tests deliberately do NOT run an LLM or simulate live transit.
 
 import hashlib
 import json
+from datetime import datetime
 from pathlib import Path
 import re
 import unittest
@@ -109,6 +110,9 @@ class FieldEvaluationTests(unittest.TestCase):
                          "2026-11-05-p1-food-missing-second-postfix.json",
                          "2026-11-05-p1-multimodal-privacy-review.md",
                          "2026-11-05-p1-image-acp-transcripts.json",
+                         "2026-11-05-p1-visual-review.md",
+                         "2026-11-05-p1-visual-transcripts.json",
+                         "2026-11-05-p1-visual-postfix-transcripts.json",
                          "2026-11-05-p1-sandbox-privacy-probe.json"):
             text = text.replace(filename, re.sub(r"^20[0-9]{2}-[0-9]{2}-[0-9]{2}-", "", filename))
         # Check for identifier *shapes*, not values from a real trip.
@@ -684,7 +688,8 @@ class FieldEvaluationTests(unittest.TestCase):
                             b["references_photo_orders_sha256"])
         self.assertEqual(
             b["references_photo_orders_sha256"],
-            hashlib.sha256((ROOT / "references/photo-and-orders.md").read_bytes()).hexdigest()
+            # Historical source digest, not the current post-visual-fix policy.
+            "c887a4563a66a283de19d2a06f103c4f1dc451b204234f17825cc7b1ee5be4b7"
         )
         for digest in [*a["source_guidance_sha256"].values(),
                        b["references_photo_orders_sha256"]]:
@@ -792,6 +797,169 @@ class FieldEvaluationTests(unittest.TestCase):
                        "synthetic-receipt-extra-gyoza.jpg",
                        "落花生", "2,700円", "actual JPEG bytes"):
             self.assertIn(phrase, fixture_doc)
+
+    def test_visual_archive_preserves_image_integrity_and_source_provenance(self):
+        # Static historical evidence integrity only; no model behavior is tested.
+        base = ROOT / "evaluations"
+        path = base / "runs/2026-11-05-p1-visual-transcripts.json"
+        raw = path.read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                         "ee38edb79ca4baa716f1d40b35fedfd783338c744601c5736061b51a7404857c")
+        data = json.loads(raw)
+        self.assertEqual(data["schema_version"], "1.0")
+        self.assertEqual(data["timezone"], "Asia/Taipei")
+        self.assertEqual(data["date_local"], "2026-11-05")
+        # Verified against this recorded Git revision, not the working policy.
+        self.assertEqual(data["skill_head"],
+                         "65f9beb1303828ab8a2eda0ed33d8e821eeb8c16")
+        self.assertEqual(data["guidance_sha256"], {
+            "SKILL.md": "8c9bc01120c269e7ca20dfe389b18a255349d7d998a100ac842d9b0a882e0b54",
+            "references/photo-and-orders.md":
+                "c887a4563a66a283de19d2a06f103c4f1dc451b204234f17825cc7b1ee5be4b7",
+        })
+        expected_images = {
+            "IMG-MENU-PEANUTS": "synthetic-menu-peanuts.jpg",
+            "IMG-RECEIPT-GYOZA": "synthetic-receipt-extra-gyoza.jpg",
+        }
+        models = {"gpt-6.1-sol", "gemini-3.8-flash"}
+        samples = data["samples"]
+        self.assertEqual(len(samples), 4)
+        self.assertEqual({(s["case_id"], s["model"]) for s in samples},
+                         {(case, model) for case in expected_images for model in models})
+        for sample in samples:
+            with self.subTest(case=sample["case_id"], model=sample["model"]):
+                name = expected_images[sample["case_id"]]
+                self.assertEqual(sample["image_fixture"], name)
+                jpeg = (base / "fixtures" / name).read_bytes()
+                self.assertTrue(jpeg.startswith(b"\xff\xd8\xff"))
+                self.assertTrue(jpeg.endswith(b"\xff\xd9"))
+                self.assertGreater(len(jpeg), 10_000)
+                self.assertLess(len(jpeg), 200_000, "Keep synthetic JPEGs lightweight")
+                self.assertEqual(hashlib.sha256(jpeg).hexdigest(), sample["image_sha256"])
+                self.assertIs(sample["image_input_actual_content_block"], True)
+                self.assertIs(sample["fresh_independent_session"], True)
+                self.assertIs(sample["run_events_complete"], True)
+                self.assertEqual(sample["status"], "completed")
+                self.assertEqual(sample["effort"], "medium")
+                codex = sample["model"] == "gpt-6.1-sol"
+                self.assertEqual(sample["adapter"], "Codex ACP" if codex else "Antigravity ACP")
+                self.assertEqual(sample["mode"], "read-only" if codex else "plan")
+                self.assertEqual(sample["sandbox"], "unrecorded" if codex else True)
+                self.assertEqual(sample["file_write_tool_calls_observed"], 0)
+                self.assertEqual(sample["host_file_system_audit"], "not performed")
+                self.assertTrue(sample["assistant_answer"].strip())
+                self.assertTrue(sample["user_question"].strip())
+                self.assertLess(datetime.fromisoformat(sample["run_started_at"].replace("Z", "+00:00")),
+                                datetime.fromisoformat(sample["run_ended_at"].replace("Z", "+00:00")))
+                # No Japanese image transcription supplied in the archived question.
+                self.assertNotIn("原材料", sample["user_question"])
+                self.assertNotIn("2,700", sample["user_question"])
+
+    def test_visual_fixture_ground_truth_and_review_links_are_public(self):
+        base = ROOT / "evaluations"
+        fixture_doc = (base / "fixtures/README.md").read_text()
+        # Source tokens and numbers are stable ground truth, unlike review prose.
+        for token in ("synthetic-menu-peanuts.jpg", "synthetic-receipt-extra-gyoza.jpg",
+                      "架空食堂", "鶏から揚げ定食", "980 円（税込）",
+                      "原材料：鶏肉、小麦、大豆、落花生（ピーナッツ）",
+                      "※ この料理には落花生を使用しています。",
+                      "スタッフにお問い合わせください。", "ラーメン（900円）",
+                      "唐揚げ（500円）", "焼き餃子（400円）", "1,800円", "2,700円",
+                      "Synthetic fixture only"):
+            self.assertIn(token, fixture_doc)
+        review_path = base / "runs/2026-11-05-p1-visual-review.md"
+        review = review_path.read_text()
+        for filename in ("README.md", "evaluations/README.md", "CHANGELOG.md",
+                         "evaluations/fixtures/README.md"):
+            self.assertIn(review_path.name, (ROOT / filename).read_text())
+        self.assertIn("2026-11-05-p1-visual-transcripts.json", review)
+        self.assertIn("Fresh-session post-fix image regression", review)
+        self.assertIn("2026-11-05-p1-visual-postfix-transcripts.json", review)
+        for path, text in ((review_path, review), (base / "fixtures/README.md", fixture_doc)):
+            for target in re.findall(r"\]\(([^)]+)\)", text):
+                self.assertTrue((path.parent / target).is_file(), target)
+        raw = (base / "runs/2026-11-05-p1-visual-transcripts.json").read_text()
+        for text in (raw, review, fixture_doc):
+            for pattern in (r"/(?:Users|home|Volumes)/", r"/(?:private/)?var/folders/",
+                            r"/(?:private/)?tmp/", r"file://", r"[A-Za-z]:\\",
+                            r'"(?:session_id|run_id|host_id|device_id|native_id)"\s*:',
+                            r"\b[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\b",
+                            r"gh[opusr]_[A-Za-z0-9]+"):
+                self.assertNotRegex(text, pattern)
+
+    def test_visual_postfix_image_reply_archive_and_host_limitations(self):
+        # Static provenance and recorded response integrity; not live LLM testing.
+        import datetime as _datetime
+        root = ROOT / "evaluations"
+        path = root / "runs/2026-11-05-p1-visual-postfix-transcripts.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(data["schema_version"], "1.0")
+        self.assertEqual(data["date_local"], "2026-11-05")
+        self.assertEqual(data["timezone"], "Asia/Taipei")
+        self.assertEqual(data["precommit_head"],
+                         "65f9beb1303828ab8a2eda0ed33d8e821eeb8c16")
+        self.assertEqual(data["photo_orders_sha256"],
+                         hashlib.sha256((ROOT / "references/photo-and-orders.md").read_bytes()).hexdigest())
+        self.assertEqual(data["skill_sha256"],
+                         hashlib.sha256((ROOT / "SKILL.md").read_bytes()).hexdigest())
+        samples = data["samples"]
+        self.assertEqual(len(samples), 2)
+        self.assertEqual({s["case_id"] for s in samples},
+                         {"IMG-MENU-PEANUTS", "IMG-RECEIPT-GYOZA"})
+        answers = {}
+        for sample in samples:
+            with self.subTest(case=sample["case_id"]):
+                self.assertEqual(sample["model"], "gemini-3.8-flash")
+                self.assertEqual(sample["adapter"], "Antigravity ACP")
+                self.assertEqual(sample["mode"], "plan")
+                self.assertEqual(sample["effort"], "medium")
+                self.assertIs(sample["sandbox"], True)
+                self.assertIs(sample["fresh_independent_session"], True)
+                self.assertIs(sample["actual_image_content_block"], True)
+                self.assertIs(sample["run_events_complete"], True)
+                self.assertEqual(sample["status"], "completed")
+                self.assertEqual(sample["write_related_tool_calls_observed"], 0)
+                self.assertEqual(sample["host_filesystem_audit"], "not performed")
+                self.assertTrue(sample["assistant_answer"].strip())
+                self.assertLess(_datetime.datetime.fromisoformat(
+                    sample["run_started_at"].replace("Z", "+00:00")),
+                    _datetime.datetime.fromisoformat(
+                    sample["run_ended_at"].replace("Z", "+00:00")))
+                img = root / "fixtures" / sample["image_fixture"]
+                self.assertEqual(sample["image_sha256"],
+                                 hashlib.sha256(img.read_bytes()).hexdigest())
+                answers[sample["case_id"]] = sample["assistant_answer"]
+        # Retain evidence that the repair was observed in these particular replies.
+        self.assertIn("ピーナッツを避ける必要があります",
+                      answers["IMG-MENU-PEANUTS"])
+        self.assertNotIn("アレルギーがあります",
+                         answers["IMG-MENU-PEANUTS"])
+        self.assertIn("原因未確認", answers["IMG-RECEIPT-GYOZA"])
+        self.assertIn("2,300", answers["IMG-RECEIPT-GYOZA"])
+        report = (root / "runs/2026-11-05-p1-visual-review.md").read_text()
+        self.assertIn(path.name, report)
+        self.assertIn("no full", report.lower())
+        self.assertNotIn("Post-fix model tests: NOT YET executed", report)
+        archive = path.read_text(encoding="utf-8")
+        for pattern in (r"/(?:Users|home|Volumes)/",
+                        r"/(?:private/)?var/folders/",
+                        r'"(?:run_id|session_id|native_id|device_id)"\s*:',
+                        r"gh[opusr]_[A-Za-z0-9]+"):
+            self.assertNotRegex(archive, pattern)
+
+    def test_visual_policy_covers_secondary_scripts_and_unverified_bill_causes(self):
+        # Textual contract guard; this cannot establish model compliance.
+        rules = " ".join((ROOT / "references/photo-and-orders.md").read_text().split())
+        for pattern in (
+            r"only say .*allergic.*user explicitly states that allergy",
+            r"never generate a first-person allergy .*claim.*optional or conditional secondary Japanese scripts or examples",
+            r"ingredient preference.*need to avoid X.*neutral intent",
+            r"visible charged item does not prove why.*cashier/POS",
+            r"without inventing.*system failure.*cause needs direct staff/source confirmation",
+            r"No extra fees visible.*not proof.*no unlisted taxes or fees",
+        ):
+            self.assertRegex(rules, pattern)
+        self.assertIn("ピーナッツを避ける必要があります。", rules)
 
     def test_sandbox_probe_distinguishes_no_write_event_from_zero_files(self):
         # A tool-event observation cannot prove the host wrote no files.
