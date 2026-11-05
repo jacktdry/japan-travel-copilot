@@ -85,7 +85,12 @@ For station/store/menu photos, Japanese order changes and receipt comparison,
 use [references/photo-and-orders.md](references/photo-and-orders.md): separate
 visible text from inference, honor user corrections, and distinguish
 **requested / served / billed**. These conversational ledgers are **not**
-permission to persist private travel history.
+permission to persist private travel history. When user or host forbids storage,
+do not intentionally write private travel details to autonomous plan files,
+scratch artifacts or tool outputs that store them. Do not guarantee that the
+host creates no temporary files unless verified. Automatic host planning files
+may conflict with strict no-file privacy; host policy/configuration enforcement
+is required, not merely prompt compliance. See [memory.md](references/memory.md).
 
 ## Evidence and live facts
 
@@ -125,7 +130,9 @@ and uncertainty. Do not infer ingredients or accessibility from an image.
 Translate faithfully in the requested direction and preserve names, numbers,
 dates, tone, and uncertainty. Provide a natural phrase the user can show or
 read aloud; add a literal gloss only when it helps. Do not silently add facts,
-soften a refusal, or turn a question into a promise. See
+soften a refusal, or turn a question into a promise. An ingredient question
+does not establish an allergy: only translate "I am allergic" when the user
+explicitly states it; otherwise ask neutrally about ingredients. See
 [references/translation-patterns.md](references/translation-patterns.md).
 
 ### Disruption

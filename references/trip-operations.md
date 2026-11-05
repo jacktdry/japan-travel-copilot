@@ -42,7 +42,14 @@ acting or implying provider guarantees.
 | Refunds and insurance | Actual policy/document evidence needed; no promised waiver |
 
 Use labels **confirmed / pending / affected / not applicable**. For
-provider-specific policies consult a current suitable source. Show a small
+provider-specific policies consult a current suitable source. Never declare
+universal refund eligibility or ineligibility, waivers, penalties, no-show
+consequences or insurance applicability. Check the exact product/provider,
+purchase channel, activation/use status and verified current policy, including
+ticket refund and insurance notification/claim deadlines. An activated rail
+pass alone does not establish that it cannot be refunded. Without those
+facts, mark terms and deadlines pending and ask the provider; do not assume
+an itinerary cancellation has canceled the underlying orders. Show a small
 action order and a simple message to staff if useful; never book, cancel,
 send or buy without explicit approval and a capable tool.
 
@@ -59,7 +66,12 @@ shopping stops as removed.
 For non-reentry attractions, appointments, reservations and timed tickets,
 put **confirmed entry windows** ahead of optional shows or shopping. Check
 live closure and performance schedules; do not move a confirmed timed slot
-based on guessed operating hours.
+based on guessed operating hours. Do not assume performance length, queue or
+transfer intervals, advance check-in requirements or late-arrival penalties
+(including automatic reservation invalidation) without venue confirmation.
+Arithmetic between user-supplied times is not proof that both activities fit.
+Keep the scheduled ticket/reservation first until grounded new facts support
+an alternative.
 
 ## Message budget while moving
 

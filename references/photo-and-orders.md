@@ -35,11 +35,28 @@ Preserve item identity, **quantity, variation, flavor, size, hot/iced,
 prices, politeness and intent**. "Replace drink A with drink B" is *not*
 "add B". Clearly distinguish a newly requested item from a canceled one.
 Offer a concise Japanese message to show staff, but don't claim it was
-sent or accepted.
+sent or accepted. An ingredient inquiry is not a first-person allergy claim:
+only say "I am allergic" if the user explicitly states that allergy. Otherwise
+use a neutral question, for example 「この料理にピーナッツは入っていますか？」
+(Does this dish contain peanuts?), with preparation/cross-contact questions
+as needed. Neither a translation nor a staff answer guarantees allergen safety.
 
 Staff may say an item is still coming, was never entered in the system, or
 is unavailable: those are different facts. If the traveler cancels an item,
 mark it as requested cancellation until staff/receipt confirms the outcome.
+Registration does not establish cooking, serving or billing status: "not
+entered" does not prove "not being prepared", "not charged" or "canceled".
+Likewise "coming soon" does not confirm a specific preparation stage. Keep
+unreported states unknown and ask staff before treating a replacement or
+additional request as accepted.
+
+**Concrete missing-order checkpoint:** If the traveler says staff reported
+「第二份串燒沒有登錄」, say 「第二份串燒未登錄；是否已開始製作、會不會出餐或收費仍未確認，先向店員詢問是否要補點」.
+Never turn that report into 「店家完全沒收到」「廚房沒有製作」
+or 「因此不會出餐」 unless staff independently confirmed those facts.
+Similarly, 「飯馬上來」 only confirms the staff's expected delivery, not that
+the kitchen has already begun cooking. A missing order is not automatically
+a canceled order.
 
 ## Order, served, billed are three different facts
 
@@ -58,8 +75,21 @@ a final Japanese order sentence. When an item seems missing, compare only
 what is actually reported. For bills, reconcile **requested / confirmed /
 served / billed**, with quantity, unit price, set cost, cover charge, tax and
 discount adjustments. Compute differences using legible prices and state any
-unreadable amount. Do not conclude "no overcharge" solely because totals
-match; a receipt charge does not prove serving, and an unbilled item does
+unreadable amount. For the first reconciliation, compute only verified readable
+amounts (or clearly attributed user-reported amounts): 800 × 2 + 300 supports
+only a 1900 JPY known-item subtotal. Do not present speculative numeric invoice
+totals from assumed tax-inclusion, tax rate, cover charge or service charge
+taxable basis as a plausible correct bill. Ask staff for the missing basis.
+Only if the user explicitly asks for hypothetical math, segregate the example
+from the actual reconciliation and disclose every assumption; it cannot
+validate the bill. Request a review/correction, but do not promise that staff
+will reprint, refund or accept a corrected total. Do not conclude "no overcharge"
+solely because totals match; a receipt charge does not prove serving, and an unbilled item does
 not prove the user never spoke the order.
 
 Use no payment identifiers, and don't retain full receipts after the task.
+The ledger belongs in the conversation by default, not autonomous plan files.
+When the user or host forbids storage, do not intentionally write private
+travel/order details to scratch files, plans or tool outputs that store them.
+Do not claim absolute zero-file behavior for the host without verification;
+see [memory.md](memory.md) for host policy/configuration limits.
