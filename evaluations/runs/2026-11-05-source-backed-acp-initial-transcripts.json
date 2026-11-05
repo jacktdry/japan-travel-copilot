@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "case_id": "SOURCE-AIRPORT-P0-01",
+  "collection_local_date": "2026-11-05",
+  "timezone": "Asia/Taipei",
+  "head_before_run": "86a90d432d7a2e4ea6bfba6cf9fdc4f858d3b80e",
+  "fixture_sha256": "c60a13df6e43e7f140632c380f9259d9b683927f41cb99124db01cd5a2ba9a27",
+  "skill_sha256": "8c9bc01120c269e7ca20dfe389b18a255349d7d998a100ac842d9b0a882e0b54",
+  "evidence_reference_sha256": "a559cb62b5dffe19041e28b92ae248b5295a72d0725b2c8413173975fa0c44f5",
+  "navigation_reference_sha256": "55a4b4751f0fdc2e2036e105460b8f74a9fdf2d376ea64d58a1ef01c3fe7dabb",
+  "variant": "static-only-source-injection, no live search, no real bookings",
+  "fixture_scope": "One two-turn synthetic source-backed case, not original traveler history nor live timetable validation",
+  "source_card_injection": "Exact provenance and evidence_card from fixture, no must/must_not or reviewer_expectations; wrapper in first user message",
+  "runs": [
+    {
+      "model": "gpt-6.1-sol",
+      "adapter": "Codex ACP",
+      "mode": "read-only",
+      "effort": "medium",
+      "sandbox": "unrecorded",
+      "fresh_session": true,
+      "start_utc": "2026-11-05T04:45:05.007792Z",
+      "end_utc": "2026-11-05T04:46:25.345864Z",
+      "run_start_end_utc": [
+        [
+          "2026-11-05T04:45:05.007792Z",
+          "2026-11-05T04:45:26.677406Z"
+        ],
+        [
+          "2026-11-05T04:46:17.472398Z",
+          "2026-11-05T04:46:25.345864Z"
+        ]
+      ],
+      "source": "ACP session/load complete adapter-owned history",
+      "adapter_history_truncated": false,
+      "run1_event_ring_truncated": true,
+      "tool_read_observed": "read-only cat of SKILL.md and two references; first-run event ring evicted some early chunks",
+      "host_filesystem_audit": "not performed",
+      "messages": [
+        {
+          "role": "user",
+          "text": "You are acting as the traveler-facing Japan Travel Copilot in a NEW isolated fictional conversation. Read only SKILL.md, references/evidence-and-transit.md and references/live-navigation.md (read-only) for your guidance; DO NOT open the evaluations/ fixture or its reviewer-only rubric. No web access or live transit tools, no other searches, no memory persistence, no file edits, no external actions or requests. Respond naturally in concise Traditional Chinese, prioritize one actionable verification step. The next JSON is a STATIC evidence card supplied by an evaluator, NOT tool browsing in this conversation; it contains source-page notes, not proof of current operation. Do not claim to have browsed the source pages. Do not evaluate your own response or mention benchmark rules.\n\nSTATIC EVIDENCE CARD:\n{\n  \"provenance\": {\n    \"observed_at\": \"2026-11-05\",\n    \"timezone\": \"Asia/Tokyo\",\n    \"precision\": \"date_only\",\n    \"inspector\": \"upstream orchestrator\",\n    \"note\": \"Official pages independently inspected upstream; collection date, not a trip date. Exact inspection clock time was not recorded. Repository worker did not browse. Facts below are quote-free paraphrases, not archived page copies.\"\n  },\n  \"evidence_card\": {\n    \"scope\": \"Static source injection/tool-equivalent evidence only; NOT live browsing, a current-timetable test, or live operational verification.\",\n    \"sources\": [\n      {\n        \"id\": \"kate-uh\",\n        \"url\": \"https://www.kate.co.jp/en/timetable/detail/UH\",\n        \"publisher\": \"Kansai Airport Transportation Enterprise\",\n        \"effective_on\": null,\n        \"facts\": [\n          \"The listed departure point is Kintetsu Uehommachi's SECOND-FLOOR bus terminal.\"\n        ],\n        \"timetable_entries\": [\n          {\n            \"departure\": \"07:10\",\n            \"scheduled_arrival_t1\": \"08:01\"\n          },\n          {\n            \"departure\": \"07:50\",\n            \"scheduled_arrival_t1\": \"08:41\"\n          }\n        ]\n      },\n      {\n        \"id\": \"kintetsu-uehommachi\",\n        \"url\": \"https://www.kintetsu.co.jp/foreign/english/about/station/yard/uehommachi.html\",\n        \"publisher\": \"Kintetsu\",\n        \"effective_on\": \"2026-08-01\",\n        \"facts\": [\n          \"The station map states it is current as of its effective_on date.\",\n          \"The published normal ground-platform to underground-platform transfer guide is 6 minutes.\"\n        ],\n        \"platform_transfer_guide_minutes\": 6\n      },\n      {\n        \"id\": \"kintetsu-tsuruhashi\",\n        \"url\": \"https://www.kintetsu.co.jp/foreign/english/about/station/yard/tsuruhashi.html\",\n        \"publisher\": \"Kintetsu\",\n        \"effective_on\": \"2026-03-14\",\n        \"facts\": [\n          \"The station map states it is current as of its effective_on date.\"\n        ]\n      }\n    ]\n  }\n}\n\nTRAVELER, turn 1:\n這是獨立的虛構練習，假設未來某天要去關西機場第一航廈，日期與航班時間尚未設定。我們兩人帶大型行李，在鶴橋準備前往大阪上本町轉機場巴士，全程需要無階梯。請依提供的來源卡比較早、晚兩班，還缺哪些確認才能選？"
+        },
+        {
+          "role": "assistant",
+          "text": "我會先讀取指定的三份指南，再依來源卡整理兩班的差異與待確認事項。"
+        },
+        {
+          "role": "assistant",
+          "text": "**下一步先確認全程無階梯是否可行**：請近鐵與巴士業者核對「鶴橋出發月台、列車上下車、大阪上本町抵達月台至二樓巴士總站，以及巴士上下車」各段；尤其巴士是否有踏階、能否提供合適協助。\n\n依你提供的靜態來源卡，比較如下（日本時間）：\n\n| 選項 | 上本町發車 | 表定抵達關西機場 T1 | 取捨 |\n|---|---|---|---|\n| 早班 | 07:10 | 08:01 | 表定早到 40 分鐘，可保留較多緩衝，但須更早完成轉乘 |\n| 晚班 | 07:50 | 08:41 | 出發前多 40 分鐘，抵達機場也晚 40 分鐘 |\n\n目前還不能判定哪班適合，缺少：\n\n- **日期、航班時間與航空公司截止時間**：才能倒推報到、托運、安檢及登機所需餘裕。\n- **旅行日班次與搭乘條件**：時刻表是否適用、營運異動、座位／預約、兩件大型行李的承運規定。\n- **完整無階梯轉乘時間**：實際鶴橋出發位置與列車班次、電梯運作、兩人帶行李的步行及候梯時間、巴士候車與上車餘裕。\n\n來源卡的「6 分鐘」只指上本町**地面月台至地下月台的一般轉乘**，不能套用為抵達月台到二樓巴士總站的無階梯時間。\n\n我未瀏覽來源頁面，也無法查即時狀態。卡片的 2026-11-05 是上游查閱日期，沒有確切查閱時刻，也不是旅行日；上本町／鶴橋站圖分別標示截至 2026-08-01／2026-03-14，均不能證明旅行當日電梯正常或班次照常。此練習僅沿用本段對話，不保存旅行記憶。"
+        },
+        {
+          "role": "user",
+          "text": "站圖寫轉乘六分鐘，是否代表我們從抵達月台走電梯到二樓巴士站也只要六分鐘？晚班表定到機場後，能保證趕上報到並逛免稅店嗎？"
+        },
+        {
+          "role": "assistant",
+          "text": "**先請近鐵站務確認「抵達月台→二樓巴士總站」的完整無階梯路線，以及兩人帶大型行李需要預留多少時間。**\n\n六分鐘不能這樣套用：來源卡指的是上本町**地面月台與地下月台之間的一般轉乘**，沒有涵蓋前往二樓巴士站的路程、候梯與候車時間，也不證明當天電梯正常。巴士上下車能否全程無階梯，仍須另向巴士業者確認。\n\n晚班也**不能保證趕上報到或有時間逛免稅店**。08:41 只是來源卡的 T1 表定到達時間；旅行日期、航班時間、航空公司報到／托運及登機截止時間都尚未設定，交通延誤與機場排隊也未知。須補齊這些資料後倒推；免稅購物只能安排在必要流程完成且仍有餘裕時。"
+        }
+      ]
+    },
+    {
+      "model": "gemini-3.8-flash",
+      "adapter": "Antigravity ACP",
+      "mode": "plan",
+      "effort": "medium",
+      "sandbox": true,
+      "fresh_session": true,
+      "start_utc": "2026-11-05T04:47:06.287074Z",
+      "end_utc": "2026-11-05T04:48:19.72511Z",
+      "run_start_end_utc": [
+        [
+          "2026-11-05T04:47:06.287074Z",
+          "2026-11-05T04:47:52.348991Z"
+        ],
+        [
+          "2026-11-05T04:48:01.750548Z",
+          "2026-11-05T04:48:19.72511Z"
+        ]
+      ],
+      "source": "ACP session/load complete adapter-owned history",
+      "adapter_history_truncated": false,
+      "run1_event_ring_truncated": false,
+      "tool_read_observed": "read_file for designated Skill/reference files; no web source",
+      "host_filesystem_audit": "not performed",
+      "model_settings_provenance": "session/update returned gemini-3.8-flash, plan, medium, sandbox=true; inspect.runtime_state retains stale gemini-4-argon and sandbox=false. Treat native execution identity as uncertain pending verification, not a verified provider-model attribution.",
+      "messages": [
+        {
+          "role": "user",
+          "text": "You are acting as the traveler-facing Japan Travel Copilot in a NEW isolated fictional conversation. Read only SKILL.md, references/evidence-and-transit.md and references/live-navigation.md (read-only) for your guidance; DO NOT open the evaluations/ fixture or its reviewer-only rubric. No web access or live transit tools, no other searches, no memory persistence, no file edits, no external actions or requests. Respond naturally in concise Traditional Chinese, prioritize one actionable verification step. The next JSON is a STATIC evidence card supplied by an evaluator, NOT tool browsing in this conversation; it contains source-page notes, not proof of current operation. Do not claim to have browsed the source pages. Do not evaluate your own response or mention benchmark rules.\n\nSTATIC EVIDENCE CARD:\n{\n  \"provenance\": {\n    \"observed_at\": \"2026-11-05\",\n    \"timezone\": \"Asia/Tokyo\",\n    \"precision\": \"date_only\",\n    \"inspector\": \"upstream orchestrator\",\n    \"note\": \"Official pages independently inspected upstream; collection date, not a trip date. Exact inspection clock time was not recorded. Repository worker did not browse. Facts below are quote-free paraphrases, not archived page copies.\"\n  },\n  \"evidence_card\": {\n    \"scope\": \"Static source injection/tool-equivalent evidence only; NOT live browsing, a current-timetable test, or live operational verification.\",\n    \"sources\": [\n      {\n        \"id\": \"kate-uh\",\n        \"url\": \"https://www.kate.co.jp/en/timetable/detail/UH\",\n        \"publisher\": \"Kansai Airport Transportation Enterprise\",\n        \"effective_on\": null,\n        \"facts\": [\n          \"The listed departure point is Kintetsu Uehommachi's SECOND-FLOOR bus terminal.\"\n        ],\n        \"timetable_entries\": [\n          {\n            \"departure\": \"07:10\",\n            \"scheduled_arrival_t1\": \"08:01\"\n          },\n          {\n            \"departure\": \"07:50\",\n            \"scheduled_arrival_t1\": \"08:41\"\n          }\n        ]\n      },\n      {\n        \"id\": \"kintetsu-uehommachi\",\n        \"url\": \"https://www.kintetsu.co.jp/foreign/english/about/station/yard/uehommachi.html\",\n        \"publisher\": \"Kintetsu\",\n        \"effective_on\": \"2026-08-01\",\n        \"facts\": [\n          \"The station map states it is current as of its effective_on date.\",\n          \"The published normal ground-platform to underground-platform transfer guide is 6 minutes.\"\n        ],\n        \"platform_transfer_guide_minutes\": 6\n      },\n      {\n        \"id\": \"kintetsu-tsuruhashi\",\n        \"url\": \"https://www.kintetsu.co.jp/foreign/english/about/station/yard/tsuruhashi.html\",\n        \"publisher\": \"Kintetsu\",\n        \"effective_on\": \"2026-03-14\",\n        \"facts\": [\n          \"The station map states it is current as of its effective_on date.\"\n        ]\n      }\n    ]\n  }\n}\n\nTRAVELER, turn 1:\n這是獨立的虛構練習，假設未來某天要去關西機場第一航廈，日期與航班時間尚未設定。我們兩人帶大型行李，在鶴橋準備前往大阪上本町轉機場巴士，全程需要無階梯。請依提供的來源卡比較早、晚兩班，還缺哪些確認才能選？"
+        },
+        {
+          "role": "assistant",
+          "text": "**優先確認步驟**：請先確認您的**「航班起飛時間」以及該航空公司在關西機場第一航廈的「行李託運與報到截止時間」**，以便從截止時間往回倒推安全出發點。\n\n---\n\n### 早、晚兩班機場巴士比較（依靜態資料卡）\n*註：以下為提供之靜態資料記錄，非即時連線檢索，亦非實際搭乘當日的營運保證。*\n\n* **早班**：**07:10** 自近鐵上本町 2 樓巴士總站（近鉄上本町 2階バスのりば）出發，表定 **08:01** 抵達關西機場第一航廈（T1）。\n* **晚班**：**07:50** 自同地點出發，表定 **08:41** 抵達 T1。\n* **比較**：\n  * 兩班表定車程均為 51 分鐘，晚班比早班晚 40 分鐘抵達機場。\n  * 07:10 班次能提供較充裕的機場手續緩衝；07:50 班次若遇路上路況延誤或機場排隊，容錯空間較小。\n\n---\n\n### 還缺哪些確認才能做出選擇？\n\n1. **航班截止時間與機場手續緩衝（關鍵決策依據）**\n   * 表定抵達時間（08:01 或 08:41）不等於完成託運的時間。國際線通常需在起飛前 2～3 小時前抵達，且需預留大型行李託運排隊與安檢時間。若無確切航班時間，無法判定 08:41 是否過晚。\n\n2. **全程無階梯（無障礙）連續動線與實際轉乘時間**\n   * **大阪上本町轉乘**：資料卡記載的「6 分鐘」僅為一般旅客在地上月台與地下月台間的步行導引，**並非**攜帶大型行李由電車月台前往「2 樓巴士總站」的無障礙電梯路徑。\n   * **全程無障礙鏈**：包含鶴橋站進站至月台、上下電車車廂間隙（若需輪椅/行李輔助坡道 `スロープ板`）、上本町站出電車至 2 樓巴士總站電梯、以及巴士行李艙放置與乘車，整段都需要連續無階梯確認，且大型行李等候電梯需額外預留時間。\n\n3. **實際搭乘日的營運狀態與乘車規則**\n   * 資料卡僅為先前記錄之靜態內容，非當日即時運行狀態（運行情報）。\n   * 需確認出發當日關西機場交通（KATE）該路線是否需事先購票、預約或現場排隊搭乘，以及巴士大型行李額度是否有限制。\n\n*(本對話為獨立工作階段，無持久記憶儲存。)*"
+        },
+        {
+          "role": "user",
+          "text": "站圖寫轉乘六分鐘，是否代表我們從抵達月台走電梯到二樓巴士站也只要六分鐘？晚班表定到機場後，能保證趕上報到並逛免稅店嗎？"
+        },
+        {
+          "role": "assistant",
+          "text": "**不能代表，也完全無法保證。** 具體原因如下：\n\n---\n\n### 1. 站圖的 6 分鐘轉乘時間\n* **端點與條件不同**：官方站圖標示的 6 分鐘，僅為「地上月台 ↔ 地下月台」之間的一般旅客換乘導引，**不等於**前往「2 樓巴士總站」的時間。\n* **無障礙動線差異**：全程無階梯需依賴電梯，而電梯動線通常較為迂迴，且兩人攜帶大型行李可能需排隊等候車廂空間。因此實際從月台搭電梯、出剪票口再轉乘電梯至 2 樓巴士站，所需時間會顯著長於 6 分鐘。\n\n---\n\n### 2. 晚班抵達後能否保證報到與逛免稅店\n* **表定不等於實際**：晚班表定 08:41 抵達第一航廈，僅為時刻表預估，無法保證路況無延誤。\n* **無法保證趕上報到**：抵達機場不等於完成手續。在尚未設定「航班起飛時間」及「航空公司報到／行李託運截止時間」之前，無法確認 08:41 抵達是否符合安全寬限，更無法承諾能趕上。\n* **免稅店並非保證項目**：必須優先滿足託運、安檢與證照查驗等必要程序。逛免稅店屬於非必要彈性時間，晚班抵達必然會大幅壓縮甚至耗盡剩餘時間，在手續排隊時間未知前絕不能視為保證。\n\n---\n\n**優先行動確認**：請先提供您的**「航班起飛時間」與所搭乘的「航空公司」**，我們先為您比對報到截止底線，才能精確倒推需要搭乘哪一班車。"
+        }
+      ]
+    }
+  ]
+}

@@ -86,9 +86,16 @@ assistance before proceeding with an elevator-only route.
 Carry forward party size, bulky luggage and user-required accessibility as hard
 constraints in every later route suggestion for the current trip. For a new
 case or unrelated trip, use only that case's constraints; do not import an
-earlier party size, luggage count or elevator-only requirement. Large luggage
+earlier party size, luggage count or elevator-only requirement. Do not infer
+baggage item count from party size; retain unknown bag counts as unknown. Large luggage
 can justify checking lift access, but does not establish a user-required
 step-free route. Ask if that distinction changes the recommendation.
+
+Do not invent the order of elevators, ticket-gate exit/re-entry, or "multiple
+elevators" from a terminal floor number or unrelated platform guide. Only give
+such a route sequence with verified station map, operator or step-free route
+evidence supporting those exact segments; otherwise keep the sequence and
+segment durations unverified and ask station staff to confirm the full path.
 
 ## Airport and other hard deadlines
 
@@ -102,6 +109,8 @@ separately; a normal transfer guide cannot prove a tight bus connection.
 1. Record the traveler-reported flight date, departure time, terminal and
    party/luggage constraints. Verify actual check-in, baggage and gate cutoffs
    from official sources where possible. An assumed cutoff is **not** a rule.
+   Generic early-arrival heuristics (such as 2–3 hours for international flights)
+   are not actual carrier deadlines; verify the applicable carrier cutoffs.
 2. Work **backward**: gate, immigration/security, bag-drop/queue, correct
    terminal arrival, ground transfer, departure from lodging. Distinguish
    airport arrival from baggage acceptance. Add disclosed contingency margin
@@ -122,6 +131,9 @@ separately; a normal transfer guide cannot prove a tight bus connection.
    or lack of shopping time. Describe likely trade-offs rather than categorical
    claims: a later departure may reduce optional time, but the available
    shopping window remains unknown until the relevant timings are checked.
+   A 40-minute earlier scheduled arrival is a relative difference only, not
+   proof of an absolute check-in or shopping window. Without flight and cutoff
+   context, do not say a later arrival necessarily exhausts shopping time.
    Preserve urgency: prioritize carrier cutoff and operator timetable checks
    and timely departure; keep shopping optional.
 4. For "can I catch the earlier bus?" calculate only with **verified or

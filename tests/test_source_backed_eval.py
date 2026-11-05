@@ -17,7 +17,7 @@ class SourceBackedEvaluationTests(unittest.TestCase):
         self.data = json.loads(FIXTURE.read_text(encoding="utf-8"))
         self.card = self.data["evidence_card"]
 
-    def test_separate_unrun_fixture_has_complete_behavioral_contract(self):
+    def test_historical_initial_fixture_has_complete_behavioral_contract(self):
         self.assertEqual(self.data["schema_version"], "1.0")
         self.assertEqual(self.data["id"], "SOURCE-AIRPORT-P0-01")
         self.assertEqual(self.data["priority"], "P0")
@@ -131,7 +131,7 @@ class SourceBackedEvaluationTests(unittest.TestCase):
         section = " ".join(protocol.split(
             "## Source-backed P0 static evidence exercise", 1)[1].split(
             "## Manual model/host evaluation", 1)[0].split())
-        for phrase in (FIXTURE.name, self.data["id"], "Not run yet",
+        for phrase in (FIXTURE.name, self.data["id"], "initial completed review",
                        "outside the 22 text-only fictional/offline cases",
                        "source-injection/tool-equivalent", "not agent live browsing",
                        "current-timetable test", "NEW isolated session",
@@ -139,7 +139,8 @@ class SourceBackedEvaluationTests(unittest.TestCase):
                        "exact inspection clock time is unrecorded",
                        "Do not inject `must`/`must_not`", "reviewer_expectations", "full replies",
                        "SHA-256", "P0 automatic critical fail",
-                       "unassessed until an actual run", "No result establishes live operational safety"):
+                       "unassessed until an actual run", "No result establishes live operational safety",
+                       "historical initial state", "2 provider samples", "runtime-state inconsistent"):
             self.assertIn(phrase, section)
         evidence = " ".join((ROOT / "references/evidence-and-transit.md").read_text().split())
         for phrase in ("effective date", "access date", "timezone",
@@ -154,7 +155,24 @@ class SourceBackedEvaluationTests(unittest.TestCase):
         for filename in ("README.md", "CHANGELOG.md"):
             text = (ROOT / filename).read_text(encoding="utf-8")
             self.assertIn("evaluations/" + FIXTURE.name, text)
-            self.assertIn("not run yet", text.lower())
+            self.assertIn("2026-11-05-source-backed-initial-review.md", text)
+            self.assertNotIn("not run yet", text.lower())
+
+    def test_demonstrated_route_and_deadline_failures_have_explicit_guardrails(self):
+        evidence = " ".join((ROOT / "references/evidence-and-transit.md").read_text().split())
+        for phrase in ("wrong-endpoint transfer time cannot establish",
+                       "longer or shorter", "estimate its minutes",
+                       "segment durations unverified", "not a claimed direction"):
+            self.assertIn(phrase, evidence)
+        navigation = " ".join((ROOT / "references/live-navigation.md").read_text().split())
+        for phrase in ("Do not invent the order of elevators", "ticket-gate exit/re-entry",
+                       '"multiple elevators"', "verified station map, operator or step-free route",
+                       "sequence and segment durations unverified",
+                       "40-minute earlier scheduled arrival is a relative difference only",
+                       "not proof of an absolute check-in or shopping window",
+                       "Generic early-arrival heuristics", "not actual carrier deadlines",
+                       "Do not infer", "baggage item count from party size"):
+            self.assertIn(phrase, navigation)
 
 
 if __name__ == "__main__":

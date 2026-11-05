@@ -183,9 +183,17 @@ and fixture structure, **not live model performance or real-time accuracy**.
 
 One separate [source-backed P0 evidence exercise](evaluations/source-backed-airport.json)
 uses an upstream-inspected official timetable/map snapshot with fictional turns.
-It is outside the 22 text-only offline cases and recorded inference results.
-**Not run yet**: static source injection is neither agent live browsing nor
-current service/accessibility/check-in verification. See its
+It is outside the 22 text-only offline cases. The
+[initial review](evaluations/runs/2026-11-05-source-backed-initial-review.md)
+records 2 completed independent provider samples, 2 turns each: Codex met the
+narrow case; Gemini failed on an unsupported route and duration inference.
+Gemini's adapter configuration and runtime projection disagree; see the review.
+The unchanged fixture's `not_run` is historical; the review records current status.
+Static source injection is neither agent live browsing nor current
+service/accessibility/check-in verification. Guidance is tightened. A [post-fix review](evaluations/runs/2026-11-05-source-backed-postfix-review.md)
+records one new two-turn Codex sample without a P0 critical failure but with
+a remaining source-date precision gap. The Gemini post-fix run was blocked
+before execution and is unassessed; there is no full P0 pass. See the
 [manual procedure](evaluations/README.md#source-backed-p0-static-evidence-exercise).
 
 The [offline ACP smoke findings](evaluations/runs/2026-11-04-acp-offline-smoke.md)
@@ -372,9 +380,18 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 
 另有一份獨立的[官方來源快照 P0 測試案例](evaluations/source-backed-airport.json)，
 以公開時刻表及車站圖驗證模型能否區分「表定抵達」、「即時運行」及
-「完整無階梯轉乘」。它不計入原本 22 個合成情境，**目前尚未執行模型測試**；
-模型只能收到來源事實，未知事項與評分條件另存，不可用快照宣稱班次
-當天正常、電梯可用或能趕上班機。執行方式見[驗收規範](evaluations/README.md#source-backed-p0-static-evidence-exercise)。
+「完整無階梯轉乘」。它不計入原本 22 個合成情境。
+[初次評審](evaluations/runs/2026-11-05-source-backed-initial-review.md)已記錄
+2 個供應商各一個全新獨立 ACP 對話、各 2 回合：Codex 通過此狹窄案例；
+Gemini 虛構電梯／剪票口動線與轉乘時間長短，判定重大失敗。
+Gemini 的介面設定與執行狀態投影不一致，歸屬限制詳見報告。
+未修改案例中的 `not_run` 是歷史初始狀態，現況以評審報告為準。
+規則已補強。[修正後審查](evaluations/runs/2026-11-05-source-backed-postfix-review.md)
+記錄 Codex 新的 2 回合測試，未見 P0 重大錯誤，但來源日期精確度仍有缺口；
+Gemini 重測在執行前遭宿主安全檢查阻擋，不能算通過或失敗。
+**目前沒有全面 P0 驗收通過的證據**。
+模型只收到靜態來源事實，未實際上網；不可宣稱班次當天正常、電梯可用、
+能趕上班機或宿主完全不落檔。執行方式見[驗收規範](evaluations/README.md#source-backed-p0-static-evidence-exercise)。
 
 [離線 ACP 初步結果](evaluations/runs/2026-11-04-acp-offline-smoke.md)涵蓋
 4 個文字情境 × 2 個模型，加上 1 個獨立合成圖片情境 × 2 個模型，以及

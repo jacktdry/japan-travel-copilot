@@ -22,6 +22,10 @@ service, seats, boarding, a connection or airline check-in. Confirm applicabilit
 to the travel date and check operational updates separately. A station's normal
 platform transfer-time guide is not a measured group-and-baggage accessible
 path to a bus terminal; it supports only the endpoints and conditions stated.
+A wrong-endpoint transfer time cannot establish whether the bus path is
+longer or shorter, or estimate its minutes. Keep that path and its segment
+durations unverified until directly supported; extra luggage or lift queues
+justify checking, not a claimed direction or size of the time difference.
 
 ## Transit decision tree
 
