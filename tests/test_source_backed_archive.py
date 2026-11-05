@@ -17,6 +17,11 @@ SNAPSHOTS = {
 }
 
 
+def _parse_utc_timestamp(value):
+    """Parse recorded UTC-Z timestamps with 1–6 fractional digits on Python 3.9+."""
+    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+
 class SourceBackedArchiveTests(unittest.TestCase):
     def setUp(self):
         self.raw = ARCHIVE.read_text(encoding="utf-8")
@@ -67,8 +72,8 @@ class SourceBackedArchiveTests(unittest.TestCase):
                 self.assertEqual(users[1], self.fixture["turns"][1])
                 self.assertEqual(len(run["run_start_end_utc"]), 2)
                 for start, end in run["run_start_end_utc"]:
-                    self.assertLess(datetime.fromisoformat(start.replace("Z", "+00:00")),
-                                datetime.fromisoformat(end.replace("Z", "+00:00")))
+                    self.assertLess(_parse_utc_timestamp(start),
+                                _parse_utc_timestamp(end))
                 self.assertEqual(run["start_utc"], run["run_start_end_utc"][0][0])
                 self.assertEqual(run["end_utc"], run["run_start_end_utc"][-1][1])
 
@@ -129,8 +134,8 @@ class SourceBackedArchiveTests(unittest.TestCase):
                          self.archive["runs"][0]["messages"][-2]["text"])
         self.assertEqual(len(codex["run_time_utc"]), 2)
         for start, end in codex["run_time_utc"]:
-            self.assertLess(datetime.fromisoformat(start.replace("Z", "+00:00")),
-                            datetime.fromisoformat(end.replace("Z", "+00:00")))
+            self.assertLess(_parse_utc_timestamp(start),
+                            _parse_utc_timestamp(end))
         self.assertEqual(codex["host_filesystem_audit"], "not performed")
         self.assertEqual(gemini["adapter"], "Antigravity ACP")
         self.assertEqual(gemini["status"], "blocked_before_run")
