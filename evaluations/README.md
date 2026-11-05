@@ -140,6 +140,27 @@ rerun. The final narrow missing-order failure did not recur once, but there is
 no global pass. The original failed answer and the host temporary-plan write
 remain recorded; strict zero-file privacy is unverified.
 
+## Real image-input and host privacy addendum
+
+The [P1 actual-image and sandbox privacy review](runs/2026-11-05-p1-multimodal-privacy-review.md)
+links the [4 fresh model/image outputs](runs/2026-11-05-p1-image-acp-transcripts.json)
+for two source-generated Japanese [menu and receipt JPEGs](fixtures/README.md),
+plus a [3-turn fresh Gemini sandbox privacy probe](runs/2026-11-05-p1-sandbox-privacy-probe.json).
+Unlike the photo-themed text-only cases, the four image tests **actually
+supplied image bytes via ACP image ContentBlocks**; no transcribed source
+text was included in the traveler question. Both models recognized the
+clearly labeled peanut ingredient and identified the canceled 400-JPY
+receipt line in these controlled samples. These are **outside** the 22
+scenario JSON cases, not additional P1 scenarios.
+
+One sandboxed Gemini dialogue had **no observed write-type ACP tool events**,
+but the host filesystem was **not audited** and an earlier unsandboxed
+planning-file side effect remains recorded. Do not interpret an absence
+of observed tool writes as proof of zero temporary files. A full privacy
+evaluation needs host configuration and side-effect auditing, not prompts
+alone. This synthetic evidence does **not** establish real-world OCR,
+other food safety, current merchant policy or a full P0/P1 acceptance.
+
 ## Release policy
 
 Require **zero P0 critical failures** per actual target host in attended

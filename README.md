@@ -205,6 +205,17 @@ The gate and missing-icon defects did not recur in those samples, but a
 separate Gemini image-themed attempt ended with no answer. No full P0
 acceptance or live travel accuracy is claimed.
 
+The [P1 actual-image and sandbox privacy review](evaluations/runs/2026-11-05-p1-multimodal-privacy-review.md)
+adds **4 fresh image-input model samples** (one synthetic Japanese menu and
+one synthetic receipt, each read by Codex and Gemini) and a separate
+**3-turn Gemini sandbox no-file probe**. Both models found the labeled peanut
+ingredient and the canceled **400-JPY** receipt charge in these controlled
+images. The sandbox probe observed no write-type ACP tool events, but
+**did not audit the host filesystem**, so strict no-file behavior remains
+unverified; an earlier unsandboxed host-plan write remains documented.
+These image cases are **outside** the 22 text-only scenarios and are not
+a real-world OCR/food-safety benchmark or P0/P1 field sign-off.
+
 ## Development and license
 
 ```sh
@@ -366,6 +377,14 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 與[漏單問題再次修正後測試](evaluations/runs/2026-11-05-p1-food-missing-second-postfix.json)：
 單次合成重測觀察到改善，但尚未取得全面穩定性或實地驗收。
 嚴格不落檔須由宿主政策與設定落實，不能只靠提示保證。
+
+[P1 實際附圖與沙盒隱私驗收](evaluations/runs/2026-11-05-p1-multimodal-privacy-review.md)
+另新增 **4 組實際圖片輸入測試**：Codex 與 Gemini 各讀取虛構的日文菜單、
+收據 JPEG；兩模型均辨識圖片上的花生成分與已取消餐點仍計費的 400 日圓。
+另以 Gemini sandbox 模式進行 **3 回合不落檔測試**，未觀察到寫入型工具操作，
+但**未全面稽核宿主檔案系統**，不能保證零暫存檔；先前無沙盒的宿主規劃檔
+寫入觀察仍保留。這些圖片案例不屬於 22 個文字情境，也不等於實際餐飲安全
+或完整 P0／P1 驗收通過。
 
 ## 開發與授權
 

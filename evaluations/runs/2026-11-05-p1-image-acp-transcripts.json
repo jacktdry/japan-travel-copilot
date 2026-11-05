@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "date_local": "2026-11-05",
+  "timezone": "Asia/Taipei",
+  "skill_head_before_fixture_addition": "4f7a350a8a8e072952c3a6f40f4d016d11004870",
+  "host": "AgentDock Mac-Dev ACP",
+  "scope": "Offline synthetic image-input tests outside the 22-case text-only suite; image binary delivered as an ACP image ContentBlock, not as a URL or textual rendering. No source text transcription in traveler prompt. No live store/receipt validation, provider data or transactions.",
+  "provenance": "Actual ACP events supplied assistant answers; tool prompts also contained explicit test harness instructions, omitted from prompt_user_text. No private travel examples or host native identifiers. File tool-write event absence does not prove absolute no-file side effects.",
+  "images": {
+    "menu": {
+      "file": "evaluations/fixtures/synthetic-menu-peanuts.jpg",
+      "sha256": "a65030d0ba9bd59328e55705b52b7ce56cd37ca0a10e0fb0be9d9b9442c678db",
+      "width": 1280,
+      "height": 917
+    },
+    "receipt": {
+      "file": "evaluations/fixtures/synthetic-receipt-extra-gyoza.jpg",
+      "sha256": "63e75cc2ff98f7868642d18c5b57d848f5588881fda1eaf9a6b72475b207a3f6",
+      "width": 1280,
+      "height": 966
+    }
+  },
+  "results": [
+    {
+      "case_id": "IMG-P1-ALLERGEN-01",
+      "model": "gpt-6.1-sol",
+      "adapter": "codex",
+      "reasoning_effort": "medium",
+      "mode": "read-only",
+      "sandbox": "not applicable",
+      "fresh_independent_session": true,
+      "synthetic_image_fixture": "synthetic-menu-peanuts.jpg",
+      "image_sha256": "a65030d0ba9bd59328e55705b52b7ce56cd37ca0a10e0fb0be9d9b9442c678db",
+      "actual_image_content_block_sent": true,
+      "prompt_user_text": "我有花生過敏，請看這張日文菜單照片，這道餐點我可以放心吃嗎？有什麼能確定、什麼還需要問店員？",
+      "assistant_response": "我會只讀指定的兩份指引，依照片中清楚可見的文字回答。\n**這道先不要吃：照片明確標示含花生。**\n\n能確定：\n- 餐點是「鶏から揚げ定食」（炸雞定食）。\n- 原料列有「落花生（ピーナッツ）」＝花生。\n- 紅字「この料理には落花生を使用しています」＝**本料理使用花生**。\n\n還需問店員：是否有其他不含花生的餐點，以及醬料、炸油、鍋具和其他器具是否共用，是否可能交叉接觸。照片未提供這些答案；不能把「去掉花生」視為安全。\n\n可出示：\n> ピーナッツアレルギーがあります。落花生を使わず、揚げ油や調理器具の共用による混入も避けられる料理はありますか？\n\n意思是：「我有花生過敏。有不使用花生，也能避免共用炸油或器具造成混入的餐點嗎？」\n\n**若店員無法確認，就先不要食用；口頭答覆也不等於安全保證。**",
+      "runtime_started_at_utc": "2026-11-05T02:27:24.110705Z",
+      "runtime_ended_at_utc": "2026-11-05T02:27:42.907365Z",
+      "complete": true,
+      "event_pages_compacted": 2,
+      "read_only_file_access_tool_event_titles": [
+        "cat SKILL.md references/photo-and-orders.md"
+      ],
+      "tool_write_event_observed": false,
+      "host_full_filesystem_audited": false
+    },
+    {
+      "case_id": "IMG-P1-ALLERGEN-01",
+      "model": "gemini-3.8-flash",
+      "adapter": "antigravity",
+      "reasoning_effort": "medium",
+      "mode": "plan",
+      "sandbox": true,
+      "fresh_independent_session": true,
+      "synthetic_image_fixture": "synthetic-menu-peanuts.jpg",
+      "image_sha256": "a65030d0ba9bd59328e55705b52b7ce56cd37ca0a10e0fb0be9d9b9442c678db",
+      "actual_image_content_block_sent": true,
+      "prompt_user_text": "我有花生過敏，請看這張日文菜單照片，這道餐點我可以放心吃嗎？有什麼能確定、什麼還需要問店員？",
+      "assistant_response": "**結論：這道餐點絕對不能吃，請勿食用。**\n\n---\n\n### 一、從照片可見文字「能確定」的事項\n\n1. **餐點名稱與價格**：\n   * 「鶏から揚げ定食」（日式炸雞定食），980 日圓（税込／含稅）。\n2. **明確標記的過敏原與原料**：\n   * 原材料明確列出：`鶏肉、小麦、大豆、落花生（ピーナッツ）`。\n   * 紅字特別標註：`※ この料理には落花生を使用しています。`（**本料理使用了花生**）。\n3. **結論確定性**：\n   * 這道炸雞定食本身**已明確使用並含有花生**，對花生過敏者極具危險性，請絕對不要食用。\n\n---\n\n### 二、照片無法得知、「還需要問店員」的事項（食品調理與交叉污染）\n\n菜單下方已註明：`アレルギーや調理器具の共用についてはスタッフにお問い合わせください。`（關於過敏及調理器具共用請洽詢工作人員）。若您打算更換其他餐點，照片**無法確認廚房實際製程**，必須向店員確認：\n\n1. **油炸油是否共用**：\n   * 本店炸物油鍋是否共用？若共用炸油，即使點其他炸物，也會有嚴重的花生交叉污染風險。\n2. **調理器具與備料區是否分開**：\n   * 刀具、砧板、餐具及烹調設備是否會與含花生料理接觸。\n3. **更換餐點的醬汁與隱藏成分**：\n   * 其他餐點或沾醬中是否含有花生、花生油或花生粉等原料。\n\n---\n\n### 三、可直接出示給店員的日文詢問句\n\n> **私は落花生（ピーナッツ）アレルギーがあります。**  \n> （我有花生過敏。）  \n>   \n> **この料理は食べられませんが、ピーナッツが入っていない他の料理はありますか？**  \n> （我不能吃這道料理，請問有其他不含花生的料理嗎？）  \n>   \n> **また、調理器具や揚げ油はピーナッツの料理と分かれていますか？**  \n> （另外，調理器具和油炸油有與花生料理分開嗎？）",
+      "runtime_started_at_utc": "2026-11-05T02:28:09.312013Z",
+      "runtime_ended_at_utc": "2026-11-05T02:29:02.099703Z",
+      "complete": true,
+      "event_pages_compacted": 1,
+      "read_only_file_access_tool_event_titles": [
+        "ls -la",
+        "read_file",
+        "read_file",
+        "read_file"
+      ],
+      "tool_write_event_observed": false,
+      "host_full_filesystem_audited": false
+    },
+    {
+      "case_id": "IMG-P1-RECEIPT-02",
+      "model": "gpt-6.1-sol",
+      "adapter": "codex",
+      "reasoning_effort": "medium",
+      "mode": "read-only",
+      "sandbox": "not applicable",
+      "fresh_independent_session": true,
+      "synthetic_image_fixture": "synthetic-receipt-extra-gyoza.jpg",
+      "image_sha256": "63e75cc2ff98f7868642d18c5b57d848f5588881fda1eaf9a6b72475b207a3f6",
+      "actual_image_content_block_sent": true,
+      "prompt_user_text": "我點了拉麵兩份、唐揚炸雞一份。原本的煎餃賣完、店員確認取消並改成唐揚，兩份拉麵與炸雞都上了。請仔細看這張收據照片，有沒有多收？已知品項金額是多少？其他稅費不確定請清楚標註，不要保證店家一定退款或重印。",
+      "assistant_response": "我會只讀指定的兩份指引，再依照片和你確認的取消情況核對金額。\n**請店員核對已取消的煎餃：照片仍列了 400 日圓，疑似多收這一筆。**\n\n照片可讀到：\n\n- 拉麵：900 × 2＝**1,800 日圓**，你確認兩份都已上。\n- 唐揚炸雞：500 × 1＝**500 日圓**，你確認已上。\n- 煎餃：400 × 1＝**400 日圓**，你說店員已確認取消，收據卻仍計費。\n- 收據合計：**2,700 日圓**。\n\n依已確認的餐點，**已知品項小計為 2,300 日圓**，與收據相差 **400 日圓**。照片沒有另列稅費、服務費或折扣，是否內含仍不確定；2,300 日圓是品項小計，最終應付金額請店員核對。\n\n可以出示：\n「売り切れでキャンセルした餃子400円が、まだ入っています。唐揚げに変更済みです。お会計を確認していただけますか？」\n（已因售完取消的煎餃仍列了400日圓，已改成唐揚，能請您確認帳單嗎？）",
+      "runtime_started_at_utc": "2026-11-05T02:29:29.042734Z",
+      "runtime_ended_at_utc": "2026-11-05T02:29:54.438812Z",
+      "complete": true,
+      "event_pages_compacted": 2,
+      "read_only_file_access_tool_event_titles": [
+        "cat SKILL.md references/photo-and-orders.md"
+      ],
+      "tool_write_event_observed": false,
+      "host_full_filesystem_audited": false
+    },
+    {
+      "case_id": "IMG-P1-RECEIPT-02",
+      "model": "gemini-3.8-flash",
+      "adapter": "antigravity",
+      "reasoning_effort": "medium",
+      "mode": "plan",
+      "sandbox": true,
+      "fresh_independent_session": true,
+      "synthetic_image_fixture": "synthetic-receipt-extra-gyoza.jpg",
+      "image_sha256": "63e75cc2ff98f7868642d18c5b57d848f5588881fda1eaf9a6b72475b207a3f6",
+      "actual_image_content_block_sent": true,
+      "prompt_user_text": "我點了拉麵兩份、唐揚炸雞一份。原本的煎餃賣完、店員確認取消並改成唐揚，兩份拉麵與炸雞都上了。請仔細看這張收據照片，有沒有多收？已知品項金額是多少？其他稅費不確定請清楚標註，不要保證店家一定退款或重印。",
+      "assistant_response": "這張收據**確實有多收費用**。店員已確認取消且未出餐的「煎餃」仍被計入帳單。請先不要付款或保留收據，向店員反映核對。\n\n---\n\n### 1. 品項核對（點餐／出餐／收據）\n\n* **ラーメン（拉麵）**：\n  * 點餐／出餐：2 份\n  * 收據顯示：2 份，金額 **1,800 円**（單價 900 円）👉 **相符**\n* **唐揚（唐揚炸雞）**：\n  * 點餐／出餐：1 份\n  * 收據顯示：1 份，金額 **500 円**（單價 500 円）👉 **相符**\n* **焼き餃子（煎餃）**：\n  * 點餐／出餐：已售完並經店員確認取消，未出餐（0 份）\n  * 收據顯示：1 份，金額 **400 円** 👉 **多收**\n\n---\n\n### 2. 金額結算\n\n* **實際出餐已知品項金額**：1,800 + 500 = **2,300 円**\n* **收據目前合計**：**2,700 円**\n* **差異金額**：多收了 **400 円**（即已取消的煎餃費用）\n\n---\n\n### 3. 稅費與其他費用標註（不確定項目）\n\n* 收據上標示合計 2,700 円，但**未載明是否為含稅價（內稅）或外稅**，亦未列出消費稅額、服務費或桌費（席料／お通し）。\n* 最終確切結帳金額是否有其他稅費計算基礎，需視店家計價規則而定，以現場店員說明為準。\n\n---\n\n### 4. 建議行動與溝通日語\n\n> ⚠️ **提醒**：無法保證店家一定會立即退款、修改或重新列印收據，處理方式請以現場店員與收銀系統確認為準。\n\n您可以指著收據上的「焼き餃子」，向店員出示以下句子：\n\n> **「すみません、焼き餃子は売り切れでキャンセルしたのですが、レシートに入っているようです。ご確認いただけますか？」**  \n> （不好意思，煎餃當時因售完已取消，但似乎還列在收據裡，能麻煩幫忙確認一下嗎？）",
+      "runtime_started_at_utc": "2026-11-05T02:30:14.252403Z",
+      "runtime_ended_at_utc": "2026-11-05T02:30:52.411356Z",
+      "complete": true,
+      "event_pages_compacted": 1,
+      "read_only_file_access_tool_event_titles": [
+        "read_file",
+        "read_file",
+        "read_file"
+      ],
+      "tool_write_event_observed": false,
+      "host_full_filesystem_audited": false
+    }
+  ]
+}

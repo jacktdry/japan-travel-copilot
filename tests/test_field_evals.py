@@ -106,7 +106,10 @@ class FieldEvaluationTests(unittest.TestCase):
                          "2026-11-04-p0-remaining-postfix-transcripts.json",
                          "2026-11-05-p1-offline-review.md",
                          "2026-11-05-p1-postfix-transcripts.json",
-                         "2026-11-05-p1-food-missing-second-postfix.json"):
+                         "2026-11-05-p1-food-missing-second-postfix.json",
+                         "2026-11-05-p1-multimodal-privacy-review.md",
+                         "2026-11-05-p1-image-acp-transcripts.json",
+                         "2026-11-05-p1-sandbox-privacy-probe.json"):
             text = text.replace(filename, re.sub(r"^20[0-9]{2}-[0-9]{2}-[0-9]{2}-", "", filename))
         # Check for identifier *shapes*, not values from a real trip.
         for pattern in (
@@ -731,6 +734,98 @@ class FieldEvaluationTests(unittest.TestCase):
             "not a general OCR benchmark or field-safety sign-off",
         ):
             self.assertIn(phrase, normalized)
+
+    def test_actual_p1_image_inputs_have_four_complete_independent_samples(self):
+        # Archive contract and JPEG-byte integrity: NOT an image-reading model test.
+        base = ROOT / "evaluations"
+        manifest = base / "runs/2026-11-05-p1-image-acp-transcripts.json"
+        evidence = json.loads(manifest.read_text(encoding="utf-8"))
+        self.assertEqual(evidence["schema_version"], "1.0")
+        self.assertIn("image ContentBlock", evidence["scope"])
+        self.assertEqual(evidence["timezone"], "Asia/Taipei")
+        expected = {
+            ("IMG-P1-ALLERGEN-01", "gpt-6.1-sol"): "menu",
+            ("IMG-P1-ALLERGEN-01", "gemini-3.8-flash"): "menu",
+            ("IMG-P1-RECEIPT-02", "gpt-6.1-sol"): "receipt",
+            ("IMG-P1-RECEIPT-02", "gemini-3.8-flash"): "receipt",
+        }
+        self.assertEqual(len(evidence["results"]), 4)
+        self.assertEqual(
+            {(r["case_id"], r["model"]) for r in evidence["results"]},
+            set(expected),
+        )
+        fixture_info = evidence["images"]
+        self.assertEqual(set(fixture_info), {"menu", "receipt"})
+        for k, info in fixture_info.items():
+            with self.subTest(fixture=k):
+                file = ROOT / info["file"]
+                self.assertEqual(file.parent, base / "fixtures")
+                content = file.read_bytes()
+                self.assertGreater(len(content), 10_000)
+                self.assertLess(len(content), 1_000_000)
+                self.assertEqual(content[:3], b"\xff\xd8\xff")
+                self.assertEqual(hashlib.sha256(content).hexdigest(),
+                                 info["sha256"])
+                self.assertGreater(info["width"], 400)
+                self.assertGreater(info["height"], 400)
+        for item in evidence["results"]:
+            with self.subTest(case=item["case_id"], model=item["model"]):
+                self.assertIs(item["actual_image_content_block_sent"], True)
+                self.assertIs(item["fresh_independent_session"], True)
+                self.assertIs(item["complete"], True)
+                self.assertIs(item["tool_write_event_observed"], False)
+                self.assertIs(item["host_full_filesystem_audited"], False)
+                self.assertEqual(item["reasoning_effort"], "medium")
+                self.assertTrue(item["prompt_user_text"].strip())
+                self.assertTrue(item["assistant_response"].strip())
+                img = fixture_info[expected[item["case_id"], item["model"]]]
+                self.assertEqual(item["image_sha256"], img["sha256"])
+                self.assertEqual(item["synthetic_image_fixture"],
+                                 Path(img["file"]).name)
+        text = manifest.read_text(encoding="utf-8")
+        for pattern in (r"/(?:Users|home)/[A-Za-z0-9._-]+",
+                        r"gh[opusr]_[A-Za-z0-9]+",
+                        r'"(?:session_id|native_id|device_id)"\s*:'):
+            self.assertNotRegex(text, pattern)
+        fixture_doc = (base / "fixtures/README.md").read_text(encoding="utf-8")
+        for phrase in ("synthetic-menu-peanuts.jpg",
+                       "synthetic-receipt-extra-gyoza.jpg",
+                       "落花生", "2,700円", "actual JPEG bytes"):
+            self.assertIn(phrase, fixture_doc)
+
+    def test_sandbox_probe_distinguishes_no_write_event_from_zero_files(self):
+        # A tool-event observation cannot prove the host wrote no files.
+        base = ROOT / "evaluations"
+        path = base / "runs/2026-11-05-p1-sandbox-privacy-probe.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(data["schema_version"], "1.0")
+        self.assertEqual(data["model"], "gemini-3.8-flash")
+        self.assertEqual(data["reasoning_effort"], "medium")
+        self.assertEqual(data["mode"], "plan")
+        self.assertIs(data["sandbox"], True)
+        self.assertIs(data["fresh_independent_session"], True)
+        self.assertEqual(len(data["turns"]), 3)
+        for t in data["turns"]:
+            self.assertTrue(t["traveler"].strip())
+            self.assertTrue(t["assistant"].strip())
+            self.assertIs(t["tool_write_event_observed"], False)
+            self.assertIs(t["host_filesystem_audited"], False)
+            self.assertIn("run_started_utc", t)
+            self.assertIn("run_ended_utc", t)
+        summary = data["summary"]
+        self.assertIn("No write-type ACP tool event observed", summary)
+        self.assertIn("No host-wide filesystem", summary)
+        self.assertIn("NOT established", summary)
+        report = (base / "runs/2026-11-05-p1-multimodal-privacy-review.md"
+                  ).read_text(encoding="utf-8")
+        self.assertIn(path.name, report)
+        self.assertIn("4 completed", report)
+        self.assertIn("no full host filesystem", report.lower())
+        self.assertIn("not", report.lower())
+        protocol = (base / "README.md").read_text(encoding="utf-8")
+        self.assertIn("P1 actual-image and sandbox privacy review", protocol)
+        self.assertNotRegex(path.read_text(encoding="utf-8"),
+                            r"/(?:Users|home)/[A-Za-z0-9._-]+")
 
     def test_image_observations_keep_sample_counts_and_limitations_explicit(self):
         # Guard reporting distinctions; this is not a new live image/model test.
