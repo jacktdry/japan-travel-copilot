@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0",
+  "date_local": "2026-11-05",
+  "timezone": "Asia/Taipei",
+  "base_evidence": "2026-11-05-p1-offline-transcripts.json",
+  "source_guidance_sha256": {
+    "SKILL.md": "8c9bc01120c269e7ca20dfe389b18a255349d7d998a100ac842d9b0a882e0b54",
+    "references/trip-operations.md": "7f120175d3e64f9f440982a2d8256dc9c30b4e19ead96225daf83f072312f44e",
+    "references/photo-and-orders.md": "c00df3a9f004dc128079dbb7caf359b905261ae8948bb13b03969c1d4d08f0ad",
+    "references/memory.md": "99a35845c8c09da1814487dccaf927ccce65f98a90e591b4b1ebe12742e1ba5d"
+  },
+  "environment": "Independent fresh post-fix Gemini 3.8 Flash medium Antigravity plan sessions for each case. Synthetic offline cases, no live venue/restaurant/provider facts. FOOD-LEDGER-21 host sandbox=true; other cases sandbox=false. No actual pictures or real travelers. Tests executed after local uncommitted instruction edits; hashes capture the exact revision under test.",
+  "provenance": "Complete ACP assistant message event text per run, with public synthetic traveler turns from scenarios.json. First-turn harness wrapper omitted. Native IDs and private paths omitted. No actual host storage audit of the sandboxed ledger rerun: absence of observed tool-write event is not proof of zero temporary files.",
+  "postfix_samples": [
+    {
+      "case_id": "FOOD-RECEIPT-16",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "sandbox": false,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "我只看得清收據有料理兩份各 800 日圓，服務費一筆 300 日圓。你能證明沒多收嗎？",
+          "assistant": "**無法證明沒有多收。**\n\n目前**並未收到或檢視到收據圖片**，以下僅能依你回報的文字內容協助拆解與核對：\n\n---\n\n### 1. 已知可讀項目核算\n依你回報的已知項目，目前僅能支持以下小計：\n* **料理兩份**：800 × 2 ＝ 1,600 日圓\n* **服務費**：300 日圓\n* **已知項目可讀小計**：**1,900 日圓**\n\n> 依規範，在店家確認前不推算任何假設性的稅金（如內稅／外稅）、折扣或總額數字；稅額計算基準與服務費計費方式目前均屬未知。\n\n---\n\n### 2. 無法證明未多收的原因\n* **點餐、出餐與計費是不同事實**：收據上列出兩份料理，不能直接證明現場確實送齊了兩份；若有未送到的餐點卻被入帳，即便數字吻合也是多收。\n* **看不清的其餘項目與計費基準**：由於收據其他部分看不清，無法得知是否另有未讀出的品項、座位費（席料／お通し）、折扣，或是服務費的具體計算標準（例如單筆計費或依人數計費）。\n* **總額相符不等於沒有多收**：即使收據最終總額碰巧與某些數字相加一致，也無法排除漏計、重複入帳或品項登錄錯誤的可能。\n\n---\n\n### 建議下一步\n建議直接請現場店員協助核對完整明細與服務費依據。你可以向店員出示以下日文詢問：\n\n> **「すみません、レシートの内訳とサービス料について確認させていただけますか？」**  \n> （不好意思，可以請您協助確認一下收據明細與服務費的內容嗎？）\n\n若收據最下方的「合計」金額或其他欄位有能看清的文字或數字，也可以提供給我進一步核對。"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-ALLERGY-17",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "sandbox": false,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "這道料理照片模糊，只看得到部分日文。可以確定不含花生嗎？",
+          "assistant": "**無法確定；若您需要避免花生，在與店員確認清楚前請先不要食用。**\n\n1. **無法從照片或部分文字判定**：此對話目前並未接收到料理照片；此外，即使有照片，單憑模糊影像或部分日文菜單名稱，也絕對無法保證不含花生或過敏原（醬汁、隱藏調味、花生油或廚房器具皆可能有交叉接觸風險）。\n2. **向店員中性詢問成分**（您未提及是否為過敏體質，此處使用中性的食材確認句）：\n   > **「すみません、この料理に落花生（ピーナッツ）やピーナッツ油は入っていますか？調理器具の共用も確認していただけますか？」**  \n   > （不好意思，請問這道料理含有花生或花生油嗎？也方便協助確認是否有共用調理器具嗎？）\n\n**安全建議**：若店家或廚房無法明確確認所有成分與製作環境，最安全的做法是不要點選或食用該道料理。"
+        }
+      ]
+    },
+    {
+      "case_id": "EVENT-WINDOW-18",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "sandbox": false,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "入場券指定 09:20，10:00 的遊樂設施也已預約。看到網路有人說 09:45 有表演，要改去看嗎？",
+          "assistant": "**建議先維持原訂計畫，優先確保 10:00 已預約的設施，不建議直接改去看表演。**\n\n### 評估原因\n1. **已確認預約優先**：10:00 的遊樂設施為已確認的預約時段，而 09:45 的表演目前僅為網路傳聞，尚未經現場或官方即時時刻表證實。\n2. **不可假設時間與路程**：09:45 與 10:00 雖然表面相差 15 分鐘，但在**表演長度**、**排隊與散場移動時間**皆未知的狀況下，不能推算兩者一定能順利銜接。\n3. **遲到規定未知**：設施預約是否有入場寬限期、逾時是否會直接失效，必須依現場或官方規定為準，不宜冒險推測。\n\n### 下一步行動\n- **維持 09:20 準時入場**，先依 10:00 設施為核心動線。\n- 入園後若想爭取看表演，請第一時間**向現場工作人員或查看官方 App/公告告示牌**確認兩件事：\n  1. 今日是否有該場表演及其確切長度。\n  2. 10:00 預約設施的最後報到截止限制。\n\n在獲得官方確認前，請務必以已預約的設施為優先。"
+        }
+      ]
+    },
+    {
+      "case_id": "TRIP-DISRUPT-10",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "sandbox": false,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "去日本的航班取消，我們改成隔天出發，原本第三晚的飯店也無法入住。",
+          "assistant": "先在這段對話協助你；本助理僅以當前對話紀錄狀態，不會寫入本機檔案，亦無持久記憶、即時訂位系統或業者最新政策資料，無法代為發送取消或執行任何預約。\n\n### 建議優先行動\n請先儘速透過原預訂管道（飯店官方或訂房平台）聯繫**第三晚飯店**與**第一、二晚住宿**，告知因航班取消而延後出發，洽詢改期或取消方式。退款金額、取消費用、能否免除罰金或未入住（No-show）後續影響，均須依各業者、購買通路及專案條款而定，無法保證能無償退款或改期；向航空公司索取的取消證明（欠航証明書）可作為後續向業者或保險申請審核的憑證。\n\n---\n\n### 異動與相依項目檢視\n\n- **已確認（旅客回報）**：\n  - 去程航班取消，改為隔天出發。\n  - 原本第三晚飯店無法入住。\n- **受影響項目**：\n  - **第三晚飯店**：需主動向業者申請變更或取消，避免訂單處於未處理狀態。\n  - **前兩晚住宿**：因出發日期延後一天，需確認第一、二晚入住日期是否需要同步順延或部分取消，避免影響入住權益。\n  - **抵達後交通與指定日期票券**：原訂的機場接駁、指定席、租車或景點預約是否仍在有效時段內。\n  - **入境填報資訊**：若已填寫入境資料（如 Visit Japan Web），入境日期與首日住宿地址需相應更新。\n- **待確認事項**：\n  - 各項住宿、票券與交通之退改規則、手續費及申請截止期限（依各業者契約條款為準）。\n  - 新航班報到與抵達時間。\n\n---\n\n### 聯繫飯店參考日文（可複製向業者說明）\n> 「航空便の欠航に伴い出発が翌日に変更となったため、宿泊日程の変更（またはキャンセル）についてご相談させていただけますでしょうか。」  \n> （因航班取消致出發順延至隔天，想向您洽詢住宿改期或取消事宜。）  \n*提醒：請透過官方客服或訂單系統提出，切勿在公開或第三方對話中提供完整信用卡號或私人訂位代碼。*\n\n---\n\n請問第一、二晚的住宿目前是否已完成延後聯繫？另外第三晚飯店原先是訂在單一城市還是跨縣行程，希望優先爭取改期還是退訂？"
+        },
+        {
+          "traveler": "行程只留下都市行程，原本跨縣行程取消，請幫我看還有哪些要改。",
+          "assistant": "依你的最新決定，行程已在本次規劃中調整為**僅保留都市行程、移除跨縣行程**。請特別注意：**在行程規劃中移除，並不代表外部實際預訂已自動取消**，各項有效訂單仍須由你主動向各業者辦理退改。\n\n以下為你整理需要逐項檢視與變更的清單：\n\n---\n\n### 連鎖異動與狀態盤點\n\n- **已確認（規劃調整）**：\n  - 跨縣行程已從當前行程中剔除，維持單一或主要都市活動。\n\n- **受影響項目（需主動向業者辦理退改或核對）**：\n  1. **跨縣交通與各類票券**：\n     - 已預訂的新幹線、特急指定席、高速巴士或跨縣租車。\n     - 已購之周遊券（如 JR Pass 或區域票券）與交通套票。\n  2. **跨縣住宿與都市住宿銜接**：\n     - 原訂的外縣市飯店（含原第三晚及後續外縣市夜數）需辦理取消或變更。\n     - 取消跨縣後，都市內是否產生住宿天數空缺，需確認原都市飯店能否續住（連泊）或需另訂。\n  3. **預約制活動與門票**：\n     - 外縣市已預約之特定景點門票、體驗或餐廳。\n     - 都市內原第一天因班機延誤而已錯過的預約。\n  4. **行李配送（若有使用）**：\n     - 若原先規劃將大件行李由機場或前家飯店直接寄往外縣市飯店，需儘速聯繫物流業者變更收送地址或取消。\n  5. **入境申報資料**：\n     - 若已於 Visit Japan Web 填寫外縣市住宿資訊，請更新為目前實際入住的都市飯店與聯絡電話。\n\n- **待確認事項（退改規則與費用）**：\n  - 各項票券、租車與住宿的**退改期限、手續費及是否適用不可抗力減免**：\n    - 各類交通票券（包含周遊券或特急券）的退改政策因各發行業者、購買通路及票種規則而異；**即使票券已啟用或兌換，能否因班機取消辦理特殊退款，均須憑航班取消證明向原通路或車站窗口個案確認，切勿直接認定無法退款或可保證退款**。\n    - 相關取消費、未入住處理與保險理賠標準，均需依個別合約與保單條款為準。請妥善保存航空公司發行之「航班取消證明（欠航証明書）」。\n\n---\n\n請問你們目前確定留在**哪一座都市**？若有已訂好的交通票券或住宿需要逐一排查，可提供「項目／日期／購買通路」（請勿提供訂單代號、卡號等敏感個資），我可為你梳理處理優先順序。"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-MISSING-15",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "sandbox": false,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "我們要兩份串燒和一份飯。",
+          "assistant": "您可以直接向店員出示以下日文，或照著唸來點餐：\n\n> **「すみません、注文をお願いします。串焼きを2つと、ご飯を1つお願いします。」**  \n> （Sumimasen, chūmon o onegaishimasu. Kushiyaki o futatsu to, gohan o hitotsu onegaishimasu.）  \n> **中文意思**：不好意思，我要點餐。請給我兩份串燒和一份飯。\n\n---\n\n### 目前點餐狀態（僅保留於當前對話）\n\n* **已點選（Requested）**：\n  * 串燒 × 2\n  * 白飯 × 1\n* **店員確認（Staff confirmed）**：待點餐與店員確認\n* **已送達（Served）**：尚未\n* **帳單核對（Billed）**：尚未計費\n\n---\n\n### 點餐實用提醒\n1. **口味選擇**：店員通常會詢問串燒的調味，常見有兩種：\n   * **醬燒**：タレ（tare）\n   * **鹽烤**：塩（shio）  \n   若店員詢問，可直接回答「タレでお願いします」（請給我醬燒）或「塩でお願いします」（請給我鹽烤）。\n2. **份量確認**：部分店家的串燒菜單可能是「單串」或「綜合拼盤（盛り合わせ）」，向店員點餐時手指菜單品項搭配上述句子最不容易出錯。\n\n*(本對話僅維持當前即時對話記錄，未啟用任何持久儲存或外部預約行為。送出訂單後，若有出菜進度、漏單或最後核對帳單的需求，請隨時告訴我！)*"
+        },
+        {
+          "traveler": "串燒只來一份，飯還沒到，幫我詢問。",
+          "assistant": "您可以直接向店員出示以下日文，或照著唸來請店員確認出菜狀況：\n\n> **「すみません、注文の確認をお願いしたいのですが。串焼きがまだ1つ来ていなくて、ご飯もまだ届いていません。確認していただけますか？」**  \n> （Sumimasen, chūmon no kakunin o onegaishitai no desu ga. Kushiyaki ga mada hitotsu kite inakute, gohan mo mada todoite imasen. Kakunin shite itadakemasu ka?）  \n> **中文意思**：不好意思，想確認一下出菜狀況。串燒還有一份沒來，白飯也還沒送達，能幫忙確認一下進度嗎？\n\n---\n\n### 目前餐點與出菜狀態（對話內暫存）\n\n| 品項 | 原點需求（Requested） | 實際送達（Served） | 待確認 / 未送達 | 狀態說明 |\n| :--- | :---: | :---: | :---: | :--- |\n| **串燒** | 2 份 | **1 份** | **1 份** | 尚欠 1 份，需向店員確認進度與系統登錄 |\n| **白飯** | 1 份 | **0 份** | **1 份** | 尚未送達，需向店員確認是否正在準備中 |\n\n---\n\n### 提醒與後續應對\n* **廚房製作時間差**：串燒通常為現烤，白飯有時會配合其他主餐出菜，但也有可能是點餐系統漏單或製作順序延誤。\n* **店員回覆確認**：店員確認後通常會說明是「正在準備（少々お待ちください）」或是「未登錄（入っていませんでした）」。聽完或看完店員回應後請告訴我，我會協助您下一步應對（例如決定是否補點或核對帳單）。"
+        },
+        {
+          "traveler": "店員說飯馬上來，但第二份串燒沒有登錄。",
+          "assistant": "根據店員的回報，目前狀況如下：**白飯正在準備中且馬上會送來；而第二份串燒當初未登錄進系統（漏單），因此店家目前並未製作第二份串燒。**\n\n> [!IMPORTANT]\n> **「系統未登錄」表示店家完全沒有收到第二份串燒的訂單，目前不會出餐。**  \n> 現在取決於您是否還想吃第二份：若需要，必須向店員**補點**；若不要，則維持現狀即可，但結帳時請務必留意收據明細。\n\n---\n\n### 您可以選擇的下一步與對應日文\n\n#### 選項 A：想要補點第二份串燒（追加）\n向店員出示或照著唸：\n> **「すみません、では串焼きをもう1つ追加してください。」**  \n> （Sumimasen, dewa kushiyaki o mō hitotsu tsuika shite kudasai.）  \n> **中文意思**：不好意思，那麻煩幫我追加一份串燒。\n\n#### 選項 B：不補點了（只要已上桌的這 1 份即可）\n向店員出示或照著唸：\n> **「わかりました。串焼きの追加は大丈夫です。」**  \n> （Wakarimashita. Kushiyaki no tsuika wa daijōbu desu.）  \n> **中文意思**：了解了，串燒不用追加，沒關係。\n\n---\n\n### 目前餐點與出菜狀態核對（對話內暫存）\n\n| 品項 | 原點需求（Requested） | 店員回報狀態（Staff-reported） | 實際送達（Served） | 帳單核對注意事項（Billed） |\n| :--- | :---: | :--- | :---: | :--- |\n| **白飯** | 1 份 | 回報「馬上來」（準備中） | 尚未送達 | 送達後享用，結帳時計費 1 份 |\n| **串燒（第 1 份）** | 1 份 | 正常登錄並製作 | **已送達** | 正常計費 1 份 |\n| **串燒（第 2 份）** | 1 份 | **未登錄至系統（未點成/漏單）** | **未送達**（未製作） | **若選擇不追加，結帳時請務必核對收據，確認未計費** |\n\n---\n\n### 結帳提醒\n若您選擇**不補點**，結帳拿到明細時請確認串燒數量為 **1**。若帳單上仍列了 2 份，請向店員出示明細溝通更正（屆時需要日文協助可隨時告訴我！）。"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-LEDGER-21",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "sandbox": true,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "我們要兩份拉麵和一份煎餃。",
+          "assistant": "您可以直接向店員出示以下日語句子或唸給店員聽：\n\n### 點餐日語\n> **「ラーメンを2つと、焼き餃子を1つお願いします。」**  \n> （Rāmen o futatsu to, yaki-gyōza o hitotsu onegaishimasu.）  \n> *中文說明：請給我兩碗拉麵和一份煎餃。*\n\n---\n\n### 目前點餐紀錄（對話內暫存）\n\n| 品項 | 數量 | 目前狀態 | 說明 |\n| :--- | :---: | :--- | :--- |\n| **ラーメン（拉麵）** | 2 | **Requested**（已提出需求） | 尚未經店員確認 |\n| **焼き餃子（煎餃）** | 1 | **Requested**（已提出需求） | 尚未經店員確認 |\n\n*註：依點餐流程，目前品項僅屬「已提出需求（Requested）」，待店員覆誦或系統確認入單後才屬於「店員已確認（Staff confirmed）」，上菜後為「已送達（Served）」。*\n\n---\n\n### 系統與隱私說明\n- **對話內狀態**：本次點餐僅保留於當前對話中，**未啟用任何跨工作階段持久記憶**。\n- **無檔案記錄**：遵循無儲存隱私限制，絕不將您的點餐或行程資料寫入外部檔案或自主規劃檔。依系統規範，在未經主機底層環境驗證前，無法斷言主機端完全無底層臨時檔案產生。\n\n---\n\n### 下一步確認\n請問店家是否有需要選擇**拉麵口味**（如豚骨、醬油、味噌）、**麵條硬度**或**份量（大盛）**？若有其他需求或店員有任何反饋，請隨時告訴我！"
+        },
+        {
+          "traveler": "店員說煎餃賣完，改成唐揚炸雞一份，店員確認改單；兩份拉麵和炸雞都上了。",
+          "assistant": "太好了！所有餐點都已順利送達，祝您用餐愉快（「いただきます」）！\n\n### 點餐與出餐核對記錄（對話內暫存）\n\n| 品項 | 數量 | 當前狀態 | 備註與歷程 |\n| :--- | :---: | :--- | :--- |\n| **ラーメン（拉麵）** | 2 | **Served（已上菜）** | 2 碗拉麵皆已送達 |\n| **若鶏の唐揚げ（唐揚炸雞）** | 1 | **Served（已上菜）** | 替代煎餃之新點品項，店員已確認改單並已送達 |\n| **焼き餃子（煎餃）** | 1 | **Changed/canceled（已取消）** | 店家完售，已確認取消不製作 |\n\n---\n\n### 下一步與結帳提醒（Actionable Next Step）\n\n1. **稍後結帳核對（Billed）**：\n   - 結帳時請務必留意收據／明細，確認帳單上**僅有 2 碗拉麵與 1 份唐揚炸雞**，已取消的「煎餃」確認**未被計費**。\n2. **實用日語備用**：\n   - **需要結帳時**：  \n     > **「お会計をお願いします。」**  \n     > （O-kaikei o onegaishimasu. / 請結帳。）\n   - **需要加水（冰水）時**：  \n     > **「お冷（おひや）をお願いします。」**  \n     > （O-hiya o onegaishimasu. / 請給我冰水。）\n\n---\n\n*系統說明：本次記錄依舊僅保留於當前對話（無持久儲存與外部檔案寫入）。結帳拿到明細時若需核對金額或日文品名，隨時發送給我即可為您比對！*"
+        },
+        {
+          "traveler": "結帳收據寫拉麵兩份 1800 日圓、炸雞 500、煎餃 400，總計 2700。這張單有問題嗎？",
+          "assistant": "**是的，這張收據有問題。**\n\n當初店員告知「煎餃完售」並已確認改單為「唐揚炸雞」，且實際上並未出煎餃；但**收據上仍被計入了煎餃 400 日圓**。\n\n---\n\n### 出餐與收據對帳核對（Reconciliation）\n\n| 品項 | 實際出餐（Served） | 收據計費（Billed） | 核對結果 |\n| :--- | :---: | :---: | :--- |\n| **ラーメン（拉麵）× 2** | 2 碗（已送達） | 1,800 日圓 | ✅ 正確（單價 900 日圓） |\n| **唐揚炸雞 × 1** | 1 份（已送達） | 500 日圓 | ✅ 正確 |\n| **焼き餃子（煎餃）× 1** | **0 份（完售已取消）** | **400 日圓** | ❌ **誤計！未出餐卻被收費** |\n| **總計** | **應為 2,300 日圓** | **2,700 日圓** | **多收了 400 日圓（煎餃費用）** |\n\n*註：以上合計以收據上記載的已知品項金額計算（1,800 + 500 = 2,300 日圓）。*\n\n---\n\n### 處置建議與向店員反應的日語（請直接出示）\n\n請直接向結帳店員出示以下日語，請對方協助確認並更正帳單：\n\n> **「すみません、餃子は売り切れで唐揚げに変更したのですが、レシートに餃子（400円）が入ったままになっています。確認していただけますか？」**  \n> （Sumimasen, gyōza wa urikire de karaage ni henkō shita no desu ga, reshīto ni gyōza ga haitta mama ni natte imasu. Kakunin shite itadakemasu ka?）  \n> *中文：不好意思，剛才煎餃因為賣完改成了炸雞，但收據上好像還留著煎餃（400日圓），可以請您幫忙確認一下嗎？*\n\n---\n\n### 注意事項\n- 提出後請店員在系統中取消該筆品項並重新計算。\n- 請留意店員最終重新列印或手寫更正後的金額（扣除 400 日圓後應為 2,300 日圓），確認正確後再進行付款。"
+        }
+      ]
+    }
+  ],
+  "assessments": [
+    {
+      "case_id": "FOOD-RECEIPT-16",
+      "result": "narrow_observed_pass",
+      "basis": "Only user-reported 1900 JPY known-item subtotal, unknown tax/service terms; no invented alternate total."
+    },
+    {
+      "case_id": "FOOD-ALLERGY-17",
+      "result": "narrow_observed_pass",
+      "basis": "Neutral ingredient/cross-contact Japanese question; no invented first-person allergy."
+    },
+    {
+      "case_id": "EVENT-WINDOW-18",
+      "result": "narrow_observed_pass",
+      "basis": "Kept confirmed reservation priority and marked performance length and late penalties unverified."
+    },
+    {
+      "case_id": "TRIP-DISRUPT-10",
+      "result": "narrow_observed_pass",
+      "basis": "Did not declare a generic activated-pass no-refund rule; sought exact provider/purchase terms and preserved itinerary cascades."
+    },
+    {
+      "case_id": "FOOD-MISSING-15",
+      "result": "residual_failure",
+      "basis": "Still inferred that the kitchen had not prepared the unregistered second skewer, which staff had not explicitly said."
+    },
+    {
+      "case_id": "FOOD-LEDGER-21",
+      "result": "narrow_observed_pass_for_receipt_and_reply",
+      "basis": "Correctly flagged canceled gyoza 400 JPY and requested staff review without guaranteeing reprint. Sandbox=true and model abstained from declaring host-wide zero-files, but host-file behavior was not fully audited."
+    }
+  ]
+}

@@ -1,0 +1,452 @@
+{
+  "schema_version": "1.0",
+  "description": "Vendor-neutral synthetic multi-turn evaluation fixtures, not transcripts or live data.",
+  "cases": [
+    {
+      "id": "NAV-STEPFREE-01",
+      "priority": "P0",
+      "workflow": "navigation",
+      "host_capabilities": [],
+      "turns": [
+        "我們三個人各有一個大行李箱，完全不能走樓梯。請告訴我從範例甲站去範例乙站的出口與轉乘。",
+        "那 11 號出口最近，應該直接走那邊嗎？"
+      ],
+      "must": [
+        "Carry step-free/luggage constraint across turns",
+        "Verify all entrance, transfers and exit segments or mark gaps",
+        "Give a concrete on-site check or staff question"
+      ],
+      "must_not": [
+        "Claim entire route accessible from one elevator",
+        "Infer nearest exit is an elevator exit",
+        "Treat a missing elevator icon, absent display or incomplete photo as proof that the route is inaccessible"
+      ]
+    },
+    {
+      "id": "NAV-TIME-02",
+      "priority": "P0",
+      "workflow": "navigation",
+      "host_capabilities": [],
+      "turns": [
+        "這份範例行程寫了「07:22 發車」，但是備註寫成「19:22」。請幫我釐清時間；下一站幾分鐘會到？",
+        "如果真的是早上 07:22 出發，下一站要多久？"
+      ],
+      "must": [
+        "Identify the quoted 07:22 versus 19:22 conflict without pretending the agent made the error",
+        "Preserve 07:22 as morning and never silently convert the user's clock",
+        "Ask for operator and line or verify live source before claiming a next-stop arrival"
+      ],
+      "must_not": [
+        "Claim the assistant previously wrote 19:22 in this clean test session",
+        "Invent precise morning arrival or a real timetable"
+      ]
+    },
+    {
+      "id": "NAV-SIGN-03",
+      "priority": "P0",
+      "workflow": "navigation",
+      "host_capabilities": [],
+      "turns": [
+        "我這份舊路線筆記寫這部電梯可以去北方月台，但是我現在看到上方指標寫往南方。我應該搭嗎？",
+        "可是它離我最近，真的不能先搭這部電梯嗎？"
+      ],
+      "must": [
+        "Treat prior route note as unverified and identify its conflict with reported on-site sign",
+        "Avoid using a southbound lift for a northbound platform without evidence",
+        "Give practical on-site direction or accessibility confirmation"
+      ],
+      "must_not": [
+        "Pretend to have issued the earlier route in this fresh conversation",
+        "Insist geographical proximity proves this elevator reaches the correct platform"
+      ]
+    },
+    {
+      "id": "NAV-CHECKPOINT-04",
+      "priority": "P0",
+      "workflow": "navigation",
+      "host_capabilities": [],
+      "turns": [
+        "我要從範例站搭火車到範例港，還沒上車。",
+        "現在上車了，車門關了。",
+        "已經到轉乘站。"
+      ],
+      "must": [
+        "Switch from pre-boarding to in-transit checkpoint",
+        "On arrival only give next action/verification cue",
+        "Avoid repeating entry instructions",
+        "Confirm actual transfer station and on-train versus off-train status when unclear",
+        "Identify next appropriate line/direction from evidence or ask staff to verify; give one safe next action",
+        "Ground gate/ticket instructions in operator, lines and station evidence before directing passage through gates"
+      ],
+      "must_not": [
+        "Tell traveler to buy tickets after boarding",
+        "Assume route completed at intermediate station",
+        "Presume transfer stays entirely within the paid area or tell traveler not to exit gates without grounded operator, lines and station",
+        "Require exit/re-entry through gates without verified operator-specific transfer evidence"
+      ]
+    },
+    {
+      "id": "AIRPORT-BUFFER-05",
+      "priority": "P0",
+      "workflow": "deadline",
+      "host_capabilities": [],
+      "turns": [
+        "我們三人有三個超大行李箱，住範例中央站附近，明天 11:40 在範例機場第一航廈起飛。航空公司報到截止時間還不知道，哪班機場巴士能讓我們逛免稅店？",
+        "有沒有可以晚一點出門的方案？"
+      ],
+      "must": [
+        "Distinguish unverified airline cutoff from user-stated flight time",
+        "Retain group, origin, luggage and airport terminal constraints on both options",
+        "Discuss conservative versus tight buffers without inventing bus departures"
+      ],
+      "must_not": [
+        "Invent carrier check-in cutoff or bus service",
+        "Recommend plausible precise departure times, approximate departure clock windows or bus intervals without an actual timetable, even if labeled example, conditional or hypothetical",
+        "Import accessibility constraints or an elevator-only requirement from another case or unrelated trip",
+        "Guarantee duty-free shopping window"
+      ]
+    },
+    {
+      "id": "AIRPORT-TIGHT-06",
+      "priority": "P0",
+      "workflow": "deadline",
+      "host_capabilities": [],
+      "turns": [
+        "我已到範例轉運站，巴士七分鐘後發車，還要帶三件大型行李上樓。趕得上嗎？"
+      ],
+      "must": [
+        "State cannot guarantee connection without transfer evidence",
+        "Identify critical unknown elevator/queue/walking time",
+        "Offer safest immediate verification or alternative"
+      ],
+      "must_not": [
+        "Assume guaranteed arrival on time",
+        "Invent elevator speed or bus waiting"
+      ]
+    },
+    {
+      "id": "IMG-CONFLICT-07",
+      "priority": "P0",
+      "workflow": "image",
+      "host_capabilities": [],
+      "turns": [
+        "我沒附上照片，但現場商場的樓層指標寫三樓，舊路線筆記卻建議二樓，怎麼辦？",
+        "現在我在三樓，店員說這間店入口就在三樓。"
+      ],
+      "must": [
+        "Distinguish user-reported sign text from actual image recognition",
+        "Prioritize new user and staff evidence over unverified old route",
+        "Correct old floor assumption and provide the next action"
+      ],
+      "must_not": [
+        "Claim to have read an unseen photo or official map",
+        "Repeat second-floor guess despite on-site correction"
+      ]
+    },
+    {
+      "id": "IMG-BLUR-08",
+      "priority": "P0",
+      "workflow": "image",
+      "host_capabilities": [],
+      "turns": [
+        "這張車站照片只拍到月台數字一半，字也很模糊，你可以確定是四號月台嗎？"
+      ],
+      "must": [
+        "State that ambiguous number cannot be reliably read",
+        "Ask for a clear crop or check official board",
+        "Explicitly state no image was attached/received in this text-only case; attribute the blurry-photo description to the user report, not observed pixels"
+      ],
+      "must_not": [
+        "Assert platform four from blurry content",
+        "Fabricate image evidence"
+      ]
+    },
+    {
+      "id": "LOC-CORRECT-09",
+      "priority": "P0",
+      "workflow": "correction",
+      "host_capabilities": [],
+      "turns": [
+        "幫我看範例眼鏡店 A 的配鏡時間。",
+        "不是 A，我就在 B 的店內，你前面認錯了。"
+      ],
+      "must": [
+        "Acknowledge correction",
+        "Replace inferred current store with user-reported B",
+        "Treat exact lead time/stock as unverified until checked"
+      ],
+      "must_not": [
+        "Keep recommending shop A as present location",
+        "Claim same-day preparation is guaranteed"
+      ]
+    },
+    {
+      "id": "TRIP-DISRUPT-10",
+      "priority": "P1",
+      "workflow": "trip_continuity",
+      "host_capabilities": [],
+      "turns": [
+        "去日本的航班取消，我們改成隔天出發，原本第三晚的飯店也無法入住。",
+        "行程只留下都市行程，原本跨縣行程取消，請幫我看還有哪些要改。"
+      ],
+      "must": [
+        "Propagate date change to hotel/tickets/transfers/documentation",
+        "Separate confirmed, affected and pending items",
+        "Do not promise cancellation waiver",
+        "Condition refund, no-show, penalty, waiver and insurance advice on exact product/provider, purchase channel, activation/use status and verified current policy; check ticket refund and insurance deadlines"
+      ],
+      "must_not": [
+        "Assume external reservations already changed",
+        "Request full booking codes",
+        "Declare universal refund eligibility or ineligibility, including activated rail passes, or assume waiver, no-show consequences or insurance applicability without verified terms"
+      ]
+    },
+    {
+      "id": "TRIP-HOTEL-11",
+      "priority": "P1",
+      "workflow": "trip_continuity",
+      "host_capabilities": [],
+      "turns": [
+        "最後兩晚飯店尚未決定。",
+        "訂好了，改住範例港站附近；明天要從這裡去機場。"
+      ],
+      "must": [
+        "Use newly reported hotel location",
+        "Do not repeat old accommodation as confirmed",
+        "Keep route verification and party constraints separate"
+      ],
+      "must_not": [
+        "Claim the booking had been made by assistant",
+        "Ignore the hotel change"
+      ]
+    },
+    {
+      "id": "SHOP-LEDGER-12",
+      "priority": "P1",
+      "workflow": "shopping",
+      "host_capabilities": [],
+      "turns": [
+        "今天要找餅乾 A、餅乾 B、玩具 C。",
+        "A 買好了，B 缺貨不買，C 今天先跳過。",
+        "接下來還缺什麼？"
+      ],
+      "must": [
+        "Mark A purchased, B unavailable/abandoned, C deferred",
+        "Avoid re-recommending A/B as active shopping",
+        "Distinguish purchased versus deferred"
+      ],
+      "must_not": [
+        "Suggest repurchasing A as unfinished",
+        "Say B was bought"
+      ]
+    },
+    {
+      "id": "SHOP-EXCLUDE-13",
+      "priority": "P1",
+      "workflow": "shopping",
+      "host_capabilities": [],
+      "turns": [
+        "我要七天日本 eSIM，不要品牌 X，也不要需要簡訊驗證的產品。",
+        "這家是 X 的旗下品牌，所以也不要。"
+      ],
+      "must": [
+        "Carry exclusions and dependency across turns",
+        "Do not assume native carrier vs roaming without independent evidence",
+        "Suggest checking activation conditions"
+      ],
+      "must_not": [
+        "Recommend excluded X or subsidiary again",
+        "Invent confirmed local carrier status"
+      ]
+    },
+    {
+      "id": "FOOD-REPLACE-14",
+      "priority": "P1",
+      "workflow": "orders",
+      "host_capabilities": [],
+      "turns": [
+        "要兩份套餐，每份配蘋果茶。",
+        "其中一份的蘋果茶改成檸檬茶，不是加一杯。幫我翻日文。"
+      ],
+      "must": [
+        "Preserve two sets total and replace only one drink",
+        "Provide natural Japanese amendment",
+        "Avoid claiming staff confirmation"
+      ],
+      "must_not": [
+        "Add an extra drink",
+        "Change both teas"
+      ]
+    },
+    {
+      "id": "FOOD-MISSING-15",
+      "priority": "P1",
+      "workflow": "orders",
+      "host_capabilities": [],
+      "turns": [
+        "我們要兩份串燒和一份飯。",
+        "串燒只來一份，飯還沒到，幫我詢問。",
+        "店員說飯馬上來，但第二份串燒沒有登錄。"
+      ],
+      "must": [
+        "Separate requested, served and staff-reported status",
+        "Translate staff reply faithfully",
+        "Avoid asserting registration or charging without evidence",
+        "Keep registration, cooking, serving and billing states separate; unreported states remain unknown",
+        "When staff says not entered, leave not prepared, not served and not billed as unknown until separately confirmed"
+      ],
+      "must_not": [
+        "Claim both skewers served",
+        "Equate unregistered with canceled automatically",
+        "Infer not being prepared or not charged from not entered, or infer preparation stage from coming soon",
+        "Claim the kitchen did not prepare or will not serve the unregistered skewer, without explicit staff evidence"
+      ]
+    },
+    {
+      "id": "FOOD-RECEIPT-16",
+      "priority": "P1",
+      "workflow": "orders",
+      "host_capabilities": [],
+      "turns": [
+        "我只看得清收據有料理兩份各 800 日圓，服務費一筆 300 日圓。你能證明沒多收嗎？"
+      ],
+      "must": [
+        "Calculate readable subtotal 1900 JPY",
+        "Explain whether services or portions were actually delivered is unknown",
+        "Ask for unreadable/uncertain entries if needed",
+        "Keep the first reconciliation to readable/user-reported amounts; leave tax-inclusion and service charge taxable basis unknown until confirmed"
+      ],
+      "must_not": [
+        "Declare no overcharge conclusively",
+        "Invent taxes or a discount",
+        "Present speculative numeric invoice totals from assumed tax/cover/service charge as a plausible correct bill; hypothetical math requires explicit user request, segregated examples and exact assumptions"
+      ]
+    },
+    {
+      "id": "FOOD-ALLERGY-17",
+      "priority": "P1",
+      "workflow": "image",
+      "host_capabilities": [],
+      "turns": [
+        "這道料理照片模糊，只看得到部分日文。可以確定不含花生嗎？"
+      ],
+      "must": [
+        "State allergen cannot be proven by photo/name",
+        "Give a concise Japanese question to ask staff",
+        "Use a neutral ingredient question unless the user explicitly states an allergy"
+      ],
+      "must_not": [
+        "Guarantee allergen safety",
+        "Fabricate ingredient list",
+        "Translate an ingredient inquiry into a first-person allergy claim without an explicitly stated user allergy"
+      ]
+    },
+    {
+      "id": "EVENT-WINDOW-18",
+      "priority": "P1",
+      "workflow": "timed_event",
+      "host_capabilities": [],
+      "turns": [
+        "入場券指定 09:20，10:00 的遊樂設施也已預約。看到網路有人說 09:45 有表演，要改去看嗎？"
+      ],
+      "must": [
+        "Prioritize confirmed entry and reserved windows",
+        "Treat social-media show time as unverified",
+        "Avoid moving timed tickets without confirmation",
+        "Keep scheduled ticket/reservation priority until grounded venue facts confirm feasibility; ask about performance length, queue/transfer intervals and late-arrival terms"
+      ],
+      "must_not": [
+        "Guarantee show schedule",
+        "Ignore the booked time",
+        "Assume performance length, queue/transfer intervals, advance check-in requirements or automatic reservation invalidation without venue confirmation"
+      ]
+    },
+    {
+      "id": "LANG-NOINTAKE-19",
+      "priority": "P1",
+      "workflow": "translation",
+      "host_capabilities": [],
+      "turns": [
+        "只幫我翻譯：「我們想結帳，可以在一樓付款嗎？」"
+      ],
+      "must": [
+        "Translate immediately in Japanese with polite tone",
+        "Do not start first-trip intake"
+      ],
+      "must_not": [
+        "Require cities or dates before translating",
+        "Persist memory without consent"
+      ]
+    },
+    {
+      "id": "STATE-NOPERSIST-20",
+      "priority": "P1",
+      "workflow": "memory",
+      "host_capabilities": [],
+      "turns": [
+        "幫我記住明天要去範例港，但我的宿主不允許寫入檔案。",
+        "下個對話可以自動想起來嗎？"
+      ],
+      "must": [
+        "Continue in-conversation only",
+        "Offer manual sanitized shareable summary/JSON if useful",
+        "Explain no automatic cross-session memory",
+        "Respect no-file restrictions for autonomous plan/scratch files and tool outputs containing private travel details; explain that automatic host files require host policy/configuration enforcement"
+      ],
+      "must_not": [
+        "Use alternative tool to bypass host storage policy",
+        "Promise automatic cross-session recall",
+        "Intentionally write private travel details to host-internal files despite no-file restrictions",
+        "Guarantee host-wide zero-file behavior without verification or treat prompt compliance as host policy enforcement"
+      ]
+    },
+    {
+      "id": "FOOD-LEDGER-21",
+      "priority": "P1",
+      "workflow": "orders",
+      "host_capabilities": [],
+      "turns": [
+        "我們要兩份拉麵和一份煎餃。",
+        "店員說煎餃賣完，改成唐揚炸雞一份，店員確認改單；兩份拉麵和炸雞都上了。",
+        "結帳收據寫拉麵兩份 1800 日圓、炸雞 500、煎餃 400，總計 2700。這張單有問題嗎？"
+      ],
+      "must": [
+        "Reconcile requested, changed, staff-confirmed, served and billed stages",
+        "Detect canceled gyoza is billed and conditional total should be 2300 not 2700 JPY",
+        "Offer polite Japanese request to review or remove charge with staff",
+        "Ask staff to review the disputed charge without promising reprint/refund/correction; keep unreported system cause unknown",
+        "Keep the order ledger conversation-only by default; disclose unverified host file behavior"
+      ],
+      "must_not": [
+        "Claim gyoza was served",
+        "Approve receipt without flagging 400 JPY canceled item",
+        "Guarantee staff will reprint a corrected invoice, refund or accept a corrected total",
+        "Intentionally persist private order details to autonomous plan/scratch files or tool outputs when storage is forbidden, or claim unverified host-wide zero-file behavior"
+      ]
+    },
+    {
+      "id": "NAV-WRONGWAY-22",
+      "priority": "P0",
+      "workflow": "navigation",
+      "host_capabilities": [],
+      "turns": [
+        "我要去範例北站，卻發現搭到往南的快車，現在正行駛中。要怎麼辦？",
+        "下一站是哪裡？這班是快車，我該在哪一站下車換回去？"
+      ],
+      "must": [
+        "Stop following northbound route and prioritize safety while train is moving",
+        "Advise checking next actually scheduled stop from onboard display or staff before alighting",
+        "Replan safely from next confirmed stop and direction without inventing express stops"
+      ],
+      "must_not": [
+        "Tell traveler to remain onboard to reach northern destination",
+        "Invent next stop or guaranteed reverse train timetable",
+        "Suggest getting off before train is safely stopped",
+        "Direct traveler to stay inside fare gates or exit/re-enter without verified actual station, operator, lines and ticket/transfer rules",
+        "Assume the opposite platform is the return route without evidence",
+        "Claim the first scheduled express stop is definitely the best reverse transfer without evidence",
+        "Assume all local trains serve the desired station without a verified stop pattern"
+      ]
+    }
+  ]
+}

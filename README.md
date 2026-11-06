@@ -165,6 +165,97 @@ this is neither encryption nor a sandbox against hostile concurrent writers.
 Sensitive free text still needs human/host review. See the full
 [CLI and limitations](references/memory.md) and [schema](references/travel-state.md).
 
+## Field-safety improvements and evaluation
+
+Travel guidance is most useful when it preserves your actual location,
+confirmed bookings, access needs and deadlines. The v0.3 work focuses on
+verified **end-to-end step-free routes**, departure-time accuracy, station
+checkpoints, flight check-in safety margins, photo correction, changing
+itineraries, shopping status, and Japanese food orders/receipts.
+
+See the [live-navigation rules](references/live-navigation.md),
+[trip continuity](references/trip-operations.md), and
+[photo/order guidance](references/photo-and-orders.md). The
+[22 fictional evaluation scenarios](evaluations/README.md) let different
+Agent hosts be manually assessed using the same criteria. These are **not
+real chat transcripts**. Passing repository tests validates documentation
+and fixture structure, **not live model performance or real-time accuracy**.
+
+One separate [source-backed P0 evidence exercise](evaluations/source-backed-airport.json)
+uses an upstream-inspected official timetable/map snapshot with fictional turns.
+It is outside the 22 text-only offline cases. The
+[initial review](evaluations/runs/2026-11-05-source-backed-initial-review.md)
+records 2 completed independent provider samples, 2 turns each: Codex met the
+narrow case; Gemini failed on an unsupported route and duration inference.
+Gemini's adapter configuration and runtime projection disagree; see the review.
+The unchanged fixture's `not_run` is historical; the review records the initial result.
+Static source injection is neither agent live browsing nor current
+service/accessibility/check-in verification. Guidance is tightened. A [post-fix review](evaluations/runs/2026-11-05-source-backed-postfix-review.md)
+records one new two-turn Codex sample without a P0 critical failure but with
+a remaining source-date precision gap. The earlier Gemini submission was blocked
+before execution and remains unassessed. A later [independent Gemini recheck](evaluations/runs/2026-11-05-source-backed-gemini-recheck-review.md)
+completed two turns with 5/6 and no P0 critical violation observed in that sample;
+explicit mapping of both map effective dates remains missing (MUST 3 partially
+unmet). This narrow conditional result is not a complete rubric pass. The prior
+block was not reproduced, but its cause is unknown; configuration/runtime
+disagreement and no-file limits remain. Historical failure is preserved;
+**P0 NO-GO**, no full P0 acceptance or live operational proof. See the
+[manual procedure](evaluations/README.md#source-backed-p0-static-evidence-exercise).
+
+The subsequent [source-date contract review](evaluations/runs/2026-11-06-source-backed-date-contract-review.md)
+links two completed NEW independent ACP sessions, two traveler turns each.
+Upstream manual review records 6/6 MUST criteria met in each sample and no
+MUST_NOT violation observed, including source-by-source dates and separate
+date-only inspection provenance. This is a narrow synthetic sample pass;
+**P0 NO-GO remains**, with no broad field-safety or live operational acceptance.
+The [configuration projection diagnostic](evaluations/runs/2026-11-06-acp-config-projection-diagnostic.md)
+records chosen settings returned by update/open but initial inspect values
+persisting after a benign probe. Native model identity, sandbox enforcement and
+host no-file behavior remain unverified; historical failures and blocked attempts
+remain visible. No host code or settings were changed here.
+
+The [offline ACP smoke findings](evaluations/runs/2026-11-04-acp-offline-smoke.md)
+cover 4 text cases × 2 models, 1 separate synthetic image case × 2 models,
+and 2 fresh airport regression reruns: 12 total samples, 6 fresh/independent
+(2 food-ledger, 2 image and 2 airport). Both airport reruns passed the narrow
+no-invented-departure condition; unsupported shopping certainty remains a concern.
+The image sample is outside the 22-case JSON suite; this is not a full benchmark
+or P0 sign-off.
+
+The [fresh-session P0 review](evaluations/runs/2026-11-04-p0-fresh-session-review.md)
+adds 10 new independent synthetic samples (5 P0 cases × 2 providers), with raw
+prompt/answer text and provenance limits. It found unsupported paid-area transfer
+instructions; one post-fix offline rerun per model now shows the narrow gate
+regression corrected, with provenance and limits recorded in the review.
+These are synthetic tests, not original travel usage logs or full P0 acceptance.
+
+The [remaining P0 review](evaluations/runs/2026-11-04-p0-remaining-review.md)
+adds 10 completed independent fresh samples plus 1 incomplete no-response
+attempt. It found unsupported paid-area advice during wrong-direction recovery;
+the focused navigation, accessibility and missing-image corrections were
+subsequently checked in [4 targeted fresh-session samples](evaluations/runs/2026-11-04-p0-remaining-postfix-transcripts.json).
+The gate and missing-icon defects did not recur in those samples, but a
+separate Gemini image-themed attempt ended with no answer. No full P0
+acceptance or live travel accuracy is claimed.
+
+The [P1 actual-image and sandbox privacy review](evaluations/runs/2026-11-05-p1-multimodal-privacy-review.md)
+adds **4 fresh image-input model samples** (one synthetic Japanese menu and
+one synthetic receipt, each read by Codex and Gemini) and a separate
+**3-turn Gemini sandbox no-file probe**. Both models found the labeled peanut
+ingredient and the canceled **400-JPY** receipt charge in these controlled
+images. The sandbox probe observed no write-type ACP tool events, but
+**did not audit the host filesystem**, so strict no-file behavior remains
+unverified; an earlier unsandboxed host-plan write remains documented.
+These image cases are **outside** the 22 text-only scenarios and are not
+a real-world OCR/food-safety benchmark or P0/P1 field sign-off.
+
+The [additional P1 visual review](evaluations/runs/2026-11-05-p1-visual-review.md)
+records four fresh actual-JPEG samples: Gemini's optional allergy claim fails
+faithful translation and its receipt cause is unverified. Two fresh
+[post-fix Gemini image reruns](evaluations/runs/2026-11-05-p1-visual-postfix-transcripts.json)
+did not reproduce those narrow defects; strict host no-file verification
+remains outstanding.
+
 ## Development and license
 
 ```sh
@@ -292,9 +383,84 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 [記憶文件](references/memory.md)、[狀態格式](references/travel-state.md)；
 引導規則見 [onboarding](references/onboarding.md)。
 
+## 現場安全補強與跨模型驗證
+
+新版特別加強：**完整的電梯路線**、列車時刻與方向的證據、搭乘途中
+依照最新位置更新下一步、機場報到截止時間倒推、現場照片更正、
+旅程異動與購物進度，以及日文點餐、加減單和收據核對。
+
+詳見[現場導航](references/live-navigation.md)、
+[旅程進度](references/trip-operations.md)與
+[照片／點餐](references/photo-and-orders.md)的規則。
+另有 [22 個虛構情境](evaluations/README.md)，可讓不同供應商的 Agent
+在相同條件下進行**人工對話驗收**；這不是私人對話紀錄。
+專案單元測試通過，**不代表所有模型都已通過實際旅途中驗證**。
+
+另有一份獨立的[官方來源快照 P0 測試案例](evaluations/source-backed-airport.json)，
+以公開時刻表及車站圖驗證模型能否區分「表定抵達」、「即時運行」及
+「完整無階梯轉乘」。它不計入原本 22 個合成情境。
+[初次評審](evaluations/runs/2026-11-05-source-backed-initial-review.md)已記錄
+2 個供應商各一個全新獨立 ACP 對話、各 2 回合：Codex 通過此狹窄案例；
+Gemini 虛構電梯／剪票口動線與轉乘時間長短，判定重大失敗。
+Gemini 的介面設定與執行狀態投影不一致，歸屬限制詳見報告。
+未修改案例中的 `not_run` 是歷史初始狀態，現況以評審報告為準。
+規則已補強。[修正後審查](evaluations/runs/2026-11-05-source-backed-postfix-review.md)
+記錄 Codex 新的 2 回合測試，未見 P0 重大錯誤，但來源日期精確度仍有缺口；
+先前 Gemini 重測在執行前遭宿主安全檢查阻擋，不能算通過或失敗。
+後續[獨立 Gemini 重測](evaluations/runs/2026-11-05-source-backed-gemini-recheck-review.md)
+完成 2 回合，評分 5/6，此單次樣本未見 P0 重大違規；但仍未明確對應兩份站圖的
+生效日期（MUST 3 部分未達成），僅為狹窄條件式結果，並非完整規準通過。
+先前阻擋未重現，根因仍未知；設定與執行狀態投影仍不一致，原生模型身分、
+沙盒效力及零落檔皆未驗證。原始失敗與阻擋歷史保留；**P0 仍為 NO-GO，
+目前沒有全面 P0 驗收通過的證據**。
+模型只收到靜態來源事實，未實際上網；不可宣稱班次當天正常、電梯可用、
+能趕上班機或宿主完全不落檔。執行方式見[驗收規範](evaluations/README.md#source-backed-p0-static-evidence-exercise)。
+
+其後的[來源日期契約重測報告](evaluations/runs/2026-11-06-source-backed-date-contract-review.md)
+連結兩個全新獨立 ACP 對話，各完成兩個旅客回合。上游人工評審記錄每個樣本
+六項 MUST 全數達成、未見 MUST_NOT 違規，包含逐一對應來源生效日期，並將
+僅日期精度的檢視紀錄分開呈現。這只是單一合成案例的狹窄樣本通過；
+**P0 仍為 NO-GO**，不代表全面現場安全或即時營運驗證。
+[設定投影診斷](evaluations/runs/2026-11-06-acp-config-projection-diagnostic.md)
+記錄 update/open 回傳所選設定，但良性探測成功後 inspect 仍顯示初始值；
+原生模型身分、沙盒效力與宿主零落檔仍未驗證。歷史失敗與阻擋紀錄保留，
+此儲存庫未修改宿主程式或設定。
+
+[離線 ACP 初步結果](evaluations/runs/2026-11-04-acp-offline-smoke.md)涵蓋
+4 個文字情境 × 2 個模型，加上 1 個獨立合成圖片情境 × 2 個模型，以及
+2 次機場回歸重測，共 12 次樣本；其中 6 次使用全新、獨立對話
+（點餐 2 次、圖片 2 次、機場 2 次）。機場重測均通過「不虛構發車時間」的
+狹義條件，但仍有無證據斷言沒有購物時間的問題。圖片樣本不屬於
+22 個情境的 JSON 測試集，尚非完整基準測試，也未通過 P0 驗收。
+
+[全新獨立對話 P0 審查](evaluations/runs/2026-11-04-p0-fresh-session-review.md)
+新增 5 個 P0 情境 × 2 家供應商，共 10 個獨立合成樣本，附提示、回答及來源限制。
+其中發現無證據要求留在付費區轉乘的問題；規則補強後，兩個模型各一次離線重跑
+均未出現該閘門假設問題，來源與限制詳見報告。
+這些是合成測試，並非原始旅遊使用紀錄，也不代表完整 P0 驗收通過。
+
+[P1 離線審查](evaluations/runs/2026-11-05-p1-offline-review.md)涵蓋全部
+12 個 P1 情境 × 2 個模型，共 24 個獨立完成樣本、46 個旅客回合；完成不等於通過。
+報告列出退款、帳單、翻譯、時段與狀態推論問題、2 次初始無效／未完成嘗試，
+以及宿主暫存規劃檔的觀察。另已保存
+[首次 6 組修正後測試](evaluations/runs/2026-11-05-p1-postfix-transcripts.json)
+與[漏單問題再次修正後測試](evaluations/runs/2026-11-05-p1-food-missing-second-postfix.json)：
+單次合成重測觀察到改善，但尚未取得全面穩定性或實地驗收。
+嚴格不落檔須由宿主政策與設定落實，不能只靠提示保證。
+
+[P1 實際附圖與沙盒隱私驗收](evaluations/runs/2026-11-05-p1-multimodal-privacy-review.md)
+另新增 **4 組實際圖片輸入測試**：Codex 與 Gemini 各讀取虛構的日文菜單、
+收據 JPEG；兩模型均辨識圖片上的花生成分與已取消餐點仍計費的 400 日圓。
+另以 Gemini sandbox 模式進行 **3 回合不落檔測試**，未觀察到寫入型工具操作，
+但**未全面稽核宿主檔案系統**，不能保證零暫存檔；先前無沙盒的宿主規劃檔
+寫入觀察仍保留。這些圖片案例不屬於 22 個文字情境，也不等於實際餐飲安全
+或完整 P0／P1 驗收通過。
+
 ## 開發與授權
 
 在根目錄執行 `python3 -m unittest discover -s tests -v`。測試只用標準函式庫、
 虛構資料與外部暫存檔案，不連網；CI 探索全部測試。引導文字的靜態契約檢查不
 等於所有宿主的對話行為驗收。貢獻規範見 [CONTRIBUTING.md](CONTRIBUTING.md)。
 Apache-2.0，詳見 [LICENSE](LICENSE)。
+
+The [post-fix actual-image P1 evidence](evaluations/runs/2026-11-05-p1-visual-postfix-transcripts.json) records two independent Gemini reruns: neutral peanut-avoidance Japanese and source-grounded receipt reconciliation; zero host files is not established.

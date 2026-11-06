@@ -71,6 +71,38 @@ class SkillContractTests(unittest.TestCase):
         self.assertNotIn("sk-", combined)
         self.assertNotRegex(combined, r"(?i)ChatGPT|OpenAI|AgentDock")
 
+    def test_source_dates_require_per_source_mapping_without_invented_dates(self):
+        # Static instruction regression only: this cannot prove model compliance.
+        # Check the entrypoint and both transit references so the rule survives
+        # hosts loading only the entrypoint or the relevant navigation reference.
+        for filename in ("SKILL.md", "references/evidence-and-transit.md",
+                         "references/live-navigation.md"):
+            with self.subTest(filename=filename):
+                text = " ".join((ROOT / filename).read_text(encoding="utf-8").split())
+                for clause in (
+                    "source-backed time-sensitive transit/airport or accessibility choice",
+                    "each decision-relevant source name + effective date",
+                    "effective date not supplied",
+                    "Separately state `observed_at` / access date, timezone and recorded precision",
+                    "never invent an effective date",
+                    "exact access clock time",
+                    "source validity, access date, service date and live operating status",
+                    "map date does not prove current elevator operation",
+                    "compact line or table",
+                    "across turns as needed",
+                    "simple unrelated queries",
+                    "immediate safety action",
+                ):
+                    self.assertIn(clause, text)
+        evidence = " ".join((ROOT / "references/evidence-and-transit.md").read_text(
+            encoding="utf-8").split())
+        for clause in ("`effective_on`, as-of or validity wording and precision",
+                       "including `null`", "never invent an effective date or substitute the access date",
+                       "If only a date was recorded, say date-only",
+                       "inspection date is not a new check by the assistant",
+                       "leave an unknown trip date and service-day applicability unresolved"):
+            self.assertIn(clause, evidence)
+
     def test_fictional_state_example_is_valid_and_has_provenance(self):
         doc = (ROOT / "references" / "travel-state.md").read_text(encoding="utf-8")
         match = re.search(r"```json\s*(\{.*?\})\s*```", doc, re.S)

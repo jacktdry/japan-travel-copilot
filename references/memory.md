@@ -10,6 +10,17 @@ permission. If the host disables memory/storage, do not work around it using
 another tool, shell, location, or service. Continue conversation-only with
 optional manual export/copy. Installation does not authorize file access.
 
+This boundary includes autonomous plan files, scratch artifacts and tool
+outputs that store private travel details: do not intentionally write those
+when the user or host forbids storage. A host-internal temporary planning file
+is a file side effect even if it is not a portable cross-session travel-state
+JSON. Do not claim an absolute guarantee that the host creates no temporary
+files unless verified. A host that automatically writes planning files may be
+incompatible with strict no-file privacy requirements; host policy/configuration
+enforcement is required, not merely prompt compliance. If that enforcement is
+unknown, disclose the limit before handling private details; do not claim
+conversation-only instructions prove host-wide zero-file behavior.
+
 The user/host chooses an existing private directory **outside the installed
 Skill and any Git repository**. There are no default paths, home directory
 assumptions, environment variables, auto-discovery, or automatic directory
