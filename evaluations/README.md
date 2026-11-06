@@ -30,8 +30,8 @@ acceptance. Repository tests validate archives, fixtures and guardrails only,
 not assistant compliance.
 
 The byte-identical fixture's `model_evaluation_status: "not_run"` is its
-historical initial state, not current evaluation status. The linked review is
-the current result record; preserve the injected card and original answers for
+historical initial state, not current evaluation status. The linked initial
+review is a historical result record; preserve the injected card and original answers for
 comparison. Guidance was tightened; a [post-fix review](runs/2026-11-05-source-backed-postfix-review.md)
 records one fresh two-turn Codex sample without a P0 critical failure but with
 an unfulfilled source-date precision criterion. The earlier Gemini post-fix
@@ -46,6 +46,24 @@ reproduced, but its cause is unknown. Adapter settings still disagree with
 runtime projection; native identity, sandbox effectiveness and no-file behavior
 are unverified. Initial failure and blocked histories remain; **P0 NO-GO**,
 no full cross-provider acceptance or live service verification.
+
+Current instructions now explicitly require each decision-relevant source name
+paired with its supplied effective date (or "effective date not supplied"),
+separate from access provenance and its recorded precision. The subsequent
+[source-date contract review](runs/2026-11-06-source-backed-date-contract-review.md)
+links two completed NEW independent ACP sessions, two traveler turns each, with
+the same original injected inputs. Upstream manual review records all six MUST
+criteria met in each sample, no MUST_NOT violation observed, and 2/2 each for
+grounding, continuity and usefulness. This is narrow synthetic sample evidence,
+not a broad field-safety acceptance: **P0 NO-GO remains**. The
+[configuration projection diagnostic](runs/2026-11-06-acp-config-projection-diagnostic.md)
+records update/open acknowledgment of chosen settings but repeated initial
+inspect values after a successful benign probe. Stale projection is a hypothesis;
+native identity, effective sandbox and host no-file behavior remain unverified.
+No live service or current accessibility verification was performed. Historical
+fixture/transcript bytes and input hashes remain as observed, including the old
+SKILL SHA. Future rerun reports must record the then-current SKILL SHA-256 and
+local changes; do not replace historical hashes with the current file hash.
 
 The card contains quote-free paraphrases of official KATE and Kintetsu pages
 independently inspected by the upstream orchestrator. `provenance.observed_at`

@@ -15,6 +15,9 @@ SNAPSHOTS = {
     "evidence_reference_sha256": "a559cb62b5dffe19041e28b92ae248b5295a72d0725b2c8413173975fa0c44f5",
     "navigation_reference_sha256": "55a4b4751f0fdc2e2036e105460b8f74a9fdf2d376ea64d58a1ef01c3fe7dabb",
 }
+DATE_ARCHIVE = ROOT / "evaluations/runs/2026-11-06-source-backed-date-contract-transcripts.json"
+DATE_REVIEW = DATE_ARCHIVE.with_name("2026-11-06-source-backed-date-contract-review.md")
+CONFIG_DIAGNOSTIC = DATE_ARCHIVE.with_name("2026-11-06-acp-config-projection-diagnostic.md")
 
 
 def _parse_utc_timestamp(value):
@@ -28,17 +31,124 @@ class SourceBackedArchiveTests(unittest.TestCase):
         self.archive = json.loads(self.raw)
         self.fixture = json.loads((ROOT / "evaluations/source-backed-airport.json").read_text())
 
+    def test_date_contract_archive_preserves_inputs_provenance_and_current_guidance(self):
+        # Exact recorded inputs/bytes only; no NLP scoring of assistant replies.
+        self.assertEqual(hashlib.sha256(DATE_ARCHIVE.read_bytes()).hexdigest(),
+                         "58b19a566256f3522d7cf226710aa14c5e07cff9a2278c85625c7df0ac8f1526")
+        data = json.loads(DATE_ARCHIVE.read_text(encoding="utf-8"))
+        self.assertEqual(data["schema_version"], "1.0")
+        self.assertEqual(data["case_id"], self.fixture["id"])
+        self.assertEqual(data["status"], "completed_two_provider_date_rule_reruns")
+        self.assertEqual(data["upstream_revision_before_changes"],
+                         "d70eb194fbc170993c364fd5d19bba043b952c2f")
+        self.assertEqual(data["fixture_sha256"], SNAPSHOTS["fixture_sha256"])
+        # This archive intentionally describes current guidance. Older archives
+        # keep their historical hash pins in the separate tests below.
+        for key, filename in (("skill", "SKILL.md"),
+                              ("evidence", "references/evidence-and-transit.md"),
+                              ("navigation", "references/live-navigation.md")):
+            self.assertEqual(data["guidance_hashes"][key],
+                             hashlib.sha256((ROOT / filename).read_bytes()).hexdigest())
+        provenance = data["evidence_provenance"]
+        for key in ("observed_at", "timezone", "precision"):
+            self.assertEqual(provenance[key], self.fixture["provenance"][key])
+        self.assertEqual(provenance["effective_on"], {
+            "kate_uh": None,
+            "kintetsu_uehommachi": "2026-08-01",
+            "kintetsu_tsuruhashi": "2026-03-14",
+        })
+        self.assertEqual(len(data["samples"]), 2)
+        for sample in data["samples"]:
+            users = [m["text"] for m in sample["messages"] if m["role"] == "user"]
+            for historical in self.archive["runs"]:
+                self.assertEqual(users, [m["text"] for m in historical["messages"]
+                                         if m["role"] == "user"])
+            # Validate source-to-date mapping in the supplied evidence, never
+            # infer behavioral acceptance by searching generated answer text.
+            payload = users[0].split("STATIC EVIDENCE CARD:\n", 1)[1]
+            card, turn = payload.split("\n\nTRAVELER, turn 1:\n", 1)
+            self.assertEqual(json.loads(card), {
+                "provenance": self.fixture["provenance"],
+                "evidence_card": self.fixture["evidence_card"],
+            })
+            self.assertEqual([turn, users[1]], self.fixture["turns"])
+
+    def test_date_contract_replays_have_two_complete_turns_and_parseable_utc_ranges(self):
+        data = json.loads(DATE_ARCHIVE.read_text(encoding="utf-8"))
+        self.assertEqual((data["local_date"], data["timezone"]),
+                         ("2026-11-06", "Asia/Taipei"))
+        self.assertEqual([(s["host"], s["configured_model"], s["mode"],
+                           s["reasoning_effort"]) for s in data["samples"]], [
+            ("Codex ACP", "gpt-6.1-sol", "read-only", "medium"),
+            ("Antigravity ACP", "gemini-3.8-flash", "plan", "medium"),
+        ])
+        review = DATE_REVIEW.read_text(encoding="utf-8")
+        for sample, roles in zip(data["samples"], [
+                ["user", "assistant", "assistant", "user", "assistant"],
+                ["user", "assistant", "user", "assistant"]]):
+            self.assertIs(sample["fresh_session"], True)
+            self.assertIs(sample["adapter_history_truncated"], False)
+            self.assertEqual(sample["adapter_history_source"], "adapter")
+            self.assertEqual(sample["host_filesystem_audit"], "not performed")
+            self.assertEqual([m["role"] for m in sample["messages"]], roles)
+            self.assertTrue(all(set(m) == {"role", "text"} and m["text"].strip()
+                                for m in sample["messages"]))
+            self.assertEqual(len(sample["run_times_utc"]), 2)
+            previous_end = None
+            for start, end in sample["run_times_utc"]:
+                parsed_start, parsed_end = map(_parse_utc_timestamp, (start, end))
+                self.assertEqual(parsed_start.date().isoformat(), data["local_date"])
+                self.assertLess(parsed_start, parsed_end)
+                if previous_end is not None:
+                    self.assertLess(previous_end, parsed_start)
+                previous_end = parsed_end
+                self.assertIn(start, review)
+                self.assertIn(end, review)
+        codex, gemini = data["samples"]
+        self.assertIs(codex["first_run_event_ring_truncated"], True)
+        self.assertEqual(codex["sandbox"], "unrecorded")
+        self.assertIs(gemini["first_run_event_ring_truncated"], False)
+        self.assertIs(gemini["sandbox_configured"], True)
+        self.assertEqual(gemini["inspect_runtime_state_projection"],
+                         {"model": "gemini-4-argon", "mode": "default", "sandbox": False})
+        self.assertIn("not independently verified", gemini["model_identity_limit"])
+
+    def test_date_contract_public_reports_and_archive_links_keep_proof_limits(self):
+        # Report/redaction contract, not a model response grading test or host audit.
+        review = DATE_REVIEW.read_text(encoding="utf-8")
+        diagnostic = CONFIG_DIAGNOSTIC.read_text(encoding="utf-8")
+        self.assertIn(DATE_ARCHIVE.name, review)
+        self.assertIn(hashlib.sha256(DATE_ARCHIVE.read_bytes()).hexdigest(), review)
+        self.assertIn(CONFIG_DIAGNOSTIC.name, review)
+        self.assertIn(DATE_ARCHIVE.name, diagnostic)
+        self.assertIn(DATE_REVIEW.name, diagnostic)
+        for filename in ("README.md", "CHANGELOG.md", "evaluations/README.md"):
+            text = (ROOT / filename).read_text(encoding="utf-8")
+            self.assertIn(DATE_REVIEW.name, text)
+            self.assertIn(CONFIG_DIAGNOSTIC.name, text)
+        for text in (DATE_ARCHIVE.read_text(encoding="utf-8"), review, diagnostic):
+            for pattern in (r"/(?:Users|home|Volumes)/", r"/(?:private/)?var/folders/",
+                            r"/(?:private/)?tmp/", r"file://", r"plugin://", r"\b[A-Za-z]:\\",
+                            r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",
+                            r"gh[opusr]_[A-Za-z0-9]+", r"github_pat_[A-Za-z0-9_]+",
+                            r"sk-[A-Za-z0-9_-]{16,}", r"AKIA[A-Z0-9]{16}",
+                            r"-----BEGIN .*PRIVATE KEY-----",
+                            r"\b[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}\b",
+                            r'"(?:session_?[Ii]d|native_?[Ii]d|run_id|host_id|device_id|thread_id|process_id|pid|transcript_url|api_key|access_token)"\s*:'):
+                self.assertNotRegex(text, pattern)
+
     def test_fixed_archive_answers_and_original_snapshots_are_preserved(self):
         # Whole-file pin protects original answers, commentary, wrapper and metadata.
         self.assertEqual(hashlib.sha256(ARCHIVE.read_bytes()).hexdigest(),
                          "7e619b66d01c7c80ef76fdaa78a7cf859c0179ae044eb32acf4a2b3c25ff5b93")
         for key, expected in SNAPSHOTS.items():
             self.assertEqual(self.archive[key], expected)
-        for key, filename in (("fixture_sha256", "evaluations/source-backed-airport.json"),
-                              ("skill_sha256", "SKILL.md")):
-            self.assertEqual(hashlib.sha256((ROOT / filename).read_bytes()).hexdigest(),
-                             SNAPSHOTS[key])
-        # Historical reference hashes describe pre-fix input, not the repaired files.
+        self.assertEqual(hashlib.sha256(
+            (ROOT / "evaluations/source-backed-airport.json").read_bytes()).hexdigest(),
+            SNAPSHOTS["fixture_sha256"])
+        # Historical SKILL/reference hashes record the prior run's inputs, not
+        # current guidance. Keep those fields and the whole archive byte-pinned;
+        # test_skill_contract checks today's source-date rule separately.
         self.assertEqual(self.archive["head_before_run"],
                          "86a90d432d7a2e4ea6bfba6cf9fdc4f858d3b80e")
         self.assertEqual(self.archive["case_id"], self.fixture["id"])

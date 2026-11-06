@@ -188,7 +188,7 @@ It is outside the 22 text-only offline cases. The
 records 2 completed independent provider samples, 2 turns each: Codex met the
 narrow case; Gemini failed on an unsupported route and duration inference.
 Gemini's adapter configuration and runtime projection disagree; see the review.
-The unchanged fixture's `not_run` is historical; the review records current status.
+The unchanged fixture's `not_run` is historical; the review records the initial result.
 Static source injection is neither agent live browsing nor current
 service/accessibility/check-in verification. Guidance is tightened. A [post-fix review](evaluations/runs/2026-11-05-source-backed-postfix-review.md)
 records one new two-turn Codex sample without a P0 critical failure but with
@@ -201,6 +201,18 @@ block was not reproduced, but its cause is unknown; configuration/runtime
 disagreement and no-file limits remain. Historical failure is preserved;
 **P0 NO-GO**, no full P0 acceptance or live operational proof. See the
 [manual procedure](evaluations/README.md#source-backed-p0-static-evidence-exercise).
+
+The subsequent [source-date contract review](evaluations/runs/2026-11-06-source-backed-date-contract-review.md)
+links two completed NEW independent ACP sessions, two traveler turns each.
+Upstream manual review records 6/6 MUST criteria met in each sample and no
+MUST_NOT violation observed, including source-by-source dates and separate
+date-only inspection provenance. This is a narrow synthetic sample pass;
+**P0 NO-GO remains**, with no broad field-safety or live operational acceptance.
+The [configuration projection diagnostic](evaluations/runs/2026-11-06-acp-config-projection-diagnostic.md)
+records chosen settings returned by update/open but initial inspect values
+persisting after a benign probe. Native model identity, sandbox enforcement and
+host no-file behavior remain unverified; historical failures and blocked attempts
+remain visible. No host code or settings were changed here.
 
 The [offline ACP smoke findings](evaluations/runs/2026-11-04-acp-offline-smoke.md)
 cover 4 text cases × 2 models, 1 separate synthetic image case × 2 models,
@@ -403,6 +415,16 @@ Gemini 的介面設定與執行狀態投影不一致，歸屬限制詳見報告�
 目前沒有全面 P0 驗收通過的證據**。
 模型只收到靜態來源事實，未實際上網；不可宣稱班次當天正常、電梯可用、
 能趕上班機或宿主完全不落檔。執行方式見[驗收規範](evaluations/README.md#source-backed-p0-static-evidence-exercise)。
+
+其後的[來源日期契約重測報告](evaluations/runs/2026-11-06-source-backed-date-contract-review.md)
+連結兩個全新獨立 ACP 對話，各完成兩個旅客回合。上游人工評審記錄每個樣本
+六項 MUST 全數達成、未見 MUST_NOT 違規，包含逐一對應來源生效日期，並將
+僅日期精度的檢視紀錄分開呈現。這只是單一合成案例的狹窄樣本通過；
+**P0 仍為 NO-GO**，不代表全面現場安全或即時營運驗證。
+[設定投影診斷](evaluations/runs/2026-11-06-acp-config-projection-diagnostic.md)
+記錄 update/open 回傳所選設定，但良性探測成功後 inspect 仍顯示初始值；
+原生模型身分、沙盒效力與宿主零落檔仍未驗證。歷史失敗與阻擋紀錄保留，
+此儲存庫未修改宿主程式或設定。
 
 [離線 ACP 初步結果](evaluations/runs/2026-11-04-acp-offline-smoke.md)涵蓋
 4 個文字情境 × 2 個模型，加上 1 個獨立合成圖片情境 × 2 個模型，以及

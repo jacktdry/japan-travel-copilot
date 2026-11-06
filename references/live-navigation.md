@@ -14,6 +14,17 @@ extends [evidence-and-transit.md](evidence-and-transit.md), not a transit feed.
   fare or elevator only if evidence supports that exact item at the relevant
   date, place and direction. State source and time when material. A stale
   timetable is not live verification.
+- For a source-backed time-sensitive transit/airport or accessibility choice,
+  report each decision-relevant source name + effective date (as-of or validity
+  as supplied), or "effective date not supplied" for each undated source.
+  Separately state `observed_at` / access date, timezone and recorded precision;
+  never invent an effective date or exact access clock time. Keep source validity,
+  access date, service date and live operating status distinct; a map date does
+  not prove current elevator operation. Use one compact line or table after the
+  immediate safety action; carry provenance across turns as needed for that
+  choice, without repeating it for simple unrelated queries. See the
+  [source-date rule](evidence-and-transit.md#source-order) for static cards and
+  missing provenance.
 - If on-site observations contradict an earlier answer, **withdraw the
   unsupported claim**, update the location and verify with the current
   departure display or staff. Do not defend a guessed route.
