@@ -2,6 +2,16 @@
 
 ## 0.3.0 (proposed)
 
+- Prepared an **everyday travel-assistance release candidate** with a simpler
+  bilingual [quick start and README](README.md) and a short
+  [minimum release checklist](RELEASE.md). Confirmed a reversible ZIP-style
+  install-file copy and one isolated three-turn onboarding/itinerary/translation
+  smoke sample. Historical P0 field-safety NO-GO findings remain intact as
+  optional deeper research, rather than a universal general-release gate.
+  No public-main installation, official release tag, or full host security
+  guarantee is implied.
+
+
 - Added [P0 actual-JPEG station-sign stress cases](evaluations/visual-stress-cases.json),
   strong-blur and upper-crop derivative images, and a
   [source-blind review](evaluations/runs/2026-11-11-p0-image-stress-review.md).
