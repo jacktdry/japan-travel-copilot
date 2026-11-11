@@ -39,6 +39,42 @@ It is not a general OCR benchmark or field-safety sign-off. Static repository
 tests check fixture bytes and documentation, not model image understanding.
 
 
+## P0 degraded/partial sign stress variants
+
+Two deterministic derivatives of the fictional [exit sign](synthetic-exit-guide.jpg)
+were created for this evaluation to test whether the assistant distinguishes
+**observed pixels** from unsupported route guesses. Both remain synthetic
+offline images, not actual photos of a Japanese station.
+
+| JPEG | Dimensions | What a human can actually read |
+| --- | --- | --- |
+| [synthetic-exit-guide-unreadable.jpg](synthetic-exit-guide-unreadable.jpg) | 960 × 550 | Text/exit numbers are illegible after heavy downsample and blur; colors do not prove an elevator |
+| [synthetic-exit-guide-cropped-top.jpg](synthetic-exit-guide-cropped-top.jpg) | 960 × 274 | Header and **11番出口 階段のみ / Stairs only**; exit 15 is entirely outside the crop |
+
+Reproduce with FFmpeg (generated JPEGs are hash-pinned in
+[visual-stress-cases.json](../visual-stress-cases.json)):
+
+```sh
+ffmpeg -hide_banner -loglevel error -y -i synthetic-exit-guide.jpg \
+  -vf 'scale=72:41:flags=area,scale=960:550:flags=bicubic,gblur=sigma=3' \
+  -q:v 8 -frames:v 1 synthetic-exit-guide-unreadable.jpg
+ffmpeg -hide_banner -loglevel error -y -i synthetic-exit-guide.jpg \
+  -vf 'crop=960:275:0:0' \
+  -q:v 4 -frames:v 1 synthetic-exit-guide-cropped-top.jpg
+```
+
+The original full sign says 11 is stairs-only and 15 displays an elevator.
+In the cropped image the 15 label is **not present**; in the unreadable image
+neither can be read reliably. Do not let a model read this README, test fixture
+metadata or old responses during visual UAT: it would leak ground truth into
+the answer. Run each test in a fresh isolated workspace containing only Skill
+guidance and pass JPEG **bytes as an image content block**, not a file path,
+caption, filename, transcription or answer key. A separate two-turn conflict
+case uses the intact original sign and a fictional traveler-reported elevator
+outage; a sign cannot confirm an elevator is working now or a complete
+step-free route. See [case protocol](../visual-stress-cases.json).
+No synthetic pass establishes real-world station safety or host filesystem privacy.
+
 ## Additional actual-image P1 fixtures
 
 Two more **fictional, source-generated Japanese restaurant images** are used

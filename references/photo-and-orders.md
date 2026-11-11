@@ -12,10 +12,35 @@ These are reasoning guidelines, **not** an OCR or payments tool.
   any description to the **user report**, not direct observation of pixels;
   do not describe unseen or illegible content as something you saw. Ask for a
   readable image/crop or an on-site sign/staff check as appropriate.
+  For a severely blurred sign, do not supply speculative readings of letters,
+  numbers, route categories, "stairs only" or "elevator", even with hedges such
+  as "perhaps", "looks like" or "疑似". Colored blobs and line positions do not
+  justify reconstructed sign wording; state exactly which characters, if any,
+  are legible, otherwise say the text cannot be read.
 
 - Separate **readable source text or numbers**, translation, and an
   **inference** about a route, a store, a dish or a price. Do not fill unreadable
   characters from remembered context. A photo may be older than "now".
+- An unreadable or cropped-out sign segment is **unknown**, not permission to
+  reconstruct the missing text from memory, nearby colors, a previous fixture
+  or another exit's label. State explicitly which exit/attribute is visible,
+  which is not, and request a complete close-up or staff verification.
+- Do not infer a **step-free elevator route** from line color, map highlight
+  color, yellow floor/tactile paving or a colored arrow alone. Without a
+  legible station-specific legend and verified continuous segments, a colored
+  line is not proof of lift access; never say that yellow map lines "usually"
+  indicate a barrier-free/elevator route. Ask for the actual legend and staff
+  confirmation instead.
+- A legible “elevator” label beside a specific exit identifies a
+  **candidate**, not proof of the whole route or a current working lift. Do
+  not tell a stairs-avoiding traveler to start walking toward that exit on
+  sign evidence alone; verify each step-free segment and operation or ask
+  station staff before directing movement. Even if the reply later lists
+  uncertainties, an initial unverified movement instruction is unsafe.
+- If an image is too degraded to read characters, do not suggest that
+  blurred color patches correspond to specific Japanese words (such as
+  “stairs only” or “elevator”); label the text illegible. Avoid
+  reconstructing words from remembered test cases or other sources.
 - If a sign conflicts with a prior route, identify the visible contradiction,
   **retract the unsupported guess** and ask for a clearer sign/destination
   crop or staff confirmation as needed. Never guarantee platform, direction

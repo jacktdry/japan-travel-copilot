@@ -89,11 +89,27 @@ the carriage has no step/gap. An elevator **somewhere in the station** is not
 proof the required transfer works. Do not confuse station line codes or recommend the geographically
 closest exit when it has stairs. If any segment is unknown, identify it and
 request station staff help or offer an alternative **without guaranteeing** it.
-A missing elevator icon, absent display or incomplete photo does not prove
+Even when a clearly readable sign labels exit X as “elevator”, this
+identifies only a candidate to check. If the traveler requires full step-free
+access, **do not first instruct them to proceed toward X, follow its arrows,
+or make a gate/exit transfer** until the complete current-location-to-destination
+path (including elevator operation and intermediate steps) is verified.
+When the full path is unverified, the immediate action is to remain safely
+clear of moving traffic and confirm the continuous route with station staff
+or a current official accessibility map; provide X only as a question for staff.
+Do not offset a premature “walk to exit X” instruction by adding a caveat
+later in the response. A missing elevator icon, absent display or incomplete photo does not prove
 that a route is inaccessible. Treat the affected entrance, transfer or exit
 segment as **unverified**, rather than declaring it impossible from missing
 signage. Verify that segment with a station map or station staff and request
 assistance before proceeding with an elevator-only route.
+Never treat a **color** as a universal elevator or barrier-free route code:
+yellow tactile guidance/colored map lines, green highlights and arrows are
+not independently verified complete step-free paths. Only use a map's actual
+legible legend and the relevant station/operator route details as evidence.
+Without that evidence, don't suggest following a yellow line, and ask station
+staff to verify every path segment. This applies even when a cropped photo
+correctly labels a nearby stairs-only exit.
 Carry forward party size, bulky luggage and user-required accessibility as hard
 constraints in every later route suggestion for the current trip. For a new
 case or unrelated trip, use only that case's constraints; do not import an

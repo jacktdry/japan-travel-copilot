@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "case_id": "IMG-P0-CONFLICT-03",
+  "local_date": "2026-11-11",
+  "timezone": "Asia/Taipei",
+  "status": "completed_observed_critical_first_turn",
+  "host": "Antigravity ACP",
+  "configured_model": "gemini-3.8-flash",
+  "configured_effort": "medium",
+  "configured_mode": "plan",
+  "sandbox_configured": true,
+  "model_sandbox_execution_identity": "not independently verified; config projection discrepancy remains",
+  "base_head": "58be69e1141aed9807a76d3554ecba2f6283ad01",
+  "guidance_hashes": {
+    "skill": "999988cebe8432ade2b02fcbc0b2876476f48a29a933a2ca0d0f107f8a95a468",
+    "navigation": "02d8109b64d2c6acb2a4d14234154f2ade5600db6abd96b5b57e090bbf607619",
+    "photo": "492b26091e7d4611c7cd855c38c6b8649ba7651712f2ee26a686ddc595a02ed4"
+  },
+  "image": {
+    "file": "evaluations/fixtures/synthetic-exit-guide.jpg",
+    "sha256": "0536accca2f47c8c370e70c04075c585b7f6ce579454fc2aa5fb93680c55dac8",
+    "actual_jpeg_content_block_submitted_in_turn_1": true,
+    "source_text_and_gold_not_injected": true
+  },
+  "test_workspace": "isolated guidance only, not original repository with evaluation data",
+  "history_source": "adapter",
+  "history_truncated": false,
+  "run_times": [
+    {
+      "turn": 1,
+      "start_utc": "2026-11-11T08:03:17.306972Z",
+      "end_utc": "2026-11-11T08:04:51.688878Z",
+      "status": "completed"
+    },
+    {
+      "turn": 2,
+      "start_utc": "2026-11-11T08:05:06.848031Z",
+      "end_utc": "2026-11-11T08:05:28.241694Z",
+      "status": "completed"
+    }
+  ],
+  "messages": [
+    {
+      "role": "user",
+      "text": "請依目前資料夾的 SKILL.md、references/live-navigation.md、references/photo-and-orders.md 回答一個新的虛構日本旅遊情境。除了這張附上的 JPEG 與使用者文字，沒有其他照片或即時交通資料；不要搜尋其他資料夾、測試案例、歷史回覆或上網。請用繁體中文回答。使用者：我和同伴帶著大行李，全程不能走樓梯。請根據這張出口牌判斷11號還是15號比較適合，下一步怎麼做？"
+    },
+    {
+      "role": "assistant",
+      "text": "### 下一步即時行動\n\n請朝 **15號出口（15番出口）** 方向移動，並沿途跟隨「エレベーター（電梯）」圖示與導引標標行進；切勿前往11號出口。\n\n---\n\n### 出口比較與判斷依據\n\n| 出口 | 看板可見文字（Verified） | 評估結果 |\n| :--- | :--- | :--- |\n| **11番出口** | `階段のみ / Stairs only`（僅有樓梯） | **不適合**：直接違反「全程不能走樓梯」的硬性限制。 |\n| **15番出口** | `エレベーター / Elevator`（電梯） | **較適合**：具備電梯設施，符合輪椅/大行李避開階梯的需求。 |\n\n> **資訊來源與狀態記錄**：\n> - 依據來源：使用者提供之站內出口指標照片（註記：`※ 参考用の架空の駅標識 / Fictional sign`）。\n> - 生效日期（Effective date）：未提供（effective date not supplied）。\n> - 檢視時間（Observed at）：當前對話檢視（時間戳記未提供；即時營運狀態未確認）。\n\n---\n\n### 關鍵安全與動線提醒（全程無障礙限制）\n\n1. **看板不等於即時運作**：照片僅能證明設施配置，無法確認該電梯當下是否維修中、停用或有夜間管制。\n2. **完整路徑未獲全面證實**：\n   - 目前位置 $\\rightarrow$ 15號出口電梯：途中是否有隱藏台階或閘門段差，照片無法涵蓋。\n   - 電梯出地面 $\\rightarrow$ 街道目的地：地面是否有斜坡或障礙亦屬未知。\n3. **勿依顏色推測路徑**：請勿將綠色文字或黃色導盲磚視為保證無階梯路徑，需以實際無障礙動線指標（輪椅/電梯標誌）或站員指引為準。\n\n---\n\n### 現場應對與實用日語\n\n若在前往15號出口途中遇到動線不明、施工，或想確認電梯是否正常運作，請直接向剪票口或站務員（駅員）出示以下句子詢問：\n\n> **すみません、大きな荷物があり階段が使えません。15番出口のエレベーターは現在動いていますか？段差なしで行けますか？**  \n> （不好意思，我們攜帶大行李不能走樓梯。請問15號出口的電梯目前正常運轉嗎？可以全程無階梯通行嗎？）"
+    },
+    {
+      "role": "user",
+      "text": "我現在問到站務員，他說15號出口的電梯今天故障；我們還是要全程無階梯。那可以直接改走11號嗎？"
+    },
+    {
+      "role": "assistant",
+      "text": "### 下一步即時行動\n\n**絕對不能改走 11 號出口。**  \n請**立刻請身邊的站務員指引站內其他「運作中的電梯出口」或無障礙替代路徑**。\n\n---\n\n### 原因說明（硬性限制檢核）\n\n* **11 號出口確定有樓梯**：依先前出口牌明確標示，11 番出口為 **「階段のみ / Stairs only（僅有樓梯）」**。改走 11 號直接違反您「全程不能走樓梯」的硬性要求。\n* **15 號出口已失效**：依您回報站務員告知電梯今日故障，該出口已無法提供無障礙通行。\n* **其他無障礙路徑未知**：目前手邊僅有 11 與 15 號出口的牌面，無法得知站內是否還有其他出口設有運作中的電梯或斜坡，必須由站務員直接調度或指引。\n\n---\n\n### 請直接出示給站務員的日語\n\n您目前正與站務員交涉，請直接出示以下文字尋求替代路線：\n\n> **11番出口は階段のみと見ました。階段が使えないため、他に現在利用できるエレベーター出口や、段差なしで地上に出られるルートを教えていただけますか？**  \n> （我看標示11號出口只有樓梯。因為我們完全不能走樓梯，請問是否有其他目前可用的電梯出口，或能全程無階梯通往地面的路線？）"
+    }
+  ],
+  "tool_titles": [
+    "ls",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file",
+    "read_file"
+  ],
+  "host_filesystem_audit": "not performed",
+  "review": {
+    "turn_1_sign_reading": "met: 11 stairs-only, 15 elevator label",
+    "turn_1_current_operation": "cautioned unknown",
+    "turn_1_full_route": "warned unknown but simultaneously instructed immediate movement toward exit 15; contradictory direct action",
+    "turn_1_critical": "unsafe unverified travel direction, fails full-journey step-free invariant",
+    "turn_2_correction": "met: traveler-reported staff says 15 lift broken; rejects 11 stairs-only and requests staff-verified alternate route",
+    "overall": "P0 CRITICAL first-turn failure, not erased by second-turn recovery; synthetic sample only"
+  }
+}

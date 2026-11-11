@@ -15,6 +15,29 @@ benchmark or field-safety sign-off. A text-only prompt is not an image test.
 Further multimodal evaluation requires synthetic or explicitly permitted
 images and human source-text verification.
 
+## P0 actual-JPEG station navigation stress
+
+The [three fictional image cases](visual-stress-cases.json) use the original
+[synthetic exit sign](fixtures/README.md) plus a strongly blurred copy and a
+top-only crop. The [source-blind evaluation review](runs/2026-11-11-p0-image-stress-review.md)
+records actual JPEG ContentBlock submissions, historical failures and focused
+post-fix observations for Antigravity ACP. Source transcription, ground-truth
+sign text and reviewer scoring conditions must **never** be injected into
+the prompts. Use a fresh, serial session per case and a clean workspace
+containing only Skill guidance; otherwise repository/test corpus access may
+contaminate the answer. Two-turn elevator-outage follow-ups must remain in the
+same case's session. Record whether response text came from session/load or
+from nontruncated run events; these provenance levels are not interchangeable.
+
+The historical answers include guesses of unreadable characters, unsupported
+yellow-map-color accessibility claims, and a **P0 critical premature walking
+instruction** toward an elevator-labeled exit. One independent post-fix
+Antigravity sample for each case did not reproduce the narrow defect. Codex ACP
+hit its usage cap before giving an evaluable image answer, so Codex behavioral
+acceptance is **pending**, not a failure. All inputs are synthetic, not actual
+station photos; config/runtime identity, host filesystem privacy, complete
+accessible-path evidence and current operating state are unverified. **P0 NO-GO**.
+
 ## Source-backed P0 static evidence exercise
 
 [source-backed-airport.json](source-backed-airport.json), `SOURCE-AIRPORT-P0-01`,

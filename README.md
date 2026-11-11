@@ -214,6 +214,16 @@ persisting after a benign probe. Native model identity, sandbox enforcement and
 host no-file behavior remain unverified; historical failures and blocked attempts
 remain visible. No host code or settings were changed here.
 
+A further [P0 actual-JPEG station-sign stress review](evaluations/runs/2026-11-11-p0-image-stress-review.md)
+covers strongly blurred, upper-cropped and full-sign-plus-elevator-outage synthetic
+images. The first answers contained unsupported yellow-map-color interpretation,
+guessed wording from illegible pixels, and a **P0 critical** instruction to walk
+toward an elevator-labeled exit before verifying the complete step-free route.
+All three problems were not observed in one separate post-fix Antigravity sample
+per case. The earlier failures remain archived; Codex image inference was blocked
+by its quota and is **unassessed**, not a model failure. There is no live station,
+native model/sandbox, or host file-side-effect proof. **P0 NO-GO remains**.
+
 The [offline ACP smoke findings](evaluations/runs/2026-11-04-acp-offline-smoke.md)
 cover 4 text cases × 2 models, 1 separate synthetic image case × 2 models,
 and 2 fresh airport regression reruns: 12 total samples, 6 fresh/independent
@@ -425,6 +435,14 @@ Gemini 的介面設定與執行狀態投影不一致，歸屬限制詳見報告�
 記錄 update/open 回傳所選設定，但良性探測成功後 inspect 仍顯示初始值；
 原生模型身分、沙盒效力與宿主零落檔仍未驗證。歷史失敗與阻擋紀錄保留，
 此儲存庫未修改宿主程式或設定。
+
+新增的[P0 實際 JPEG 站牌壓力測試報告](evaluations/runs/2026-11-11-p0-image-stress-review.md)
+涵蓋強烈模糊、局部裁切及清晰站牌加上電梯故障回報。首次測試分別發現
+模糊文字猜測、無證據的黃色地圖線無障礙推論，以及**尚未驗證全程無階梯就
+直接指示朝電梯出口移動**的 P0 重大錯誤。三項個別修補後的單次新對話
+未再觀察到相同問題，但原始失敗紀錄均保留。Codex 額度不足未完成
+圖片模型驗收，不能計為模型回答失敗或通過；真實車站、宿主沙盒及零落檔
+仍未驗證，**P0 持續 NO-GO**。
 
 [離線 ACP 初步結果](evaluations/runs/2026-11-04-acp-offline-smoke.md)涵蓋
 4 個文字情境 × 2 個模型，加上 1 個獨立合成圖片情境 × 2 個模型，以及

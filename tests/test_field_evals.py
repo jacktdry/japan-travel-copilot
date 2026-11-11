@@ -99,7 +99,8 @@ class FieldEvaluationTests(unittest.TestCase):
         text = "\n".join(source.read_text(encoding="utf-8") for source in sources)
         # Public report filenames contain run dates, not trip dates. Exempt
         # only those filenames; keep scanning prose and other paths.
-        for filename in ("2026-11-06-source-backed-date-contract-review.md",
+        for filename in ("2026-11-11-p0-image-stress-review.md",
+                         "2026-11-06-source-backed-date-contract-review.md",
                          "2026-11-06-acp-config-projection-diagnostic.md",
                          "2026-11-05-source-backed-gemini-recheck-review.md",
                          "2026-11-05-source-backed-postfix-review.md",
@@ -904,7 +905,9 @@ class FieldEvaluationTests(unittest.TestCase):
         self.assertEqual(data["precommit_head"],
                          "65f9beb1303828ab8a2eda0ed33d8e821eeb8c16")
         self.assertEqual(data["photo_orders_sha256"],
-                         hashlib.sha256((ROOT / "references/photo-and-orders.md").read_bytes()).hexdigest())
+                         "621d8d20e597edd85d4224f6272e4056ff4d8d17f9ba788b0f6b39c9e30cfdeb")
+        # Historical recorded input hash remains fixed after current photo guidance
+        # changes; the current contract is checked in test_visual_stress.
         # Historical run input, independent of later SKILL instruction changes.
         # Current source-date guidance is checked in test_skill_contract.
         self.assertEqual(data["skill_sha256"],

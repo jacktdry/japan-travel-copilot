@@ -42,13 +42,14 @@ class SourceBackedArchiveTests(unittest.TestCase):
         self.assertEqual(data["upstream_revision_before_changes"],
                          "d70eb194fbc170993c364fd5d19bba043b952c2f")
         self.assertEqual(data["fixture_sha256"], SNAPSHOTS["fixture_sha256"])
-        # This archive intentionally describes current guidance. Older archives
-        # keep their historical hash pins in the separate tests below.
-        for key, filename in (("skill", "SKILL.md"),
-                              ("evidence", "references/evidence-and-transit.md"),
-                              ("navigation", "references/live-navigation.md")):
-            self.assertEqual(data["guidance_hashes"][key],
-                             hashlib.sha256((ROOT / filename).read_bytes()).hexdigest())
+        # These are the exact *historical* inputs from the 2026-11-06 run;
+        # subsequent guidance edits must not invalidate or rewrite its archive.
+        # Current guidance rules are checked independently by contract tests.
+        self.assertEqual(data["guidance_hashes"], {
+            "skill": "006a2a47a68a95943bf0a87950673f95f2134744e9e633a52b43e19c0c804ecf",
+            "evidence": "a406378e658b418973f51b0b36222470214c5e3e7c553cbc9dc2dd89c2147150",
+            "navigation": "d383462b90f9a6877eb7a77438dae9bf7b3731fa51f3f985df2d3cb5925152c7",
+        })
         provenance = data["evidence_provenance"]
         for key in ("observed_at", "timezone", "precision"):
             self.assertEqual(provenance[key], self.fixture["provenance"][key])
