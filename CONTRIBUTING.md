@@ -19,6 +19,21 @@ command changes, confirm it against the tool provider before publishing;
 show global vs project scope, require consent, verify host discovery, and keep
 the no-Node manual method. Installation must not imply travel-memory consent.
 
+For general version readiness, use the small user-facing
+[release candidate checklist](RELEASE.md). A basic compatible-host workflow
+smoke and existing offline tests are sufficient for a portable travel-assistance
+release decision; exhaustive multi-model, live-station or host-sandbox research
+is valuable but not universally mandatory. Do not conceal known reproducible
+core failures or overclaim real-time accuracy.
+
+For field-safety changes, add vendor-neutral synthetic examples to
+`evaluations/scenarios.json` and check that `evaluations/README.md` still
+describes honest manual model/host testing. Never publish original traveler
+logs, identifying booking details, itinerary history or private photos.
+A green static unit test is not evidence of model behavior or of the latest
+rail/airline schedules. The relevant pass/fail conditions should favor
+source-grounded safety over confident specificity.
+
 Keep references relative and linked from `SKILL.md` or the README. The root
 skill must remain below 500 lines and must not require a particular runtime,
 API, or vendor contract. Never state current schedules, routes, availability,

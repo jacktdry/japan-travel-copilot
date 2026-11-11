@@ -10,6 +10,28 @@ first, and distinguish user reports, verified facts and inference.
 > 也可以直接請 Agent 閱讀本 README 並協助安裝；操作前須確認安裝範圍與權限。
 > See **Install and compatibility / 安裝與相容性** below for other options.
 
+## What this Skill is for / 這個 Skill 能做什麼
+
+Plan a Japan trip, adjust a schedule, understand station signs or menus,
+translate useful Japanese, and work out a sensible next step when plans change.
+It **adds instructions to a compatible AI agent**, not a standalone booking,
+navigation or real-time transit application. Live data and image reading depend
+on the host's tools.
+
+**最簡單的用法：** 安裝後對 AI 說「幫我規劃日本旅行：大阪、京都、三個人，
+日期未定，先問最需要的問題」，或「我在車站，幫我看這張照片、翻譯指標並
+建議下一步」。不需要先啟用記憶、登入額外服務或完成長問卷。
+
+- **行程**：逐步規劃、保留已確認資訊、調整交通與景點。
+- **現場**：車站、路線、照片與交通疑問；未查到的資訊會標明。
+- **溝通**：菜單、點餐、日文翻譯與收據比對。
+- **異動**：班機、住宿或預約出問題時整理下一步；不會自行下單或取消。
+
+**v0.3 release candidate / 發布候選版：** 核心功能、安裝方式與
+最小發布標準請看 [RELEASE.md](RELEASE.md)。
+過往完整的測試與研究保留在 [evaluations/](evaluations/README.md)，
+不再要求所有實地驗證或多模型實驗完成才可發布日常旅遊輔助 Skill。
+
 ## Install and compatibility
 
 ### Option 1 — Let your Agent guide the installation
@@ -165,6 +187,39 @@ this is neither encryption nor a sandbox against hostile concurrent writers.
 Sensitive free text still needs human/host review. See the full
 [CLI and limitations](references/memory.md) and [schema](references/travel-state.md).
 
+## Travel guidance and evaluation history
+
+The Skill keeps trip constraints (luggage, accessibility, dates, bookings)
+across conversation turns. It helps interpret signs, translate Japanese,
+compare options and find the next practical check. **It cannot guarantee**
+live transit status, an entire accessible route, store availability, or
+successful bookings without current evidence and capable host tools.
+
+v0.3 uses the **small, practical release checklist** in [RELEASE.md](RELEASE.md).
+The extensive historical tests remain available for research, but their
+**P0 field-safety NO-GO** is a separate, higher bar—not a mandatory
+gate for publishing a general-purpose travel-assistance Skill.
+
+For detailed evidence and limitations, use the
+[22 fictional scenarios and reports](evaluations/README.md):
+- [Static official-source exercise](evaluations/source-backed-airport.json):
+  [initial](evaluations/runs/2026-11-05-source-backed-initial-review.md),
+  [post-fix](evaluations/runs/2026-11-05-source-backed-postfix-review.md),
+  [Gemini recheck](evaluations/runs/2026-11-05-source-backed-gemini-recheck-review.md)
+  and [source-date recheck](evaluations/runs/2026-11-06-source-backed-date-contract-review.md).
+- [ACP configuration caveat](evaluations/runs/2026-11-06-acp-config-projection-diagnostic.md)
+  and [actual-JPEG sign stress test](evaluations/runs/2026-11-11-p0-image-stress-review.md).
+- [Other P0 travel/navigation observations](evaluations/runs/2026-11-04-p0-remaining-review.md).
+- [P1 offline review](evaluations/runs/2026-11-05-p1-offline-review.md),
+  [initial corrections](evaluations/runs/2026-11-05-p1-postfix-transcripts.json)
+  and [missing-order follow-up](evaluations/runs/2026-11-05-p1-food-missing-second-postfix.json).
+- [P1 image review](evaluations/runs/2026-11-05-p1-visual-review.md).
+
+These are synthetic observations, **not** proof of current service operation,
+complete accessibility, model-wide correctness, or zero host-created files.
+Their original failures are retained and the deeper validation can continue
+without blocking useful everyday planning and translation.
+
 ## Development and license
 
 ```sh
@@ -292,9 +347,31 @@ Agent 閱讀本 README 後，請按以下順序執行；**不要因為這份 REA
 [記憶文件](references/memory.md)、[狀態格式](references/travel-state.md)；
 引導規則見 [onboarding](references/onboarding.md)。
 
+## 旅遊協助與歷史驗收
+
+日常使用的重點是幫你規劃、延續已確認的行程、翻譯日文、看懂標誌、
+整理選項並提供合理的下一步。即時交通、電梯、營業時間等資訊，
+需要宿主具備相應工具才能查證；Skill 不能憑空保證正確。
+
+v0.3 改採 [RELEASE.md](RELEASE.md) 的**簡單實用發布標準**。
+以前的嚴格 P0 現場安全測試仍維持自己的 **NO-GO** 結論，但
+這是更高層級的研究與驗證，不再作為一般旅遊輔助 Skill 發版的前提。
+
+完整歷史、失敗回答與限制都保留在[評估文件](evaluations/README.md)，
+包含[官方來源快照](evaluations/source-backed-airport.json)、
+[初次](evaluations/runs/2026-11-05-source-backed-initial-review.md)、
+[修補](evaluations/runs/2026-11-05-source-backed-postfix-review.md)、
+[Gemini 補驗](evaluations/runs/2026-11-05-source-backed-gemini-recheck-review.md)、
+[來源日期重測](evaluations/runs/2026-11-06-source-backed-date-contract-review.md)、
+[ACP 設定診斷](evaluations/runs/2026-11-06-acp-config-projection-diagnostic.md)與
+[實際 JPEG 合成站牌測試](evaluations/runs/2026-11-11-p0-image-stress-review.md)。
+這些不是即時路況或現場安全保證，也不能證明宿主完全不產生暫存檔。
+
 ## 開發與授權
 
 在根目錄執行 `python3 -m unittest discover -s tests -v`。測試只用標準函式庫、
 虛構資料與外部暫存檔案，不連網；CI 探索全部測試。引導文字的靜態契約檢查不
 等於所有宿主的對話行為驗收。貢獻規範見 [CONTRIBUTING.md](CONTRIBUTING.md)。
 Apache-2.0，詳見 [LICENSE](LICENSE)。
+
+The [post-fix actual-image P1 evidence](evaluations/runs/2026-11-05-p1-visual-postfix-transcripts.json) records two independent Gemini reruns: neutral peanut-avoidance Japanese and source-grounded receipt reconciliation; zero host files is not established.

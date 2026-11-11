@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "case_id": "IMG-P0-CROPPED-02",
+  "status": "completed_postfix_sample_observation",
+  "date_local": "2026-11-11",
+  "timezone": "Asia/Taipei",
+  "host": "Antigravity ACP",
+  "configured_model": "gemini-3.8-flash",
+  "configured_mode": "plan",
+  "configured_sandbox": true,
+  "native_model_sandbox_identity": "unverified",
+  "image": {
+    "file": "evaluations/fixtures/synthetic-exit-guide-cropped-top.jpg",
+    "sha256": "eb12b8d399079e3887d48c7e337d7bbc86ea86f97c74aaab14fd340654fece55",
+    "actual_image_content_block_submitted": true,
+    "answer_key_not_injected": true
+  },
+  "guidance_hashes": {
+    "skill": "999988cebe8432ade2b02fcbc0b2876476f48a29a933a2ca0d0f107f8a95a468",
+    "navigation": "02d8109b64d2c6acb2a4d14234154f2ade5600db6abd96b5b57e090bbf607619",
+    "photo": "492b26091e7d4611c7cd855c38c6b8649ba7651712f2ee26a686ddc595a02ed4"
+  },
+  "run": {
+    "started_at_utc": "2026-11-11T07:57:36.656445Z",
+    "ended_at_utc": "2026-11-11T07:58:58.35352Z",
+    "status": "completed",
+    "event_ring_truncated": false,
+    "event_types": {
+      "tool_call": 5,
+      "tool_call_update": 1,
+      "agent_message_chunk": 16,
+      "completed": 1
+    }
+  },
+  "history_limit": "Antigravity session/load returned empty history even though completed run events contained full assistant chunks; prompt is the exact authored start request, not verified from session/load",
+  "test_workspace": "isolated Skill and three reference files only; no fixture/gold source",
+  "messages": [
+    {
+      "role": "user",
+      "text": "請依目前資料夾的 SKILL.md、references/live-navigation.md、references/photo-and-orders.md 回答一個新的虛構日本旅遊情境。除了這張附上的 JPEG 與使用者文字，沒有其他照片或即時交通資料；不要搜尋其他資料夾、測試案例、歷史回覆或上網。請用繁體中文回答。使用者：我們帶大行李必須走無階梯路線。這張照片只拍到一半，能確認15號出口有電梯並帶我們走嗎？"
+    },
+    {
+      "role": "assistant",
+      "text": "**請先在原地暫停移動，切勿直接前往 15 號出口。** \n\n目前這張照片**無法確認 15 號出口是否有電梯**，在確認連續無階梯路徑前，無法保證該路線可行並帶您前往。\n\n---\n\n### 1. 照片判讀與事實說明\n* **照片可見文字**：僅有上方標題「出口案内 / Exit Guide」，以及下方「11番出口 階段のみ / Stairs only」（11 號出口僅有樓梯）。\n* **未包含之資訊（未驗證）**：照片遭裁切，**完全沒有拍到 15 號出口**的文字或設施符號。沒有拍到並不代表它沒有電梯，而是目前處於「未確認狀態」。\n* **無階梯路線原則**：因您攜帶大行李且設定「必須走無階梯路線」，依規範必須確認從目前位置到地面出口全程皆有電梯或無障礙坡道，不可僅憑猜測指引。\n\n---\n\n### 2. 建議的即時行動與實用日語\n建議就近尋找站內的「構内図」（站內地圖 / Barrier-free 導覽圖），或直接出示以下日語向站務員（駅員）詢問：\n\n> **「すみません、大きいスーツケースがあるので、地上へのエレベーターがある出口を教えていただけますか？」**  \n> （不好意思，我們有大件行李，請問有通往地面的電梯出口在哪裡？）\n\n若想直接確認 15 號出口：\n> **「15番出口に地上へのエレベーターはありますか？」**  \n> （請問 15 號出口有通往地面的電梯嗎？）\n\n---\n\n### 3. 接續確認\n若需要進一步協助，請告訴我**您目前所在的車站名稱**，或補拍一張包含 15 號出口與周邊標示的完整站內地圖。\n\n*(本對話僅維持於當前視窗中，未啟用持久記憶，不會儲存您的私人旅遊紀錄。)*"
+    }
+  ],
+  "review": {
+    "crop11_stairs_only": "met",
+    "unseen15_not_inferred": "met",
+    "full_stepfree_not_promised": "met",
+    "unverified_yellow_color_route_claim": "not observed",
+    "assessment": "narrow single synthetic rerun no P0 critical violation observed; not a full acceptance"
+  },
+  "host_filesystem_audit": "not performed"
+}

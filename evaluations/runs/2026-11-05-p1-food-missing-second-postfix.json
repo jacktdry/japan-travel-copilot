@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "date_local": "2026-11-05",
+  "timezone": "Asia/Taipei",
+  "case_id": "FOOD-MISSING-15",
+  "model": "gemini-3.8-flash",
+  "host": "Antigravity ACP plan",
+  "effort": "medium",
+  "fresh_independent_session": true,
+  "previous_postfix_result": "residual_failure",
+  "references_photo_orders_sha256": "c887a4563a66a283de19d2a06f103c4f1dc451b204234f17825cc7b1ee5be4b7",
+  "environment": "Second post-fix test of a fictional three-turn restaurant dialogue after making the source-order-state checkpoint concrete. No live staff or restaurant verification, no image or external actions.",
+  "source": "Complete nontruncated ACP prompt event stream; original first-turn harness wrapper omitted; all traveler prompts from public synthetic case.",
+  "turns": [
+    {
+      "traveler": "我們要兩份串燒和一份飯。",
+      "assistant": "您可以直接向店員出示以下日文，或照著唸來點餐：\n\n> **「すみません、注文をお願いします。串焼きを2つと、ご飯を1つお願いします。」**  \n> （Sumimasen, chūmon o onegaishimasu. Kushiyaki o futatsu to, gohan o hitotsu onegaishimasu.）  \n> **中文意思**：不好意思，我要點餐。請給我兩份串燒和一份飯。\n\n---\n\n### 目前點餐狀態（僅保留於當前對話，未儲存至外部檔案）\n\n* **已點選（Requested）**：\n  * 串燒 × 2 份\n  * 白飯 × 1 份\n* **店員確認（Staff confirmed）**：待點餐與店員確認\n* **已送達（Served）**：尚未出餐\n* **帳單核對（Billed）**：尚未計費\n\n---\n\n### 點餐實用提醒\n1. **口味選擇**：店員通常會詢問串燒的口味／調味，常見有兩種：\n   * **醬燒**：タレ（tare）—— 可回覆「タレでお願いします」（請給我醬燒）\n   * **鹽烤**：塩（shio）—— 可回覆「塩でお願いします」（請給我鹽烤）\n2. **份量確認**：部分店家的串燒菜單可能是「單串」或「綜合拼盤（盛り合わせ）」，向店員點餐時手指菜單對應品項與上述日文搭配，最不易發生誤會。\n\n*(本對話僅維持當前即時對話記錄，不存取任何個人資料或外部檔案，亦不推測任何尚未確認的廚房製作進度。待向店員點餐後，若有後續出菜進度、漏單確認或結帳核對需求，請隨時告訴我！)*"
+    },
+    {
+      "traveler": "串燒只來一份，飯還沒到，幫我詢問。",
+      "assistant": "您可以直接向店員出示以下日文，或照著唸來請店員協助確認：\n\n> **「すみません、注文の確認をお願いしたいのですが。串焼きがまだ1つ来ていなくて、ご飯もまだ届いていません。確認していただけますか？」**  \n> （Sumimasen, chūmon no kakunin o onegaishitai no desu ga. Kushiyaki ga mada hitotsu kite inakute, gohan mo mada todoite imasen. Kakunin shite itadakemasu ka?）  \n> **中文意思**：不好意思，想確認一下出菜進度。串燒還有一份沒來，飯也還沒送達，能幫忙確認一下嗎？\n\n---\n\n### 目前餐點與出菜狀態（僅保留於當前對話）\n\n| 品項 | 原點需求（Requested） | 實際送達（Served） | 待確認 / 未送達 | 說明 |\n| :--- | :---: | :---: | :---: | :--- |\n| **串燒** | 2 份 | **1 份** | **1 份** | 尚欠 1 份，待店員確認進度與登錄狀況 |\n| **白飯** | 1 份 | **0 份** | **1 份** | 尚未送達，待店員確認出餐進度 |\n\n---\n\n### 提醒\n* **不預設製作狀態**：目前廚房是否已開始製作尚無法確認，請以店員回覆的實際狀況為準。\n* **店員回覆確認**：店員確認後通常會說明是「正在準備」或是「系統未登錄／漏單」。聽完或看完店員回應後請告訴我，我會協助您確認下一步應對（例如是否補點或後續帳單核對）。"
+    },
+    {
+      "traveler": "店員說飯馬上來，但第二份串燒沒有登錄。",
+      "assistant": "**第二份串燒未登錄；是否已開始製作、會不會出餐或收費仍未確認，先向店員詢問是否要補點。**\n\n此外，店員表示「飯馬上來」僅確認了店員預期的出餐時間，並不代表廚房當前具體的製作階段；而未登錄也不等於已自動取消。\n\n---\n\n### 您的下一步行動與日文溝通\n\n現在取決於您是否需要第二份串燒：\n\n#### 選項 A：想要吃第二份串燒（確認補點）\n可以直接向店員出示或照著唸：\n> **「すみません、では串焼きをもう1つ追加してください。」**  \n> （Sumimasen, dewa kushiyaki o mō hitotsu tsuika shite kudasai.）  \n> **中文意思**：不好意思，那麻煩幫我追加一份串燒。\n\n#### 選項 B：不補點了（只要已上桌的這 1 份即可）\n向店員表明不追加，並請店員確認不計費：\n> **「わかりました。串焼きの追加は大丈夫ですので、お会計に含まれないようご確認いただけますか？」**  \n> （Wakarimashita. Kushiyaki no tsuika wa daijōbu desu node, okaikei ni fukuma renai yō gokakunin itadakemasu ka?）  \n> **中文意思**：了解了，串燒不用追加。另外也麻煩協助確認不會計入帳單，謝謝。\n\n---\n\n### 目前餐點與出菜狀態（僅保留於當前對話）\n\n| 品項 | 原點需求（Requested） | 店員回報狀態（Staff-reported） | 實際送達（Served） | 帳單核對注意事項（Billed） |\n| :--- | :---: | :--- | :---: | :--- |\n| **白飯** | 1 份 | 回報「馬上來」（預期出餐） | 尚未送達 | 出餐後確認；結帳時計費 1 份 |\n| **串燒（第 1 份）** | 1 份 | 正常登錄與出餐 | **已送達** | 正常計費 1 份 |\n| **串燒（第 2 份）** | 1 份 | **未登錄**（製作、出餐與收費狀況未確認） | **未送達** | 若選擇不補點，結帳時請務必核對收據確認未被計費 |\n\n---\n\n### 結帳提醒\n**點餐、出餐與計費是三件不同的事**。若您選擇不補點，結帳拿到收據時請留意確認串燒數量是否確實為 **1 份**。若收據明細有任何疑問，或需要日文向店家詢問，請隨時提供給我協助核對！"
+    }
+  ],
+  "observation": "The final answer explicitly states that not entered does NOT prove kitchen preparation, serving, or billing state; unlike earlier Gemini sample, it no longer asserts kitchen did not prepare the missing skewer. Observed narrow sample pass only."
+}

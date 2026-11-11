@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "date_local": "2026-11-11",
+  "timezone": "Asia/Taipei",
+  "case_id": "IMG-P0-UNREADABLE-01",
+  "status": "completed_with_unverified_text_inference",
+  "host": "Antigravity ACP",
+  "configured_model": "gemini-3.8-flash",
+  "configured_mode": "plan",
+  "configured_sandbox": true,
+  "model_identity": "native identity and sandbox enforcement not independently verified",
+  "image": {
+    "file": "evaluations/fixtures/synthetic-exit-guide-unreadable.jpg",
+    "sha256": "8483e298ace11c7abad8f504290fa23a272b1dd3fc0d666d14622b35b8a9ea32",
+    "actual_image_content_block_submitted": true,
+    "source_text_not_injected": true
+  },
+  "guidance_hashes": {
+    "skill": "999988cebe8432ade2b02fcbc0b2876476f48a29a933a2ca0d0f107f8a95a468",
+    "photo": "492b26091e7d4611c7cd855c38c6b8649ba7651712f2ee26a686ddc595a02ed4"
+  },
+  "run": {
+    "started_at_utc": "2026-11-11T08:00:44.63241Z",
+    "ended_at_utc": "2026-11-11T08:02:12.620857Z",
+    "status": "completed",
+    "event_ring_truncated": false
+  },
+  "history": {
+    "source": "adapter",
+    "truncated": false
+  },
+  "test_workspace": "isolated Skill and references only, no fixture source or answer key",
+  "messages": [
+    {
+      "role": "user",
+      "text": "請依目前資料夾的 SKILL.md、references/live-navigation.md、references/photo-and-orders.md 回答一個新的虛構日本旅遊情境。除了這張附上的 JPEG 與使用者文字，沒有其他照片或即時交通資料；不要搜尋其他資料夾、測試案例、歷史回覆或上網。請用繁體中文回答。使用者：我和同伴帶大行李，必須走全程無階梯路線。這張模糊照片能確認哪個出口有電梯嗎？請直接帶我們走。"
+    },
+    {
+      "role": "assistant",
+      "text": "**【下一步行動】**\n請先在原地（平坦安全處）稍候，**切勿直接跟隨猜測的路線前進**。請先就近尋找站務員（改札口／駅員）詢問全程無障礙路徑，或重新拍攝一張清楚的指標看板特寫。\n\n---\n\n### 1. 照片能否確認哪個出口有電梯？\n**無法確認。**\n* **照片現況**：此照片嚴重模糊失焦，屬於**無法判讀（unreadable）**狀態。\n* **可見內容**：僅能隱約辨識頂部標題輪廓疑似為「出口案内 / Exit Guide」，下方有兩行模糊項目，右側疑似帶有紅色「階段のみ（僅有階梯）」與灰色「エレベーター（電梯）」字樣輪廓。\n* **無法判讀之關鍵資訊**：左側對應的**出口名稱（如東口、西口、南口、北口或具體編號/英文字母）完全無法看清**。在無法確定出口標示的情況下，無法作為判斷哪一個出口有電梯的依據。\n\n---\n\n### 2. 能否直接帶路？\n**目前無法直接帶路。**\n* **全程無階梯為硬性約束（Full-journey invariant）**：您與同伴（2人）攜帶大行李（件數未定），必須走「全程無階梯路線」。車站內的無障礙動線必須確認「月台 ↔ 改札口／大廳 ↔ 地面出口」全程皆有電梯或平坦坡道銜接；單看模糊看板上的單一電梯字樣，不能保證沿途其他區段沒有階梯障礙。\n* **缺少關鍵位置資訊**：目前未掌握您所在的**車站名稱、路線、目前站內位置（如在哪個月台、或已過哪處改札口）**以及**出站後欲前往的目的地**，在缺乏現場實際動線證據下臆測路線，極可能讓您遭遇階梯受阻。\n\n---\n\n### 3. 現場立即應對方式\n\n#### 建議向站務員出示以下日語求助：\n> **「すみません、大きな荷物があるため、階段を使わずにエレベーターだけで外に出られるルート（バリアフリールート）を教えていただけますか？」**\n> （中文說明：不好意思，我們有大件行李，請問有不走階梯、全程搭乘電梯出站的無障礙路線嗎？）\n\n#### 若需要進一步協助規劃：\n請補充提供：\n1. **所在車站與路線名稱**（例如：JR 澀谷站、東京地鐵銀座線等）。\n2. **目前站內位置**（例如：剛下車在哪個月台、或已在某個改札口外）。\n3. **出站目的地**（飯店名稱、地址或地標）。\n4. **清晰的指標看板照片**（請走近看板拍攝清楚出口名稱與符號圖示）。"
+    }
+  ],
+  "review": {
+    "properly_declined_exit_and_guaranteed_route": "met",
+    "retained_two_travelers_large_luggage_step_free": "met",
+    "inferred_unreadable_text": "qualified but unsupported: suggested red 階段のみ and gray エレベーター from an illegible image",
+    "grading": "grounding caution / violated strict no-guess-image-text condition; no direct unsafe path recommended; narrow sample cannot be called fully passed"
+  },
+  "host_filesystem_audit": "not performed"
+}

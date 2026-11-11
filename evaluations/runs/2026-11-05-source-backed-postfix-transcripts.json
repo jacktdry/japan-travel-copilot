@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "case_id": "SOURCE-AIRPORT-P0-01",
+  "date_local": "2026-11-05",
+  "timezone": "Asia/Taipei",
+  "status": "partial_postfix_observation",
+  "variant": "same static source card, revised references, no current web checks",
+  "fixture_sha256": "c60a13df6e43e7f140632c380f9259d9b683927f41cb99124db01cd5a2ba9a27",
+  "original_pre_fix_archive_sha256": "7e619b66d01c7c80ef76fdaa78a7cf859c0179ae044eb32acf4a2b3c25ff5b93",
+  "skill_sha256": "8c9bc01120c269e7ca20dfe389b18a255349d7d998a100ac842d9b0a882e0b54",
+  "revised_navigation_sha256": "8bdb456376e268190fba2e9e67fbdf2c285bb672283d44cf3fa2c262e18c5b57",
+  "revised_evidence_sha256": "44b013948ceba8577502b70c05e1d99a823c4f475819ffd55e189d7c6336cb64",
+  "notes": "Post-fix Codex ran in a NEW independent session and complete adapter history loaded. Antigravity/Gemini post-fix prompt submission was blocked by host safety checks before a run id or answer; no Gemini sample or pass/fail is counted. Does not verify live routes or host-wide zero-files.",
+  "samples": [
+    {
+      "adapter": "Codex ACP",
+      "configured_model": "gpt-6.1-sol",
+      "mode": "read-only",
+      "effort": "medium",
+      "fresh_independent_session": true,
+      "status": "completed",
+      "run_time_utc": [
+        [
+          "2026-11-05T04:59:20.421758Z",
+          "2026-11-05T04:59:40.394361Z"
+        ],
+        [
+          "2026-11-05T04:59:51.554039Z",
+          "2026-11-05T05:00:00.9082Z"
+        ]
+      ],
+      "history_source": "ACP session/load complete adapter-owned history",
+      "history_truncated": false,
+      "host_filesystem_audit": "not performed",
+      "messages": [
+        {
+          "role": "user",
+          "text": "You are acting as the traveler-facing Japan Travel Copilot in a NEW isolated fictional conversation. Read only SKILL.md, references/evidence-and-transit.md and references/live-navigation.md (read-only) for your guidance; DO NOT open the evaluations/ fixture or its reviewer-only rubric. No web access or live transit tools, no other searches, no memory persistence, no file edits, no external actions or requests. Respond naturally in concise Traditional Chinese, prioritize one actionable verification step. The next JSON is a STATIC evidence card supplied by an evaluator, NOT tool browsing in this conversation; it contains source-page notes, not proof of current operation. Do not claim to have browsed the source pages. Do not evaluate your own response or mention benchmark rules.\n\nSTATIC EVIDENCE CARD:\n{\n  \"provenance\": {\n    \"observed_at\": \"2026-11-05\",\n    \"timezone\": \"Asia/Tokyo\",\n    \"precision\": \"date_only\",\n    \"inspector\": \"upstream orchestrator\",\n    \"note\": \"Official pages independently inspected upstream; collection date, not a trip date. Exact inspection clock time was not recorded. Repository worker did not browse. Facts below are quote-free paraphrases, not archived page copies.\"\n  },\n  \"evidence_card\": {\n    \"scope\": \"Static source injection/tool-equivalent evidence only; NOT live browsing, a current-timetable test, or live operational verification.\",\n    \"sources\": [\n      {\n        \"id\": \"kate-uh\",\n        \"url\": \"https://www.kate.co.jp/en/timetable/detail/UH\",\n        \"publisher\": \"Kansai Airport Transportation Enterprise\",\n        \"effective_on\": null,\n        \"facts\": [\n          \"The listed departure point is Kintetsu Uehommachi's SECOND-FLOOR bus terminal.\"\n        ],\n        \"timetable_entries\": [\n          {\n            \"departure\": \"07:10\",\n            \"scheduled_arrival_t1\": \"08:01\"\n          },\n          {\n            \"departure\": \"07:50\",\n            \"scheduled_arrival_t1\": \"08:41\"\n          }\n        ]\n      },\n      {\n        \"id\": \"kintetsu-uehommachi\",\n        \"url\": \"https://www.kintetsu.co.jp/foreign/english/about/station/yard/uehommachi.html\",\n        \"publisher\": \"Kintetsu\",\n        \"effective_on\": \"2026-08-01\",\n        \"facts\": [\n          \"The station map states it is current as of its effective_on date.\",\n          \"The published normal ground-platform to underground-platform transfer guide is 6 minutes.\"\n        ],\n        \"platform_transfer_guide_minutes\": 6\n      },\n      {\n        \"id\": \"kintetsu-tsuruhashi\",\n        \"url\": \"https://www.kintetsu.co.jp/foreign/english/about/station/yard/tsuruhashi.html\",\n        \"publisher\": \"Kintetsu\",\n        \"effective_on\": \"2026-03-14\",\n        \"facts\": [\n          \"The station map states it is current as of its effective_on date.\"\n        ]\n      }\n    ]\n  }\n}\n\nTRAVELER, turn 1:\n這是獨立的虛構練習，假設未來某天要去關西機場第一航廈，日期與航班時間尚未設定。我們兩人帶大型行李，在鶴橋準備前往大阪上本町轉機場巴士，全程需要無階梯。請依提供的來源卡比較早、晚兩班，還缺哪些確認才能選？"
+        },
+        {
+          "role": "assistant",
+          "text": "我會先讀取指定的三份指引，再依來源卡整理選班前需要確認的事項。"
+        },
+        {
+          "role": "assistant",
+          "text": "**下一步：等旅行日期與航班確定，先向航空公司確認該航班的報到、託運及登機截止時間**，才能倒推哪班巴士合適。\n\n依你提供的靜態來源卡，時間均為日本時間：\n\n| 選項 | 上本町發車 | 預定抵達第一航廈 | 比較 |\n|---|---|---|---|\n| 早班 | 07:10 | 08:01 | 預定早到40分鐘，保留較多餘裕 |\n| 晚班 | 07:50 | 08:41 | 可晚40分鐘出發，是否足夠仍待確認 |\n\n選班前還缺：\n\n- **當日巴士資訊**：這兩班是否適用旅行日期、是否行駛，以及座位、購票、候車與大型行李規定。\n- **完整無階梯動線**：鶴橋所在位置至正確月台、列車上下車的階差／間隙、上本町抵達月台至**二樓巴士總站**，以及巴士上下車與抵達航廈後的動線；各段電梯運作與所需協助也要確認。\n- **兩人帶大型行李的實際轉乘時間**：包含步行、候梯、候車及上車安排，再加上道路延誤與機場排隊餘裕。\n\n近鐵的「6分鐘」只指地面月台與地下月台間的一般轉乘，**不能套用到前往二樓巴士總站，也不能據此判斷那段較快或較慢**。\n\n我未瀏覽來源頁面，也無法確認即時運行。卡片的2026-11-05是資料蒐集日期；站圖標示日期也不代表旅行當天電梯可用。目前只能比較40分鐘的相對差距，還不能保證任一班能趕上航班。"
+        },
+        {
+          "role": "user",
+          "text": "站圖寫轉乘六分鐘，是否代表我們從抵達月台走電梯到二樓巴士站也只要六分鐘？晚班表定到機場後，能保證趕上報到並逛免稅店嗎？"
+        },
+        {
+          "role": "assistant",
+          "text": "**先請近鐵站務員確認：「從我們抵達的月台到二樓機場巴士總站，全程無階梯怎麼走？兩人帶大型行李需要預留多久？」**\n\n站圖的「6分鐘」指地面月台與地下月台間的一般轉乘，並非抵達月台到二樓巴士站的電梯路線。因此不能套用，也不能據此推算這段較長或較短；完整動線、電梯運作及候梯時間仍待確認。\n\n晚班來源卡列的是 **07:50出發、08:41表定抵達第一航廈**，不是實際抵達保證。旅行日期、航班時間及航空公司報到／託運截止時間尚未確定，還要計入道路延誤、排隊、安檢與出境程序，**無法保證趕上報到或有時間逛免稅店**。早班表定早到40分鐘，只代表相對多40分鐘餘裕；免稅購物時間仍未知。"
+        }
+      ]
+    },
+    {
+      "adapter": "Antigravity ACP",
+      "configured_model": "gemini-3.8-flash",
+      "mode": "plan",
+      "effort": "medium",
+      "fresh_independent_session": true,
+      "status": "blocked_before_run",
+      "run_time_utc": [],
+      "model_response_count": 0,
+      "reason": "Host safety check blocked prompt submission; no ACP run id and no generated reply; neither a model failure nor a pass.",
+      "host_filesystem_audit": "not performed"
+    }
+  ]
+}

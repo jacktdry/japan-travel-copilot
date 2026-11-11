@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "case_id": "NAV-CHECKPOINT-04",
+  "date_local": "2026-11-04",
+  "timezone": "Asia/Taipei",
+  "precommit_head": "ca07c8af6624a54f16ae5f92443ee4ac913e907a",
+  "navigation_reference_sha256": "be740984415f7b8ef97258bfa725449dad07d3193be47d24eea7954dda50c3f8",
+  "note": "Two new independent ACP sessions for this fictional post-edit test. No web or live transit tool. Model text is adapter-native; Gemini messages recovered from complete run event stream because adapter session/load empty. Native identifiers omitted. Gemini first-turn harness wrapper excluded (original traveler message from fixture), Codex first-turn wrapper preserved.",
+  "runs": [
+    {
+      "adapter": "codex",
+      "model": "gpt-6.1-sol",
+      "effort": "medium",
+      "fresh_session": true,
+      "source": "ACP adapter session/load",
+      "messages": [
+        {
+          "role": "user",
+          "text": "Fresh isolated post-fix testcase NAV-CHECKPOINT-04. Read the CURRENT SKILL.md and references/live-navigation.md from repository, follow as Japan Travel Copilot in concise Traditional Chinese. This is a synthetic unknown train station and destination; no web, real-time transit tools or outside information. Do not edit files or self-grade. Answer the traveler naturally and safely.\n\nTraveler: 我要從範例站搭火車到範例港，還沒上車。"
+        },
+        {
+          "role": "assistant",
+          "text": "我會先讀取目前的技能與即時導航規則，再依這個模擬情境回答。"
+        },
+        {
+          "role": "assistant",
+          "text": "先在安全位置查看發車看板，向站務人員確認哪班車可到「範例港」，確認前先別上車。\n\n目前無法確認這兩個地點的路線、月台或停靠站。你眼前看板上的**路線、列車終點與車種**寫什麼？可以抄給我，我再陪你核對下一步。\n\n"
+        },
+        {
+          "role": "user",
+          "text": "現在上車了，車門關了。"
+        },
+        {
+          "role": "assistant",
+          "text": "先在車內坐穩或扶好，查看車內螢幕或聽廣播，確認**列車終點與下一站**。\n\n螢幕顯示的終點和下一站叫什麼？目前還沒確認是否往範例港，先別急著在下一站下車。"
+        },
+        {
+          "role": "user",
+          "text": "已經到轉乘站。"
+        },
+        {
+          "role": "assistant",
+          "text": "先確認站名與所在位置，再決定轉乘方向。你到的是哪一站？目前**還在車上，還是已經下車**？\n\n目前無法確認轉乘路線；若已下車，可在安全位置向站務人員確認前往「範例港」的路線、方向，以及是否需要出閘。"
+        }
+      ]
+    },
+    {
+      "adapter": "antigravity",
+      "model": "gemini-3.8-flash",
+      "effort": "medium",
+      "fresh_session": true,
+      "source": "ACP run events plus fixture traveler prompts",
+      "messages": [
+        {
+          "role": "user",
+          "text": "我要從範例站搭火車到範例港，還沒上車。"
+        },
+        {
+          "role": "assistant",
+          "text": "先看站內發車看板（発車案内），確認往「範例港」方向的路線、發車時間與月台；在確認班次資訊前請先別上車。\n\n我目前沒有即時鐵路資訊，無法為你直接核實班次與月台。建議採取的現場確認步驟：\n\n1. **查看電子看板**：確認看板上的行先（目的地）或經由路線是否有「範例港」，或將看板文字／照片傳給我。\n2. **直接詢問站務員**：出示以下日語向工作人員確認：\n   「範例港へ行きたいです。どの電車（何番線）に乗ればいいですか？」\n   （我想去範例港，請問該搭哪班車／在幾號月台？）\n\n確認好車次或上車後請告訴我，我會為你切換至乘車檢查點。（本次對話僅在當前會話中協助，未啟用持久記憶）"
+        },
+        {
+          "role": "user",
+          "text": "現在上車了，車門關了。"
+        },
+        {
+          "role": "assistant",
+          "text": "已為你切換至**乘車中**檢查點，請停止關注進站或購票資訊。\n\n**目前的第一步行動：先在車內站穩或坐好，查看車門上方的螢幕或聽車內廣播。**\n\n1. **確認行駛方向**：查看螢幕顯示的列車終點站（行先）與「下一站（次は……）」，可將顯示的站名或方向傳給我。\n2. **核對停靠站**：查看車廂內的路線圖，確認本班列車是否有直達「範例港」，或是需要在中途轉乘。\n\n在列車行駛期間請勿急著移動；我目前無法連線即時班表，會依你看到的車內資訊協助確認。抵達轉乘站或有任何新動態時，請隨時回報！"
+        },
+        {
+          "role": "user",
+          "text": "已經到轉乘站。"
+        },
+        {
+          "role": "assistant",
+          "text": "已為你切換至**中途轉乘檢查點**（尚未抵達最終目的地「範例港」）。\n\n**首要確認行動：**\n請先確認你的當前位置與狀態：**你目前已經下車在月台上，還是仍在車廂內？這座車站的站名是什麼？**\n\n**下一步安全指引：**\n1. **若仍在車上**：請先看窗外站名牌確認站名，確認要在此站轉乘再安全下車。\n2. **若已下車在月台**：請先停在月台安全處，尋找轉乘指標（のりかえ／乗換案内）或往「範例港」方向的看板。\n3. **閘門與換線注意**：各鐵路公司與車站的轉乘動線不同（有些可在站內付費區直接換月台，有些則需出閘門換乘其他鐵路系統）。在未確認車站與路線前，**請勿自行穿過閘門或認定不用出站**，請以現場指示或向站務員確認：\n   - 「範例港方面への乗り換えは何番線ですか？改札を出る必要がありますか？」\n   - （請問往範例港方向要在幾號月台轉乘？需要出驗票閘門嗎？）\n\n確認站名與看到的轉乘標示後請告訴我，我們繼續進行下一步！"
+        }
+      ]
+    }
+  ]
+}

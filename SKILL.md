@@ -5,8 +5,10 @@ description: >-
   Japan travel, an in-trip transit next step, station platforms/exits/elevators,
   reading a menu or travel photo, Chinese-Japanese translation, shopping or
   currency, recovering a disrupted itinerary such as a canceled flight or
-  accommodation, first-time trip setup, trip continuity, or updating a travel
-  plan. Supports pre-trip, on-trip, translation, and disruption modes across
+  accommodation, first-time trip setup, trip continuity, photo-guided in-trip
+  checkpoints, accessible luggage routes, ordering and receipt checks, or
+  updating a travel plan. Supports pre-trip, on-trip, translation, and
+  disruption modes across
   compatible hosts without assuming a vendor or tool capability.
 license: Apache-2.0
 ---
@@ -65,6 +67,31 @@ JSON to copy manually. Cross-session restoration requires the same explicitly
 shared file accessible to the current agent; there is no sync or cloud service,
 automatic retention, or background monitoring.
 
+## Live checkpoints, hard constraints and corrections
+
+When the user is boarding, walking, transferring, or facing a check-in
+deadline, follow [references/live-navigation.md](references/live-navigation.md):
+preserve the user's time/date and location as reported; never silently convert
+a clock time or claim an exact platform/exit/service without current evidence.
+An elevator-only route is a **full-journey invariant**, not a claim about one
+station elevator. Treat "boarded", "arrived" and "bags checked" as new
+checkpoints, and retract earlier guessed directions when on-site evidence
+conflicts. For flights, work backward from verified cutoffs with group/luggage
+and queue uncertainty; never promise shopping time.
+
+Maintain user-confirmed constraints, exclusions, cancellations and completion
+states per [references/trip-operations.md](references/trip-operations.md).
+For station/store/menu photos, Japanese order changes and receipt comparison,
+use [references/photo-and-orders.md](references/photo-and-orders.md): separate
+visible text from inference, honor user corrections, and distinguish
+**requested / served / billed**. These conversational ledgers are **not**
+permission to persist private travel history. When user or host forbids storage,
+do not intentionally write private travel details to autonomous plan files,
+scratch artifacts or tool outputs that store them. Do not guarantee that the
+host creates no temporary files unless verified. Automatic host planning files
+may conflict with strict no-file privacy; host policy/configuration enforcement
+is required, not merely prompt compliance. See [memory.md](references/memory.md).
+
 ## Evidence and live facts
 
 Separate **user-provided**, **verified**, and **inferred** information. Prefer
@@ -74,7 +101,24 @@ help locate a lead but does not establish that a train is running or a facility
 is available. Say when a claim could not be checked and what the traveler can
 confirm on the station board, staff desk, or official service page. Never
 hallucinate routes, platforms, exits, elevator access, fares, travel times,
-opening hours, reservations, availability, or disruption status.
+opening hours, reservations, availability, or disruption status. A cropped or
+blurred image cannot establish unseen exit details or speculative sign wording, even hedged as possibly or 疑似; do not infer a full
+step-free/elevator route from map color coding, yellow floor/tactile guides
+or arrows without the actual station-specific legend and complete route
+verification. An exit marked “elevator” is only a candidate, not a
+confirmed continuous accessible path or permission to direct movement; if the
+traveler requires no stairs and any segment/lift operation is unverified,
+lead with a safe staff/official-map check rather than “walk toward exit X”.
+
+For a source-backed time-sensitive transit/airport or accessibility choice,
+report each decision-relevant source name + effective date (`effective_on`,
+as-of or validity as supplied), or explicitly say "effective date not supplied".
+Separately state `observed_at` / access date, timezone and recorded precision;
+never invent an effective date or exact access clock time. Keep source validity,
+access date, service date and live operating status distinct; a map date does
+not prove current elevator operation. One compact line or table suffices for
+multiple sources. Carry this provenance across turns as needed for the choice;
+do not repeat it for simple unrelated queries or bury the immediate safety action.
 
 If browsing, maps, image reading, translation, or other tools are unavailable,
 say so plainly and offer a useful fallback (for example, a phrase to show staff
@@ -103,7 +147,9 @@ and uncertainty. Do not infer ingredients or accessibility from an image.
 Translate faithfully in the requested direction and preserve names, numbers,
 dates, tone, and uncertainty. Provide a natural phrase the user can show or
 read aloud; add a literal gloss only when it helps. Do not silently add facts,
-soften a refusal, or turn a question into a promise. See
+soften a refusal, or turn a question into a promise. An ingredient question
+does not establish an allergy: only translate "I am allergic" when the user
+explicitly states it; otherwise ask neutrally about ingredients. See
 [references/translation-patterns.md](references/translation-patterns.md).
 
 ### Disruption
@@ -144,6 +190,9 @@ confirmation.
 
 ## References
 
+- [Live navigation, full-route accessibility, deadlines](references/live-navigation.md)
+- [Trip continuity, disruptions and task progress](references/trip-operations.md)
+- [Photos, translation, order changes and receipts](references/photo-and-orders.md)
 - [Progressive first-trip onboarding](references/onboarding.md)
 - [Optional file memory and CLI contract](references/memory.md)
 - [Travel state and delta schema](references/travel-state.md)

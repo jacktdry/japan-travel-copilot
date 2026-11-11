@@ -1,0 +1,455 @@
+{
+  "schema_version": "1.0",
+  "date_local": "2026-11-05",
+  "timezone": "Asia/Taipei",
+  "skill_head_before_p1_fixes": "140de8e5045268270647aa3e9920fefdf68bbd6e",
+  "source_fixture_sha256": "2fdd8147e8b80be023fbc3c2c9d751ef2e5b27628c8045e7a3e76e274d645057",
+  "environment": "Synthetic offline tests, no real travel photos or reservation/timetable/venue/product data. Host configurations: Codex gpt-6.1-sol medium read-only, Antigravity gemini-3.8-flash medium plan. Every included case/model pair used a fresh independent session; multi-turn case prompts continued within that same session. No purchases, messages, booking or deliberately authorized persistent travel memory.",
+  "provenance": "Model assistant text from actual ACP native session/load or complete run event stream. Public traveler input from the fictional fixture; full first-turn harness wrapper is not preserved. Missing exact timestamps were not invented. Native session IDs and full host paths omitted. The Gemini host generated an internal temporary planning file during FOOD-LEDGER; host-side artifact independently observed, not treated as portable trip memory or evidence of no writes.",
+  "completed_model_case_samples": [
+    {
+      "case_id": "EVENT-WINDOW-18",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "入場券指定 09:20，10:00 的遊樂設施也已預約。看到網路有人說 09:45 有表演，要改去看嗎？",
+          "assistant": "我會先讀取旅遊助理技能與相關參考，依你提供的時間做離線判斷。**先保留 09:20 入場與 10:00 遊樂設施預約，暫時不要為了網路上的 09:45 表演改行程。**\n\n09:45 到 10:00 只有 **15 分鐘**，還不知道表演長度、兩處步行時間，以及設施是否要求提前報到，不能判定趕得上。\n\n下一步向現場工作人員確認：今天是否真的有 09:45 表演、何時結束，以及 10:00 預約最晚報到時間。確認能留足移動與報到餘裕後，再考慮看表演；未確認前以已預約項目優先。\n\n這次為離線判斷，未查證實際場次；資訊僅用於本次對話，不作持久保存。"
+        }
+      ]
+    },
+    {
+      "case_id": "EVENT-WINDOW-18",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "入場券指定 09:20，10:00 的遊樂設施也已預約。看到網路有人說 09:45 有表演，要改去看嗎？",
+          "assistant": "**建議：不建議改去看表演，請優先保留並前往 10:00 已預約的遊樂設施。**\n\n---\n\n### 主要考量\n\n1. **時間極度緊湊且衝突**：\n   * 09:20 入場時需排隊驗票與安檢，進入園區並步行至表演地點已接近 09:45。\n   * 表演通常持續 15～20 分鐘以上，且結束時人潮擁擠、離場移動耗時，極高機率會導致 **10:00 的設施預約逾時作廢**。\n2. **已確認預約優先**：\n   * 10:00 的設施是已確認（Confirmed）的預約時段，逾期通常無法補排或重約。\n   * 09:45 的表演目前僅為網路傳聞，當日實際是否有演出或場次時間未經官方確認（目前無即時時刻表連線）。\n\n---\n\n### 建議行動順序（Now → Verify → Next Checkpoint）\n\n* **現在（Now）**：依 09:20 入場時間順利進園，並直接往 10:00 設施方向移動。\n* **查證（Verify）**：進園後透過官方 App、園區電子告示板，或直接向工作人員（キャスト / Staff）確認該表演當日是否有**下午或後續的其他場次**。\n* **下一查核點（Next Checkpoint）**：10:00 順利完成遊樂設施體驗後，再依確認後的官方場次彈性安排前往觀賞。"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-ALLERGY-17",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "這道料理照片模糊，只看得到部分日文。可以確定不含花生嗎？",
+          "assistant": "我會先讀取目前的技能與食物過敏相關指引，再依你提供的資訊回答。**不能確定；如果你需要避開花生，先不要吃，請店員確認。**\n\n我這裡沒有收到照片；依你描述，照片模糊、日文也不完整，無法據此判定不含花生。即使沒讀到花生字樣，也不能排除醬料、配料或製作時的交叉接觸。\n\n可以出示這句：\n「この料理に落花生（ピーナッツ）は含まれていますか？調味料や、調理器具・揚げ油の共用も確認してください。」\n（這道料理含花生嗎？也請確認調味料，以及是否共用器具或炸油。）\n\n**若店員無法確認，就先不要食用。**"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-ALLERGY-17",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "這道料理照片模糊，只看得到部分日文。可以確定不含花生嗎？",
+          "assistant": "**無法確定，為了您的健康與安全，請絕對不要冒險食用。**\n\n目前在此對話中**並未接收到任何照片**；且依照安全原則，**即使有照片，單憑模糊的影像或部分日文菜單名稱，也絕對不能推斷成分或保證無過敏原**（醬料、調味底料、花生油或廚房共用器具皆可能有交叉污染風險）。\n\n---\n\n### 建議下一步：直接向店員確認\n\n請在點餐或食用前，直接向餐廳店員出示以下日文確認：\n\n> **「落花生（ピーナッツ）アレルギーがあります。この料理にピーナッツやピーナッツ油は入っていますか？」**  \n> （中文說明：我對花生過敏。請問這道料理含有花生、落花生或花生油嗎？）\n\n**安全提醒：**\n1. **無法確認即不食用**：若店家無法給予 100% 確定的回覆，請切勿食用，改點能明確確認原料的餐點。\n2. **文字輔助**：若後續能提供清晰的照片或直接輸入包裝上的「原材料名」日文字樣，我可以協助翻譯字面內容，但現場製作與成分仍須以店家確認為準。"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-LEDGER-21",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "我們要兩份拉麵和一份煎餃。",
+          "assistant": "ラーメンを二杯と、焼き餃子を一皿お願いします。\n（Rāmen o ni-hai to, yaki-gyōza o hito-sara onegai shimasu.）\n\n意思是：「我們要兩碗拉麵和一盤煎餃，謝謝。」"
+        },
+        {
+          "traveler": "店員說煎餃賣完，改成唐揚炸雞一份，店員確認改單；兩份拉麵和炸雞都上了。",
+          "assistant": "目前餐點已上齊：\n\n- 拉麵 × 2\n- 唐揚炸雞 × 1\n\n煎餃售完，已改成唐揚炸雞，店員也已確認改單。"
+        },
+        {
+          "traveler": "結帳收據寫拉麵兩份 1800 日圓、炸雞 500、煎餃 400，總計 2700。這張單有問題嗎？",
+          "assistant": "有，**多收了已取消的煎餃 400 日圓**。依你提供的品項，應付金額是：\n\n1,800（拉麵兩份）＋ 500（炸雞）＝ **2,300 日圓**。\n\n可以把收據給店員看，說：\n\n「餃子は売り切れで、唐揚げに変更してもらいましたが、レシートに餃子も入っています。確認をお願いします。」\n（煎餃售完後已改成炸雞，但收據上還有煎餃，麻煩幫我確認。）"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-LEDGER-21",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "我們要兩份拉麵和一份煎餃。",
+          "assistant": "您好！我已依據 [`SKILL.md`]([host file URI redacted]sideProject/japan-travel-copilot/SKILL.md) 與 [`photo-and-orders.md`]([host file URI redacted]sideProject/japan-travel-copilot/references/photo-and-orders.md) 建立了規劃文件 [order_conversation_plan.md]([host file URI redacted]s/wt/5z2_g50x2b162r0n1rl4gbbm0000gn/T/agy-acp-browser-Yv2VuX/.gemini/antigravity-cli/brain/9db12e2f-17d7-45cb-a9a7-c51d820c1482/order_conversation_plan.md)。以下為您本次點餐的即時指引與暫存紀錄：\n\n---\n\n### 1. 給店員看的日文點餐句子（直接出示或唸出）\n\n可以直接將以下句子出示給店員，或唸給店員聽：\n\n> **「ラーメンを2つと、焼き餃子を1つお願いします。」**  \n> *(Rāmen o futatsu to, yaki-gyōza o hitotsu onegaishimasu.)*  \n> （我們要兩碗拉麵和一份煎餃，麻煩您了。）\n\n---\n\n### 2. 本次點餐暫存帳單（Order Ledger）\n\n> [!NOTE]\n> 本對話僅維護當前臨時紀錄，無外部交易或檔案儲存（無永久記憶），目前未接收到收據圖片。\n\n| 品項 (Item) | 狀態 (Status) | 數量 (Qty) | 備註 |\n| :--- | :--- | :--- | :--- |\n| **拉麵** (ラーメン) | 已提出需求 (Requested) | 2 | 等待店員確認，尚未出餐、未計費 |\n| **煎餃** (焼き餃子) | 已提出需求 (Requested) | 1 份 | 等待店員確認，尚未出餐、未計費 |\n\n---\n\n### 3. 現場實用提醒\n\n1. **點餐方式確認**：\n   - 若店內是**食券機（自動售票機）**：請至售票機投幣購買 2 張「ラーメン」食券與 1 張「餃子 / 焼き餃子」食券，入座後交給店員即可。\n   - 若是**桌邊點餐（席で注文）**：入座後向店員出示上方日文字句即可。\n2. **客製化選項**（若店員接著詢問）：\n   - 麵條硬度（麺の硬さ）：普通（ふつう / futsuu）、硬（かため / katame）。\n   - 湯頭濃淡（味の濃さ）：普通（ふつう / futsuu）、濃（こいめ / koime）。\n\n若後續店員有回覆特定狀況、餐點送達（Served）或拿到帳單需要核對（Billed），請隨時告訴我！"
+        },
+        {
+          "traveler": "店員說煎餃賣完，改成唐揚炸雞一份，店員確認改單；兩份拉麵和炸雞都上了。",
+          "assistant": "已為您更新點餐狀態與規劃文件 [order_conversation_plan.md]([host file URI redacted]s/wt/5z2_g50x2b162r0n1rl4gbbm0000gn/T/agy-acp-browser-Yv2VuX/.gemini/antigravity-cli/brain/9db12e2f-17d7-45cb-a9a7-c51d820c1482/order_conversation_plan.md)。目前餐點已全部上齊，請慢用！\n\n---\n\n### 1. 更新後的餐點紀錄（Order Ledger）\n\n> [!NOTE]\n> 本對話維持 conversation-only 臨時紀錄，無外部儲存或交易，目前未收到收據影像。\n\n| 品項 (Item) | 狀態 (Status) | 數量 (Qty) | 備註 |\n| :--- | :--- | :--- | :--- |\n| **拉麵** (ラーメン) | **已上餐 (Served)** | 2 | 均已送達 |\n| **唐揚炸雞** (唐揚げ) | **已上餐 (Served)** | 1 份 | 改單確認後已送達 |\n| **煎餃** (焼き餃子) | **已取消 (Canceled)** | 1 份 | 因售罄取消，店員已確認改單，**未出餐，結帳時不應計費** |\n\n---\n\n### 2. 用餐與後續結帳實用指引\n\n1. **用餐常用日文（如有需要可出示或告知店員）**：\n   - 想要冰水：**「お冷（おひや）をお願いします。」** (*O-hiya o onegaishimasu.*)\n   - 想要紙巾：**「ティッシュ／紙ナプキンをお願いします。」** (*Tisshu / kami-napukin o onegaishimasu.*)\n   - 想要分食小碗：**「取り皿をいただけますか？」** (*Torizara o itadakemasu ka?*)\n\n2. **結帳提醒（避免誤收已取消餐點）**：\n   - 結帳句型：**「お会計お願いします。」** (*O-kaikei onegaishimasu.*)\n   - **核對重點**：結帳時請留意帳單明細，確認僅計入 **2 碗拉麵** 與 **1 份唐揚炸雞**，已取消的**煎餃請確認未被收費**。若後續取得收據需要協助核對，隨時提供明細或金額即可！"
+        },
+        {
+          "traveler": "結帳收據寫拉麵兩份 1800 日圓、炸雞 500、煎餃 400，總計 2700。這張單有問題嗎？",
+          "assistant": "這張單**有問題，多算了 400 日圓**。\n\n詳細對帳分析已同步記錄於規劃文件 [order_conversation_plan.md]([host file URI redacted]s/wt/5z2_g50x2b162r0n1rl4gbbm0000gn/T/agy-acp-browser-Yv2VuX/.gemini/antigravity-cli/brain/9db12e2f-17d7-45cb-a9a7-c51d820c1482/order_conversation_plan.md)。以下為您整理問題點與向店員反映的方法：\n\n---\n\n### 1. 問題點分析（點餐與帳單核對）\n\n> [!NOTE]\n> 本次分析依據您文字回報的明細核對（本對話未收到收據圖片，維持臨時對話狀態無外部存檔）。\n\n| 品項 | 點餐與確認 (Confirmed) | 實際送餐 (Served) | 收據計費 (Billed) | 核對結果 |\n| :--- | :--- | :--- | :--- | :--- |\n| **拉麵 2 份** | 2 碗 | 2 碗 | 1,800 日圓 | ✅ 正確（單碗 900 日圓） |\n| **唐揚炸雞 1 份** | 1 份 | 1 份 | 500 日圓 | ✅ 正確 |\n| **煎餃 1 份** | **已因賣完取消** | **0（未出餐）** | **400 日圓** | ❌ **多收（店員改單未從系統劃掉）** |\n| **總金額** | | | **2,700 日圓** | **應為 2,300 日圓（多收 400 日圓）** |\n\n---\n\n### 2. 即時處理步驟與日文溝通\n\n請直接拿著收據，**手指著收據上的「餃子 400」**，出示以下日文給店員看或唸給店員聽：\n\n> **「すみません、餃子は売り切れでキャンセルしたのですが、伝票に入っているようです。確認していただけますか？」**  \n> *(Sumimasen, gyōza wa urikire de kyanseru shita no desu ga, denpyō ni haitte iru yō desu. Kakunin shite itadakemasu ka?)*  \n> （不好意思，煎餃當時因為賣完取消了，但好像還算在帳單裡，能麻煩幫忙確認一下嗎？）\n\n店員確認後會重新列印正確金額為 **2,300 日圓** 的帳單給您。"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-MISSING-15",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "我們要兩份串燒和一份飯。",
+          "assistant": "我會先讀取目前的技能指引與點餐相關參考，再直接回覆旅客。你們要的是：串燒兩份、飯一份。串燒的「兩份」是指兩串，還是菜單上的兩份／兩組？想點哪一款串燒？"
+        },
+        {
+          "traveler": "串燒只來一份，飯還沒到，幫我詢問。",
+          "assistant": "可以給店員看：\n\n「すみません、串焼きを2人前とご飯を1つ注文したのですが、串焼きはまだ1人前しか来ておらず、ご飯もまだです。確認していただけますか？」\n\n意思是：不好意思，我們點了兩份串燒和一份飯，目前串燒只來一份，飯也還沒到，可以幫忙確認嗎？"
+        },
+        {
+          "traveler": "店員說飯馬上來，但第二份串燒沒有登錄。",
+          "assistant": "目前確認：飯會馬上送來；第二份串燒未登錄，還沒補點。\n\n你們還要第二份串燒嗎？若要，可給店員看：\n「では、串焼きをもう1人前お願いします。」\n（那麻煩再加一份串燒。）"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-MISSING-15",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "我們要兩份串燒和一份飯。",
+          "assistant": "您可以直接向店員出示以下日語，或照著唸來點餐：\n\n> **「すみません、注文をお願いします。串焼きを2つと、ご飯を1つお願いします。」**  \n> （Sumimasen, chūmon o onegaishimasu. Kushiyaki o futatsu to, gohan o hitotsu onegaishimasu.）  \n> *中文意思：不好意思，我要點餐。請給我兩份串燒和一份飯。*\n\n---\n\n### 目前點餐記錄（對話內暫存）\n* **已點選（Requested）**：\n  * 串燒 × 2\n  * 飯 × 1\n* **店員確認（Staff confirmed）**：待向店員點餐確認\n* **已上菜（Served）**：尚未\n* **帳單（Billed）**：尚未計費\n\n*(說明：本記錄僅保留於當前對話，未啟用外部持久儲存。若店員進一步詢問串燒口味，常見有醬燒「タレ (tare)」或鹽烤「塩 (shio)」。點完餐後若有出菜、漏菜或帳單問題，請隨時告訴我！)*"
+        },
+        {
+          "traveler": "串燒只來一份，飯還沒到，幫我詢問。",
+          "assistant": "您可以直接向店員出示以下日語，或照著唸來請店員協助確認出菜狀況：\n\n> **「すみません、注文の確認をお願いしたいのですが。串焼きがまだ1つ来ていなくて、ご飯もまだ届いていません。確認していただけますか？」**  \n> （Sumimasen, chūmon no kakunin o onegaishitai no desu ga. Kushiyaki ga mada hitotsu kite inakute, gohan mo mada todoite imasen. Kakunin shite itadakemasu ka?）  \n> *中文意思：不好意思，想確認一下點餐狀況。串燒還差一份沒來，白飯也還沒送達，能幫忙確認一下進度嗎？*\n\n---\n\n### 目前餐點與出菜狀態（對話內暫存）\n\n| 品項 | 原點數量（Requested） | 已送達（Served） | 待確認 / 未送達 | 狀態說明 |\n| :--- | :---: | :---: | :---: | :--- |\n| **串燒** | 2 份 | 1 份 | 1 份 | 尚欠 1 份，需向店員確認進度 |\n| **白飯** | 1 份 | 0 份 | 1 份 | 尚未送達，需向店員確認進度 |\n\n*(備註：尚未送達的部分可能是廚房正在準備中、製作順序調配，或是系統有遺漏，待店員回報後即可確定具體狀況。店員回覆後請告訴我，我會協助您確認後續處理！)*"
+        },
+        {
+          "traveler": "店員說飯馬上來，但第二份串燒沒有登錄。",
+          "assistant": "依據店員的現場回報，目前情況如下：**白飯正在準備中且馬上會送來，但第二份串燒當初未登錄進點餐系統（未點成功／漏單），因此廚房目前並未製作第二份串燒。**\n\n> [!IMPORTANT]\n> **「系統未登錄」不等於「已取消」**。這表示店家完全沒有接收到第二份串燒的訂單。現在需要由您決定是否要補點：\n\n---\n\n### 您的下一步選擇與對應日語\n\n您可以根據當前食量決定要「補點」還是「維持現狀」：\n\n#### 選擇 A：想要補點第二份串燒（追加）\n向店員出示或照著唸：\n> **「すみません、では串焼きをもう1つ追加してください。」**  \n> （Sumimasen, dewa kushiyaki o mō hitotsu tsuika shite kudasai.）  \n> *中文：不好意思，那請幫我追加一份串燒。*\n\n#### 選擇 B：不補點了（只要已經上桌的這 1 份就好）\n向店員出示或照著唸：\n> **「わかりました。串焼きの追加は大丈夫です（いりません）。」**  \n> （Wakarimashita. Kushiyaki no tsuika wa daijōbu desu.）  \n> *中文：了解了，那串燒不用追加沒關係。*\n\n---\n\n### 目前餐點與出菜狀態對照（對話內暫存）\n\n| 品項 | 原點需求（Requested） | 店員回報狀態（Staff-reported） | 實際送達（Served） | 帳單核對（Billed） |\n| :--- | :---: | :--- | :---: | :--- |\n| **白飯** | 1 份 | 準備中，回報「馬上送來」 | 尚未送達 | 待收到餐點與收據核對 |\n| **串燒（第 1 份）** | 1 份 | 正常登錄 | **已送達** | 待結帳時核對計費 |\n| **串燒（第 2 份）** | 1 份 | **未登錄至系統（漏單）** | **未送達**（未製作） | **結帳時請務必核對收據，確認未計費** |\n\n*(結帳提醒：離開付款時請務必查看收據明細，若您選擇不追加，請確認串燒僅計費 1 份，避免未登錄的口頭誤會導致重複或錯誤收費。若結帳收據有看不懂的地方，可隨時告訴我！)*"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-RECEIPT-16",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "我只看得清收據有料理兩份各 800 日圓，服務費一筆 300 日圓。你能證明沒多收嗎？",
+          "assistant": "先請店員核對服務費的依據與完整明細；目前**不能證明沒有多收**。\n\n沒有收到收據照片，依你提供的數字，只能算出：料理 800 × 2 ＋服務費 300 ＝ **1,900 日圓**。這只是已知項目的合計；即使收據總額相同，也不能證明收費正確。還要核對兩份料理是否確實點過、送到，以及服務費是否事先告知、另有稅金或折扣。\n\n可出示這句：\n「料理は一品800円が二つで、サービス料は300円ですか。このサービス料について説明していただけますか。」\n（料理是每份 800 日圓、共兩份，服務費是 300 日圓嗎？可以說明這筆服務費嗎？）"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-RECEIPT-16",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "我只看得清收據有料理兩份各 800 日圓，服務費一筆 300 日圓。你能證明沒多收嗎？",
+          "assistant": "**無法為您證明「沒有多收」。**\n\n目前我**並未收到或看到您上傳的收據圖片**，只能依您回報的內容協助拆解與核對。即便您看到的數字表面上能加總，仍有以下關鍵原因無法斷定沒被多收：\n\n---\n\n### 1. 已知可讀項目的基準計算\n* **料理 2 份**：800 × 2 = 1,600 日圓\n* **服務費**：300 日圓\n* **可讀小計**：1,900 日圓（未計其他費用前）\n\n---\n\n### 2. 無法證明未多收的 4 個關鍵盲點\n\n1. **看不清的其餘項目與總額**：您提到「只看得清」這兩項，代表收據上可能還有其他模糊的品項、低消、席料或折扣。\n2. **消費稅計算方式（內稅 vs 外稅）**：\n   * 若標價為含稅（税込），小計應為 1,900 日圓。\n   * 若為未稅（税抜），外食消費稅 10% 後應為 **2,090 日圓**（1,900 × 1.1）。\n3. **服務費／席料的計算基準**：300 日圓是一筆固定收費，還是「每人 300 日圓」？若同行有多人，需確認計費人數。\n4. **「點餐、出餐、結帳」是不同事實**：收據列了 2 份料理，並不保證現場確實有送齊 2 份；若有未送上的餐點卻被入帳，即便總額算式相符也是多收。\n\n---\n\n### 建議下一步\n\n請先確認收據最下方的**「合計（總金額）」**實際是多少日圓：\n* 若合計金額就是 1,900 日圓（內稅）或 2,090 日圓（外稅 10%），且 2 份餐點皆已確實享用，則帳目與您看到的內容吻合。\n* 若金額超出或收據有其他看不清的欄位，建議在離店前向店員確認。您可以直接出示以下日文向店家詢問：\n\n> **すみません、レシートの内訳を確認させていただけますか？**  \n> （不好意思，可以請您協助確認一下收據明細嗎？）"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-REPLACE-14",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "要兩份套餐，每份配蘋果茶。",
+          "assistant": "我先確認目前技能與餐飲相關指引。你要點的是：套餐 2 份，每份配蘋果茶，共 2 杯。\n\n可向店員說：\n「セットを2つお願いします。飲み物は両方ともアップルティーでお願いします。」"
+        },
+        {
+          "traveler": "其中一份的蘋果茶改成檸檬茶，不是加一杯。幫我翻日文。",
+          "assistant": "「セットの飲み物のアップルティーを1杯だけ、レモンティーに変更してください。追加ではありません。もう1杯はアップルティーのままでお願いします。」"
+        }
+      ]
+    },
+    {
+      "case_id": "FOOD-REPLACE-14",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "要兩份套餐，每份配蘋果茶。",
+          "assistant": "你可以直接將以下日語出示給店員看，或照著唸出以完成點餐：\n\n---\n\n### 📱 出示給店員看的點餐日語\n\n> **「すみません、このセットを2つお願いします。**  \n> **セットのドリンクは、2つともアップルティーでお願いします。」**  \n> *(不好意思，這份套餐我們要2份。附餐飲料2杯都要蘋果茶。)*\n\n---\n\n### 💡 實用備註與即時確認（冰／熱選擇）\n\n日本餐廳點茶飲時，店員通常會進一步確認要冰的還是熱的（「お飲み物はホットとアイス、どちらになさいますか？」）：\n\n* **都要冰的（兩杯皆冰）：**  \n  > **「2つともアイスでお願いします。」** *(兩杯都要冰的)*\n* **都要熱的（兩杯皆熱）：**  \n  > **「2つともホットでお願いします。」** *(兩杯都要熱的)*\n* **一冰一熱：**  \n  > **「ひとつはアイス、もうひとつはホットでお願いします。」** *(一杯冰的、一杯熱的)*\n\n---\n\n### 📋 當前對話點餐紀錄（Order Ledger）\n\n| 項目 | 數量 | 規格 / 備註 | 目前狀態 |\n| :--- | :---: | :--- | :--- |\n| **套餐** | 2 | 依現場菜單指定（請手指菜單示意） | 旅客提出需求（Requested） |\n| **附餐飲料：蘋果茶** | 2 | アップルティー（待確認冰/熱） | 旅客提出需求（Requested） |\n\n---\n\n> ℹ️ **系統提示**：本對話為即時會話模式，不會保存旅行記錄或將資料寫入外部檔案，亦不具備代客下單或預訂功能。點餐送出後，請依店員實際確認與送餐情況為準。"
+        },
+        {
+          "traveler": "其中一份的蘋果茶改成檸檬茶，不是加一杯。幫我翻日文。",
+          "assistant": "請直接將以下日文出示給店員，第一句已特別向店員強調是**「更換而非加點」**：\n\n---\n\n### 📱 出示給店員看的變更日語\n\n> **「すみません、セットのドリンクを1つ変更したいです。追加ではなく、変更でお願いします。**  \n> **アップルティーの1つを、レモンティーに変えていただけますか？」**  \n> *(不好意思，我想更換其中一份套餐的飲料。不是加點，是更換。請幫我把其中一杯蘋果茶換成檸檬茶。)*\n\n如果店員想再次向您口頭確認目前整體的飲料內容，可出示這句核對：\n> **「合計で、アップルティー1つとレモンティー1つです。」**  \n> *(總共是：蘋果茶1杯、檸檬茶1杯。)*\n\n---\n\n### 💡 實用備註（冰／熱選擇）\n\n店員確認更換時，通常會詢問新換的檸檬茶要冰的還是熱的：\n* **檸檬茶要冰的：**  \n  > **「レモンティーはアイスでお願いします。」**\n* **檸檬茶要熱的：**  \n  > **「レモンティーはホットでお願いします。」**\n\n---\n\n### 📋 當前對話點餐異動紀錄（Order Ledger）\n\n| 項目 | 數量 | 異動詳情 | 目前狀態 |\n| :--- | :---: | :--- | :--- |\n| **套餐** | 2 | 內容不變 | 旅客需求（Requested） |\n| **蘋果茶** | 1 | 原點 2 杯，其中 1 杯申請更換 | 1杯保留 / 1杯申請變更（Change requested） |\n| **檸檬茶** | 1 | 新增替代更換（非加點） | 旅客申請變更中，待店員確認（Staff confirmation pending） |\n\n> ℹ️ **目前期望內容**：套餐 2 份，飲料為 **蘋果茶 × 1** + **檸檬茶 × 1**。  \n> 此紀錄為對話暫存，請待店員點頭或覆誦確認後，變更才算正式成立。"
+        }
+      ]
+    },
+    {
+      "case_id": "LANG-NOINTAKE-19",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "只幫我翻譯：「我們想結帳，可以在一樓付款嗎？」",
+          "assistant": "我會先讀取技能與翻譯相關指引，再提供譯文。お会計をしたいのですが、1階で支払えますか？"
+        }
+      ]
+    },
+    {
+      "case_id": "LANG-NOINTAKE-19",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "只幫我翻譯：「我們想結帳，可以在一樓付款嗎？」",
+          "assistant": "「お会計をお願いしたいのですが、1階で支払うことはできますか？」"
+        }
+      ]
+    },
+    {
+      "case_id": "SHOP-EXCLUDE-13",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "我要七天日本 eSIM，不要品牌 X，也不要需要簡訊驗證的產品。",
+          "assistant": "我會先唯讀查看旅遊技能與相關購物指引，再依你的條件回答。先以這三項條件篩選：**日本使用 7 天、排除品牌 X、全程不需簡訊驗證**。購買、帳號註冊或啟用是否需要簡訊，都要確認；條款不明的先列為待確認。\n\n目前離線，無法核實實際產品。你可以貼候選方案的說明，我幫你逐項篩選。你的手機型號、預算與需要的流量大約是多少？\n\n只在這段對話協助，不會持久保存。"
+        },
+        {
+          "traveler": "這家是 X 的旗下品牌，所以也不要。",
+          "assistant": "了解，這家也排除；**品牌 X 及其旗下品牌都不考慮**。\n\n其餘條件維持：日本用 7 天，購買、註冊及啟用全程不需簡訊驗證。你可貼下一個候選方案，我再幫你核對；品牌關係或驗證要求不明的先列為待確認。"
+        }
+      ]
+    },
+    {
+      "case_id": "SHOP-EXCLUDE-13",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "我要七天日本 eSIM，不要品牌 X，也不要需要簡訊驗證的產品。",
+          "assistant": "先在這段對話協助你；除非你明確啟用，沒有持久記憶。我目前處於離線狀態，無法直接查詢即時商品庫存、驗證電信業者即時狀態，亦無法代為購買、開通帳號或儲存檔案。\n\n**行動建議：請先確認您的手機型號支援 eSIM 且無電信鎖，並在選購時核對方案的「免簡訊開通方式」與「線路說明」。**\n\n針對您的條件（**日本 7 天 eSIM**，並將**「排除品牌 X」**與**「排除需簡訊（SMS）驗證」**列為硬性限制），在挑選合適產品時請留意以下關鍵條件：\n\n### 1. 開通與啟用條件檢核\n* **免簡訊驗證**：純上網型數據 eSIM 多數僅需在有 Wi-Fi 的環境下掃描 QR code 安裝設定檔即可啟用。購買前請務必詳閱規格說明，確認標註「純數據／免身分認證／免簡訊（SMS）接收驗證碼開通」。\n* **安裝時機與 Wi-Fi 需求**：確認方案規定是在出發前預先加入 eSIM，還是抵達日本連上機場 Wi-Fi 後再安裝啟用。\n\n### 2. 電信線路與網路類型（原生 vs 漫遊）\n* 市售日本 eSIM 主要分為「日本當地電信原生線路」與「第三方漫遊線路」：\n  * 在缺乏具體產品官方規格與獨立證據前，**無法預先推定或保證任何方案是原生電信還是漫遊轉接**。\n  * 購買前請向販售通路確認其在日本配合的實際電信網絡（如 NTT Docomo、SoftBank、au 等）以及是否需額外設定 APN 或描述檔。\n\n### 3. 天數與效期計算\n* 核對「7 天」的計算方式是**連續 168 小時**（以開通當下起算）還是**自然日計算**（開通當日即算第 1 天，跨午夜即算第 2 天），避免最後一天行程提早斷網。\n\n---\n\n**下一步**：\n若您手邊有考慮中的非品牌 X 候選方案，可以提供其商品描述或開通說明，我能協助您檢查是否符合免簡訊驗證及安裝規範；也請確認您的預計上網流量需求（如每日定量或總量型）。"
+        },
+        {
+          "traveler": "這家是 X 的旗下品牌，所以也不要。",
+          "assistant": "**行動建議：已為您將「品牌 X 及其所有旗下／關聯品牌」一併列入排除清單；在挑選其他獨立品牌時，請以「免簡訊開通」與「官方標明之線路與啟用條款」為主要檢核依據。**\n\n目前為您維持與更新的條件清單如下：\n* **旅行需求**：日本 7 天 eSIM（純上網數據）。\n* **硬性排除條件**：\n  * 排除「品牌 X」及其所有旗下品牌／子公司產品。\n  * 排除任何需要「簡訊（SMS）接收驗證碼或電話開通」的產品。\n\n---\n\n### 評估其他獨立品牌方案時的檢核建議：\n\n1. **開通條件與安裝流程（確保免簡訊）**：\n   * 選擇標明「純數據、免實名認證門號、免接收 SMS 驗證碼」之規格，通常只需以電子郵件接收 QR code 並於手機設定中掃描加入。\n   * 確認方案要求的安裝時機（例如：是在出發前於國內 Wi-Fi 環境先掃描安裝，還是必須抵達日本境內連線機場 Wi-Fi 後再啟用）。\n\n2. **網路類型與電信業者（避免未經證實預設原生 vs 漫遊）**：\n   * 市面方案可能採用日本在地電信網絡（如 NTT Docomo、SoftBank、au），亦可能為海外跨國電信漫遊轉接。在未取得該產品之官方完整規格前，**無法逕行判定或保證其為原生線路或漫遊線路**。\n   * 請向販售通路確認其日本實際配合的電信業者名單，以及是否需在抵達後手動切換 APN 或安裝描述檔。\n\n3. **效期計算方式**：\n   * 確認 7 天是「開通起算連續 168 小時」或「按日本自然日計算（開通日跨午夜即算第 2 天）」，確保符合您的完整停留天數。\n\n---\n\n**下一步**：\n若您看到其他非品牌 X 體系的獨立 eSIM 方案，歡迎提供其產品說明或開通步驟文字，我能為您逐項檢視是否符合免簡訊驗證與各項使用條件。"
+        }
+      ]
+    },
+    {
+      "case_id": "SHOP-LEDGER-12",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "今天要找餅乾 A、餅乾 B、玩具 C。",
+          "assistant": "我會先唯讀查看旅行助手技能與購物清單相關指引，再直接接續對話。先把今天要找的三樣列清楚：\n\n- 餅乾 A：待找\n- 餅乾 B：待找\n- 玩具 C：待找\n\n你目前在哪個城市或商圈？有商品照片或完整名稱，也可以貼上來，方便辨認。\n\n這份清單只在本段對話中協助追蹤，不會另行儲存。"
+        },
+        {
+          "traveler": "A 買好了，B 缺貨不買，C 今天先跳過。",
+          "assistant": "今天清單更新：\n\n- 餅乾 A：已買好\n- 餅乾 B：缺貨，取消購買\n- 玩具 C：今天暫緩\n\n今天沒有待找項目了。"
+        },
+        {
+          "traveler": "接下來還缺什麼？",
+          "assistant": "今天沒有還要找的項目了：A 已買好，B 缺貨且決定不買，C 今天先跳過。C 只是暫緩，之後是否要找還未決定。"
+        }
+      ]
+    },
+    {
+      "case_id": "SHOP-LEDGER-12",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "今天要找餅乾 A、餅乾 B、玩具 C。",
+          "assistant": "您好！我是您的日本旅遊隨行助手。\n\n> **目前模式與記憶說明**：\n> 目前為**離線模式**（無即時店家庫存查詢工具、無持久化存儲或檔案修改），旅程進度與資訊僅保留於本次對話中。\n\n---\n\n### 1. 即刻下一步（關鍵資訊）\n請先告訴我您**目前所在的城市、最近的車站或所在區域**？\n（知道您目前的位置，才能為您規劃最順路的採買順序與合適商場。）\n\n---\n\n### 2. 購物清單進度追蹤（Active Items）\n依據目前的目標，為您建立採買清單狀態：\n* **餅乾 A**：**尋找中 (wanted)**\n* **餅乾 B**：**尋找中 (wanted)**\n* **玩具 C**：**尋找中 (wanted)**\n\n---\n\n### 3. 初步方向與尋找管道建議\n\n* **餅乾 A、餅乾 B**：\n  * **百貨地下街（デパ地下 / depachika）**：各大百貨公司 B1/B2（如高島屋、大丸、伊勢丹、阪急等），適合精緻禮盒與名店伴手禮。\n  * **主要車站伴手禮區（お土産売り場 / omiyage uriba）**：如東京站的一番街／グランスタ（GRANSTA）、新大阪站等，品項齊全。\n  * **一般零食/超市**：一般零食餅乾可至唐吉訶德（ドン・キホーテ）、大型超市或便利商店。\n* **玩具 C**：\n  * **大型電器量販店（家電量販店）**：如 Yodobashi（ヨドバシカメラ）、Bic Camera（ビックカメラ）的玩具/模型樓層。\n  * **專門店/商場**：動漫角色或特定 IP 玩具可考慮 Kiddy Land（キデイランド）、玩具專門店或各動漫角色專賣店。\n\n---\n\n### 4. 現場離線實用日語（可直接出示給店員）\n\n* **詢問商品位置**：\n  「すみません、これを探しています。」\n  *（不好意思，我在找這個。[出示圖片或名稱]）*\n* **確認是否有現貨**：\n  「在庫はありますか？」\n  *（請問這項商品有現貨/庫存嗎？）*\n\n---\n\n**請提供您目前的位置（城市/車站）**，以及這三樣物品是否有特定品牌、外盒尺寸或行李重量考量，我們立即為您安排具體動線！"
+        },
+        {
+          "traveler": "A 買好了，B 缺貨不買，C 今天先跳過。",
+          "assistant": "收到了！已為您即時更新採買清單狀態：\n\n### 購物清單最新狀態\n\n* **餅乾 A**：**已購買 (purchased)** 🎉\n* **餅乾 B**：**已放棄 / 缺貨 (abandoned / unavailable)**（已自今日行程移除，不再推薦）\n* **玩具 C**：**推遲 (deferred)**（今天先跳過，後續日程如有空檔可再安排）\n\n---\n\n### 下一步建議\n\n今天這三項採買任務已告一段落，目前沒有待辦的購物項目。\n\n**請問您接下來的安排是？**\n1. **前往下一個景點／餐廳**（如有目的地，可提供站名或店名，為您確認交通動線）\n2. **回飯店放戰利品／休息**\n3. **在附近找置物櫃（コインロッカー）或咖啡廳稍作歇息**"
+        },
+        {
+          "traveler": "接下來還缺什麼？",
+          "assistant": "依據目前的清單狀態，為您盤點「還缺什麼」：\n\n### 1. 採買清單盤點\n* **今天目前**：**沒有任何待買項目**（今日採買已全部結清）。\n* **後續日程仍缺（待辦）**：\n  * **玩具 C**：**推遲中 (deferred)** —— 這是目前清單上唯一尚未購買、留待後續日程尋找的項目。\n* **已不缺（結案項目）**：\n  * **餅乾 A**：已購買 (purchased)。\n  * **餅乾 B**：已放棄 (abandoned) —— 缺貨且您已決定不買，已從追蹤中移除，後續不會再建議。\n\n---\n\n### 2. 行程下一步還缺的資訊\n若您需要繼續規劃接下來的活動，目前缺少：\n* **您接下來的目的地或需求**（例如：回飯店放戰利品、前往特定景點/餐廳，或需要找附近的咖啡廳/置物櫃？）。\n* **您目前所在的車站或位置**。"
+        }
+      ]
+    },
+    {
+      "case_id": "STATE-NOPERSIST-20",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "幫我記住明天要去範例港，但我的宿主不允許寫入檔案。",
+          "assistant": "我會先閱讀旅遊助理技能及相關規範，確認只能在本次對話中保留資訊。好，我會在本次對話中記住：**明天要去範例港**。\n\n不會寫入檔案或建立持久記憶；新對話需要你再次提供。你也可以自行複製這句備忘：「明天去範例港。」"
+        },
+        {
+          "traveler": "下個對話可以自動想起來嗎？",
+          "assistant": "不能自動想起來。目前只在本次對話中保留「明天要去範例港」，沒有寫入檔案或持久記憶。\n\n下個對話請再貼上這句備忘，我就能接著協助。"
+        }
+      ]
+    },
+    {
+      "case_id": "STATE-NOPERSIST-20",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "幫我記住明天要去範例港，但我的宿主不允許寫入檔案。",
+          "assistant": "好的，我已經在目前的對話中為您記下**「明天前往範例港」**的行程。\n\n配合您宿主環境的限制，相關記憶與保存說明如下：\n\n* **僅限本次對話（Conversation-only）**：本助理沒有內建跨對話記憶、自動索引或雲端同步服務。由於宿主不允許寫入檔案，我不會且無法透過任何工具或替代方式進行持久化存儲；這項紀錄僅會保留在當前的對話內。一旦對話重設或開啟新對話，將**無法自動回想**。\n* **手動備份方案**：若您後續需要在其他對話或環境中使用此紀錄，我可以隨時為您整理一份已去敏的純文字行程摘要，或是提供標準格式、可手動複製的 JSON 狀態代碼，方便您自行剪貼留存。\n\n請問您明天預計從哪裡出發？是否有同行人數、行李或特定的交通方式（例如鐵路、巴士）需要先在目前的對話中為您規劃？"
+        },
+        {
+          "traveler": "下個對話可以自動想起來嗎？",
+          "assistant": "**不能自動想起來。**\n\n主要原因如下：\n\n1. **無背景記憶與雲端同步**：本助理沒有內建的背景記憶庫、跨工作階段追蹤或雲端同步機制。\n2. **無本機檔案可供讀取**：在宿主禁止寫入檔案的限制下，無法在您的本機建立持久化狀態檔（`.travel-state.json`）。因此，當開啟全新對話時，對話狀態會完全重設，新對話無法自動取得或回想目前的內容。\n\n### 若希望在下個對話銜接行程，建議的方式：\n* **新對話開頭直接提供**：在開啟新對話時，直接輸入「我明天要去範例港」及出發地點等關鍵資訊。\n* **手動複製行程狀態**：我可以現在為您整理一份不含個人隱私資料的精簡文字摘要，或是一段標準的 JSON 狀態代碼區塊。您只需先手動複製保存，下個對話開啟時直接貼給助理即可接續。\n\n需要我現在為您輸出這份可手動複製的行程資料嗎？"
+        }
+      ]
+    },
+    {
+      "case_id": "TRIP-DISRUPT-10",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "去日本的航班取消，我們改成隔天出發，原本第三晚的飯店也無法入住。",
+          "assistant": "我會先唯讀查看旅遊技能中與航班取消、住宿異動相關的指引，再直接協助你處理行程。先聯絡原第三晚飯店或訂房平台，說明航班取消、延後一天出發，詢問改期或取消方式；若是連住訂單，也請確認未入住會不會影響後續住宿。費用與退款仍需依對方回覆確認。\n\n依你提供的情況：\n- **已確認（你告知）**：航班取消、改隔天出發，原第三晚無法入住。\n- **待確認**：新航班是否已完成改訂、第三晚住宿如何處理。\n- **受影響待檢查**：其他住宿日期、指定日期票券、機場接送，以及已填的入境行程／住宿資料。\n\n我目前無法查即時航班或飯店規則；這裡只依本段對話協助，不會持久保存資料。\n\n你們目前還在機場，還是已回家？另外，「第三晚無法入住」是你們行程改變，還是飯店通知無法接待？那晚原訂在哪個城市、哪一天？"
+        },
+        {
+          "traveler": "行程只留下都市行程，原本跨縣行程取消，請幫我看還有哪些要改。",
+          "assistant": "先檢查**已訂的跨縣交通、住宿與指定日期票券**，確認哪些需要你向業者辦理變更，避免漏掉仍有效的訂單。\n\n依你最新決定，行程只保留都市活動，跨縣行程已從規劃中移除；相關訂單是否取消，仍待確認。\n\n需要逐項看：\n\n- **住宿**：原第三晚如何處理、其他晚日期是否受影響，留在都市後有沒有住宿空缺。\n- **交通**：跨縣列車／巴士、租車、接送及交通票券；改班後的機場往返也要重新核對。\n- **預約活動**：跨縣景點、餐廳、體驗，以及都市行程中因晚一天出發而趕不上的時段。\n- **行李配送**：若原本寄往跨縣飯店，需向配送方確認能否更改。\n- **入境資料**：若已填寫住宿或抵達資訊，檢查是否需要更新。\n- **取消費與保險**：保留航班取消通知及相關單據；能否退費或理賠須依實際條款確認。\n\n你們保留哪個城市？可以貼上原行程和已訂項目，用「日期／城市／住宿或交通活動／是否已付款」即可，不用提供訂單編號。我會逐項標出要改、可保留及待確認的部分。"
+        }
+      ]
+    },
+    {
+      "case_id": "TRIP-DISRUPT-10",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP complete nontruncated prompt event stream",
+      "turns": [
+        {
+          "traveler": "去日本的航班取消，我們改成隔天出發，原本第三晚的飯店也無法入住。",
+          "assistant": "先在這段對話協助你；除非你明確啟用，沒有持久記憶。我無法代為執行預訂、取消或發送任何外部訊息，亦無即時業者資料。\n\n**目前最優先行動：**\n請立刻聯繫第三晚的飯店或訂房平台，告知因航班取消而行程異動，避免被列為未入住（No-Show）而被收取全額費用。\n\n**建議處理順序與連鎖檢視：**\n\n1. **第三晚飯店（受影響 / 待處理）**\n   盡速向飯店或平台提出異動需求。可直接出示或發送以下日文訊息：\n   > 「航空便の欠航に伴う日程変更のため、宿泊のキャンセル（または日程変更）をお願いできますでしょうか。予約者名：［姓名］」  \n   > （中文意為：因航班取消導致行程變更，能否協助取消或更改住宿日期？預約人姓名：［姓名］）  \n   *提醒：請直接與官方客服聯繫，切勿在對話中提供完整信用卡號或敏感個資。*\n\n2. **盤點其他相依項目**\n   - **航班**：已確認改為隔天出發（已確認）。\n   - **第 1、2 晚住宿**：是否已處理延後入住或取消？需避免第 1 晚因未如期 Check-in 導致整筆訂單被取消。\n   - **預約制交通與票券**：是否有已劃位的新幹線、特急券、租車或指定時段門票需要改期？\n   - **入境資訊**：抵達日本的「Visit Japan Web」或入境卡填寫之首日住宿資訊記得更新。\n   - **證明文件**：請務必向航空公司索取「航班取消證明（欠航証明書）」，以利後續向平台或旅遊不便險申請退費/理賠。\n\n請問第三晚飯店你是希望爭取**取消退費**還是**順延入住**？另外第 1、2 晚的住宿目前處理情況如何？"
+        },
+        {
+          "traveler": "行程只留下都市行程，原本跨縣行程取消，請幫我看還有哪些要改。",
+          "assistant": "將行程縮減為**純都市行程、取消跨縣移動**後，能大幅降低趕車與搬運行李的壓力。以下是為你整理的連鎖異動清單與待辦順序：\n\n### 優先行動：處理跨縣預約退改（避免衍生罰金）\n1. **跨縣交通票券（受影響／待退票）**\n   - **新幹線／特急指定席**：若已在網路訂票或取票，請盡速線上退票或至車站綠色窗口（みどりの窓口）辦理退票。\n   - **JR Pass／區域周遊券**：若購買了跨縣周遊券且尚未兌換／啟用，可洽原購買通路依規定退款；若已啟用，則無法退款。\n   - **長途租車（レンタカー）或高速巴士**：若有預訂請務必主動取消。\n\n2. **跨縣住宿與預約（受影響／待取消）**\n   - **外縣市飯店**：連同第三晚，確認所有外縣市住宿是否皆已完成取消通知。\n   - **票券與體驗**：外縣市已預約的特定景點、展覽或餐廳，檢視退款期限並依序退訂。\n\n---\n\n### 次要行動：重新銜接都市行程與後勤\n3. **都市住宿天數（待確認）**\n   - 不去外縣市後，後續原本在外縣市的夜晚，是打算在目前都市的同一間飯店「續住（連泊）」，還是需要另找市區飯店？建議提早確認房況。\n\n4. **市區交通調整（待調整）**\n   - 省去跨縣車票，市區內直接使用交通 IC 卡（如 Suica、PASMO、ICOCA）或購買地鐵一日／多日券即可，搭乘彈性最高。\n\n5. **行李與行程節奏（已簡化）**\n   - 跨縣移動取消後，不需要天天寄放或拖著大件行李轉車，行程可改為以市區飯店為核心的放射狀散步與購物。\n\n---\n\n為了幫你聚焦接下來的行程，想請問：\n1. 你們目前是留在**哪一座主要都市**（例如：東京、大阪、福岡）？\n2. 後續幾晚在市區的住宿已經安排好了嗎，還是需要重新規劃住宿區域？"
+        }
+      ]
+    },
+    {
+      "case_id": "TRIP-HOTEL-11",
+      "model": "gpt-6.1-sol",
+      "host": "Codex ACP read-only",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "最後兩晚飯店尚未決定。",
+          "assistant": "我會先唯讀查看旅遊助理指引與住宿相關參考，再接著協助你安排。先決定最後兩晚的住宿區域，再縮小飯店選擇。目前這兩晚仍是「未定」。\n\n最後兩晚想住哪個城市、日期或大約期間、幾位入住？可以先回答一部分，未定也沒關係。\n\n我只在這段對話協助，不會持久保存旅程資料；這次也不查即時房價或空房。"
+        },
+        {
+          "traveler": "訂好了，改住範例港站附近；明天要從這裡去機場。",
+          "assistant": "收到，最後兩晚已訂好，改住範例港站附近；明天從這裡前往機場。\n\n要去哪座機場、哪個航廈，班機幾點起飛？另外有幾位同行、大件行李或全程需電梯的需求嗎？我會依你提供的資訊協助倒推安排；離線無法確認實際班次與運行狀況。"
+        }
+      ]
+    },
+    {
+      "case_id": "TRIP-HOTEL-11",
+      "model": "gemini-3.8-flash",
+      "host": "Antigravity ACP plan",
+      "reasoning_effort": "medium",
+      "fresh_independent_session": true,
+      "source": "ACP session/load",
+      "turns": [
+        {
+          "traveler": "最後兩晚飯店尚未決定。",
+          "assistant": "先在這段對話協助你；除非你明確啟用，沒有持久記憶。\n\n為了協助你挑選最後兩晚合適的住宿方向，想先了解：\n1. 最後兩晚預計在哪個城市或目的地（例如是否有特定的回程機場或車站）？\n2. 入住日期或大約期間？\n3. 共有幾位旅客？\n\n可以先回答一部分，也可以說未定或直接跳過。"
+        },
+        {
+          "traveler": "訂好了，改住範例港站附近；明天要從這裡去機場。",
+          "assistant": "已將住宿更新為「範例港站附近」（依你回報已訂好），接下來規劃明天前往機場的行程。\n\n為了幫你倒推建議的出發時間與合適的交通方式（避免匆忙或錯過報到截止），請告訴我：\n\n1. **哪一座機場與第幾航廈**？\n2. **航班起飛時間**（或航空公司指定的報到截止時間）？\n3. **同行人數、隨身與托運行李件數**，以及是否需要**全程電梯（無障礙）**路線？\n\n收到這些資訊後，會為你預留報到、行李託運與安檢緩衝時間進行倒推規劃。"
+        }
+      ]
+    }
+  ],
+  "excluded_or_qualified_attempts": [
+    {
+      "case_id": "SHOP-LEDGER-12",
+      "model": "gemini-3.8-flash",
+      "status": "invalid_misrouted_first_attempt",
+      "details": "When Gemini requests were initiated concurrently, a shopping-list case initially received a lodging-related answer. Mechanism unconfirmed. A new isolated session was used for the recorded 3-turn sample."
+    },
+    {
+      "case_id": "SHOP-EXCLUDE-13",
+      "model": "gemini-3.8-flash",
+      "status": "incomplete_first_attempt",
+      "details": "Initial concurrent Gemini prompt run completed with no user-visible answer. A new isolated session was used for the recorded 2-turn sample."
+    },
+    {
+      "case_id": "FOOD-LEDGER-21",
+      "model": "gemini-3.8-flash",
+      "status": "host_temporary_plan_written",
+      "details": "Gemini plan mode reported creating and updating an internal temporary plan file containing synthetic order details, and the file existence was verified. This contradicts a strict no-files test assumption; not proof of an exported persistent travel memory file."
+    }
+  ]
+}

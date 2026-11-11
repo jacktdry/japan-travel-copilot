@@ -1,5 +1,55 @@
 # Changelog
 
+## 0.3.0 (proposed)
+
+- Prepared an **everyday travel-assistance release candidate** with a simpler
+  bilingual [quick start and README](README.md) and a short
+  [minimum release checklist](RELEASE.md). Confirmed a reversible ZIP-style
+  install-file copy and one isolated three-turn onboarding/itinerary/translation
+  smoke sample. Historical P0 field-safety NO-GO findings remain intact as
+  optional deeper research, rather than a universal general-release gate.
+  No public-main installation, official release tag, or full host security
+  guarantee is implied.
+
+
+- Added [P0 actual-JPEG station-sign stress cases](evaluations/visual-stress-cases.json),
+  strong-blur and upper-crop derivative images, and a
+  [source-blind review](evaluations/runs/2026-11-11-p0-image-stress-review.md).
+  Historical answers exposed illegible-word guesses, unsupported yellow-map
+  color accessibility interpretation, and a P0 critical instruction to walk
+  toward an elevator-labeled exit before confirming continuous step-free
+  access. Narrow fresh Antigravity post-fix samples did not reproduce these
+  defects; Codex image samples remain unassessed due to quota, and invalid
+  parallel/contaminated samples were excluded. Hardened Skill/photo/navigation
+  guidance and static JPEG/archive tests. Real station operation, effective
+  native sandbox and zero-file behavior remain unverified: P0 NO-GO.
+
+
+- Hardened source-date instructions: name each decision-relevant source with its supplied effective date or explicit unknown, and report access provenance separately at recorded precision. The [completed source-date reruns](evaluations/runs/2026-11-06-source-backed-date-contract-review.md) preserve two NEW independent ACP sessions, two traveler turns each; upstream manual review records 6/6 MUST criteria per sample with no MUST_NOT violation observed. The [configuration projection diagnostic](evaluations/runs/2026-11-06-acp-config-projection-diagnostic.md) records update/open acknowledgment versus initial inspect values even after a benign probe; stale projection is a hypothesis, native identity and sandbox effectiveness remain unverified. Historical fixture/transcript bytes and claimed input hashes remain unchanged; static tests cannot prove model behavior. P0 NO-GO remains; no broad field-safety acceptance, live operational verification or host no-file proof.
+
+- Added one [source-backed P0 static evidence exercise](evaluations/source-backed-airport.json) and manual injection/report procedure, separate from the 22 offline cases and actual inference archives. Kept reviewer-only unknowns out of the injected evidence card and clarified scheduled-arrival, accessible-transfer and source-date boundaries. The [initial completed review](evaluations/runs/2026-11-05-source-backed-initial-review.md) records 2 independent provider samples, 2 turns each: narrow Codex sample pass and Gemini critical route/duration failure (adapter configuration confirmed, runtime-state inconsistent). Preserved the fixture's historical `not_run` state and original answers; added route-order, wrong-endpoint duration, relative-arrival and carrier-deadline guardrails plus static archive checks. One [post-fix Codex sample](evaluations/runs/2026-11-05-source-backed-postfix-review.md) completed both turns without a P0 critical failure but missed explicit map effective-date detail; the earlier Gemini post-fix submission was blocked before execution and remains unassessed. A later [independent Gemini recheck](evaluations/runs/2026-11-05-source-backed-gemini-recheck-review.md) completed two turns with 5/6 and no observed P0 critical violation in that sample, but both explicit map effective-date mappings remain missing (MUST 3 partially unmet). This narrow conditional result is not a complete rubric pass. The prior block was not reproduced; cause unknown, not conclusively repaired. Native model identity and sandbox effectiveness remain unverified due to configuration/runtime disagreement. Historical failure and blocked attempt preserved; P0 NO-GO, no full P0 pass, live operational verification or host no-file proof.
+
+- Added two fresh sandboxed Gemini actual-image post-fix responses; neutral peanut avoidance and unknown cashier cause now observed in narrow synthetic cases (no host file audit or live safety sign-off).
+- Reviewed [four additional actual-JPEG samples](evaluations/runs/2026-11-05-p1-visual-review.md); tightened optional allergy scripts, receipt-cause and unlisted-fee grounding, with static integrity checks. Gemini's pre-fix failure/caveat remain recorded alongside two successful narrow post-fix image reruns; strict host no-file verification is outstanding.
+
+- Added [actual-image P1 tests and a sandbox privacy probe](evaluations/runs/2026-11-05-p1-multimodal-privacy-review.md): two wholly synthetic Japanese menu/receipt JPEGs, four fresh independent ACP image-input samples (two models) and one separate three-turn Gemini sandbox no-file observation. Both models grounded the explicit peanut warning and canceled 400-JPY receipt line. No write-type tool event observed in the sandbox probe, but **no host-wide filesystem audit**; strict zero-file and field safety remain unverified.
+
+- Added the [P1 offline review](evaluations/runs/2026-11-05-p1-offline-review.md): 24 independent completed synthetic samples, 46 traveler turns, 2 excluded/qualified initial attempts and a host temporary plan-file observation. Tightened refund/timed-ticket grounding, receipt math, allergy translation, order-state separation and host storage boundaries; targeted contracts and static archive checks added. Six targeted fresh post-fix Gemini case samples showed narrow repairs in five cases and a residual missing-order error; a seventh independent three-turn sample after a concrete rule edit no longer made that error. Historical failures and host plan-file behavior remain; no broad all-pass or strict zero-file claim.
+
+- Added the [remaining P0 review](evaluations/runs/2026-11-04-p0-remaining-review.md): 10 completed fresh synthetic samples plus 1 incomplete no-response attempt. Hardened wrong-direction gate/return-route verification, missing-elevator-sign uncertainty and absent-image attribution; subsequent targeted new-session reruns did not reproduce the gate/missing-icon defects, but a Gemini no-response attempt remains; no P0 sign-off.
+- Grounded transfer gate/ticket instructions in operator, lines and station evidence; added static checkpoint contracts and a 10-sample fresh-session synthetic review with provenance limits; the narrow checkpoint gate rerun was observed fixed for both providers.
+- Prohibited fictitious airport departure windows; tightened fresh-session evaluation protocol and logged limited offline ACP findings with no P0 sign-off.
+- Strengthened evidence-grounded live navigation, date/time interpretation,
+  direction and checkpoint corrections, full-route step-free requirements,
+  and airport deadline/baggage safety margins.
+- Added traveler-decision continuity for cancellations, shopping state,
+  hard exclusions, timed entry and verified versus tentative status.
+- Added multimodal/photo correction, Japanese order changes and
+  requested/served/billed receipt reconciliation guidance.
+- Added 22 fictional evaluation scenarios (single- and multi-turn) with a
+  cross-provider manual scoring rubric. Static tests are not model UAT.
+
+
 ## 0.2.0 (unreleased)
 
 - Added bilingual, copy-ready installation instructions: Agent-guided install, interactive skills CLI, and manual ZIP fallback.
