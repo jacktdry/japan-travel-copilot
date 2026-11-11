@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 (proposed)
+## 0.3.0
 
 - Prepared an **everyday travel-assistance release candidate** with a simpler
   bilingual [quick start and README](README.md) and a short
@@ -8,8 +8,9 @@
   install-file copy and one isolated three-turn onboarding/itinerary/translation
   smoke sample. Historical P0 field-safety NO-GO findings remain intact as
   optional deeper research, rather than a universal general-release gate.
-  No public-main installation, official release tag, or full host security
-  guarantee is implied.
+  After PR #2 merged, the public-main Skill source and isolated project-scoped
+  Skills CLI install/update were verified. The official tag and release notes
+  are available through GitHub Releases; full host security guarantees are not implied.
 
 
 - Added [P0 actual-JPEG station-sign stress cases](evaluations/visual-stress-cases.json),

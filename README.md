@@ -27,8 +27,8 @@ on the host's tools.
 - **溝通**：菜單、點餐、日文翻譯與收據比對。
 - **異動**：班機、住宿或預約出問題時整理下一步；不會自行下單或取消。
 
-**v0.3 release candidate / 發布候選版：** 核心功能、安裝方式與
-最小發布標準請看 [RELEASE.md](RELEASE.md)。
+**v0.3.0 版本資訊：** 核心功能、安裝方式與
+實際發布驗收請看 [RELEASE.md](RELEASE.md)。
 過往完整的測試與研究保留在 [evaluations/](evaluations/README.md)，
 不再要求所有實地驗證或多模型實驗完成才可發布日常旅遊輔助 Skill。
 

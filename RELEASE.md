@@ -1,6 +1,6 @@
-# v0.3 Release Candidate / 發布候選
+# v0.3.0 版本說明 / Release Notes
 
-**狀態：v0.3 RC ready（待維護者決定是否合併）。隔離安裝、基本對話及本機回歸均通過；GitHub CI 以 PR #2 最新提交的 Checks 為準。尚未合併或建立正式版 tag。**
+**狀態：v0.3.0 發布前驗證完成。PR #2 已合併；`main` 的 CI、公開來源和 Skills CLI 的隔離安裝／更新均已通過。正式版本標籤與下載請以 GitHub Releases 為準。**
 這個專案是日本旅遊的 **AI 助理指引（Agent Skill）**，不是具備
 即時車站定位、保證無障礙路線或代替官方平台的旅遊 App。
 
@@ -30,12 +30,12 @@
 - [x] **核心流程可用：** 至少在一個相容的 Agent 宿主完成簡單的
       首次規劃、上下文延續、翻譯／旅途下一步對話測試。
 - [x] **基本回歸通過：** Python 3.9.6、3.15.2 各 95/95 項測試通過，
-      安裝說明和相對連結有效；合併前再以 PR #2 Checks 確認 GitHub CI。
+      安裝說明和相對連結有效；合併後 `main` 的 GitHub CI 也已通過。
 - [x] **沒有當前可重現的核心阻斷問題：** 不任意捏造即時資料、
       不在未確認時宣稱付款／訂單已執行，也不擅自儲存私人資料。
       如果基本使用測試出現這類問題，先修復再發布。
 
-以上通過代表 **RC 可考慮合併**，不等於所有宿主、交通資料、
+以上是 **一般旅遊 Skill 的基本發布標準**，不等於所有宿主、交通資料、
 無障礙路線、圖片理解或隱私隔離都經過全面認證。
 
 ## 本次基本驗收紀錄（2026-11-11，虛構資料）
@@ -44,8 +44,10 @@
 `references/`、`scripts/`、README 與本文件製成 ZIP，解壓至
 臨時的 `host-skills/japan-travel-copilot/` 路徑。
 15 個實際檔案皆可讀取，`SKILL.md` 內 19 個相對參照均指向存在的檔案；
-沒有安裝到全域 Skills 目錄、沒有啟動記憶，也沒有使用公開 main
-版本進行真正的 CLI 安裝驗證。
+沒有安裝到全域 Skills 目錄、沒有啟動記憶。後來又從**已合併的公開 `main`**
+以 Skills CLI 成功辨識 Skill、在獨立暫存專案執行實際安裝，並確認
+`skills update japan-travel-copilot --project` 回報已是最新；安裝後
+`SKILL.md` 的 SHA-256 與公開主分支一致。沒有修改個人全域安裝。
 
 **單一宿主基本對話：通過。** 在該隔離副本建立一個新 ACP 會話，
 以虛構「仙台、盛岡、兩人、日期未定」開始，模型只追問一個關鍵資訊；
@@ -55,10 +57,10 @@
 「すみません、エレベーターはどこですか？」並提供向站務員詢問方向的
 簡短日文，不重新啟動旅程問卷。
 
-記錄的是**一個已完成的簡單宿主對話樣本**；不是跨模型驗收、
-真實站點測試或正式 CLI 的安裝證明。沒有對宿主整個檔案系統進行
-零暫存檔稽核，也未獨立確證底層模型或 Sandbox 狀態。對一般 RC
-發布只保留這些誠實界線，不把它們升級成額外發布阻擋。
+記錄的是**一個已完成的簡單宿主對話樣本**，不是跨模型或真實站點
+測試。公開 CLI 安裝與更新已在隔離專案驗證，但不代表每個聊天宿主
+都會自動載入 Skill。沒有稽核整個宿主檔案系統，也未獨立確證底層
+模型或 Sandbox 狀態；這些不作為一般旅遊輔助版本的額外發布門檻。
 
 ## 不再阻擋一般版本發布的項目
 
@@ -74,18 +76,19 @@
 任何預約、取消、付款或對外發訊須另外授權；
 未啟用可選記憶前不主動寫入旅客檔案。
 
-## 待辦與發布決策
+## 已完成的發布流程與後續維護
 
-1. 完成並記錄一次**隔離的安裝資源測試及實際 Agent 對話煙霧測試**。
-2. 確認本機單元測試、GitHub CI、文件與 PR #2 皆正常。
-3. 將本版標為 **RC ready**，供維護者確認；**不自動合併、
-   不自動標記正式版**。合併後才另外確認公開 main 的安裝／更新。
+1. 已完成隔離 ZIP 資源檢查及三回合 Agent 旅遊對話煙霧測試。
+2. 已通過 Python 3.9／3.15 單元測試、PR CI 與合併後 `main` 的 CI。
+3. PR #2 已合併；公開 `main` 的 Skill 可被 CLI 找到，並已完成隔離的
+   專案範圍安裝與更新測試。正式版標籤、版本紀錄與下載以
+   [GitHub Releases](https://github.com/jacktdry/japan-travel-copilot/releases) 為準。
 4. 延後的高嚴格度項目放在 [evaluations/README.md](evaluations/README.md)
-   與相關報告，後續依真實使用回饋決定是否投入。
+   與相關報告；是否繼續投入依真實使用回饋決定。
 
 ## English summary
 
-v0.3 is a practical Japan-travel Agent Skill release candidate: plan trips,
+v0.3.0 is a practical Japan-travel Agent Skill release: plan trips,
 retain confirmed conversational context, translate signs and menus, assist with
 on-trip choices and disruptions, and optionally use explicitly approved file
 memory. Minimum release readiness is one compatible-host basic workflow smoke
@@ -93,5 +96,6 @@ test, a reversible isolated installation-file check, and passing offline
 Python/CI checks. Extensive cross-model, host sandbox and live station safety
 research remains **optional follow-up**, not a universal release gate.
 The Skill does not claim current transit accuracy, guaranteed step-free routes
-or host-wide zero-file privacy. Merging PR #2 and tagging a release are separate
-maintainer decisions.
+or host-wide zero-file privacy. PR #2 was merged; the publicly hosted main-branch
+Skill was discovered, installed and updated in an isolated CLI project.
+The official release tag and notes are listed in GitHub Releases.
